@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Administrateur;
 
 public class M_Administrateur {
-	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards2", "root", "");
+	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertAdministrateur(Administrateur unAdministrateur) {
 		String requete = "insert into administrateur values(null, '"+unAdministrateur.getNom()+"', '"
@@ -23,7 +23,7 @@ public class M_Administrateur {
 			uneBDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de :" + requete);
+			System.out.println("Erreur d'execution de :" + requete);
 		}
 	}
 	public static ArrayList<Administrateur> selectAllAdministrateurs() {
@@ -55,7 +55,7 @@ public class M_Administrateur {
 		return lesAdministrateurs;
 	}
 	public static void supprimerAdministrateur(int idAd) {
-		String requete = "delete from adminstrateur where idAd = " + idAd;
+		String requete = "delete from administrateur where idAd = " + idAd;
 		try {
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
@@ -64,7 +64,7 @@ public class M_Administrateur {
 			uneBDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static Administrateur selectWhereAdministrateur(int idAd) {
@@ -90,7 +90,7 @@ public class M_Administrateur {
 			uneBDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unAdministrateur;
 	}
@@ -117,16 +117,16 @@ public class M_Administrateur {
 			uneBDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unAdministrateur;
 	}
 	public static void updateAdministrateur(Administrateur unAdministrateur) {
-		/*String requete = "update client set nom = '"+unAdministrateur.getNom()+"', prenom = '"
+		String requete = "update administrateur set nom = '"+unAdministrateur.getNom()+"', prenom = '"
 				+unAdministrateur.getPrenom()+"', adresse = '"+unAdministrateur.getAdresse()+
 				"', telephone = '"+unAdministrateur.getTelephone()+"', mdp = '"+unAdministrateur.getMdp()+
 				"', URLSignature = '"+unAdministrateur.getUrlSignature()+"', email = '"
-				+unAdministrateur.getEmail()+"' where idAd = " + unAdministrateur.getIdAd() + ";";
+				+unAdministrateur.getEmail()+"' where idAd = " + unAdministrateur.getIdU() + ";";
 		try {
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
@@ -135,7 +135,7 @@ public class M_Administrateur {
 			uneBDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de :" + requete);
-		}*/
+			System.out.println("Erreur d'execution de :" + requete);
+		}
 	}
 }

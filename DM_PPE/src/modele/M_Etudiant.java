@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import controleur.Etudiant;
 
-public class ModeleEtudiant {
-	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "");
+public class M_Etudiant {
+	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertEtudiant(Etudiant unEtudiant) {
 		String requete = "insert into etudiant values(null, '"
@@ -25,7 +25,7 @@ public class ModeleEtudiant {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de : " + requete);
+			System.out.println("Errer d'execution de : " + requete);
 		}
 	}
 	public static ArrayList<Etudiant> selectAllEtudiants() {
@@ -38,11 +38,14 @@ public class ModeleEtudiant {
 			while (desResultats.next()) {
 				Etudiant unEtudiant = new Etudiant(
 						desResultats.getInt("idE"),
-						desResultats.getInt("idCl"),
 						desResultats.getString("nom"),
 						desResultats.getString("prenom"),
+						desResultats.getString("adresse"),
+						desResultats.getString("telephone"),
 						desResultats.getString("email"),
-						desResultats.getString("adresse")
+						desResultats.getString("mdp"),
+						desResultats.getString("diplome"),
+						desResultats.getInt("idCl")
 						);
 				lesEtudiants.add(unEtudiant);
 			}
@@ -64,7 +67,7 @@ public class ModeleEtudiant {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static Etudiant selectWhereEtudiant(int idE) {
@@ -77,18 +80,21 @@ public class ModeleEtudiant {
 			if(unResultat.next()) {
 				unEtudiant = new Etudiant (
 						unResultat.getInt("idE"),
-						unResultat.getInt("idCl"),
 						unResultat.getString("nom"),
 						unResultat.getString("prenom"),
+						unResultat.getString("adresse"),
+						unResultat.getString("tel"),
 						unResultat.getString("email"),
-						unResultat.getString("adresse")
+						unResultat.getString("mdp"),
+						unResultat.getString("diplome"),
+						unResultat.getInt("idCl")
 						);
 			}
 			unStat.close();
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'exï¿½cution de : " + requete);
 		}
 		return unEtudiant;
 	}
@@ -98,7 +104,7 @@ public class ModeleEtudiant {
 				+"', idCl = '"+unEtudiant.getIdCl()
 				+"', email = '"+unEtudiant.getEmail()
 				+"', adresse = '"+unEtudiant.getAdresse()
-				+"' where idE = " + unEtudiant.getIdE() + ";";
+				+"' where idE = " + unEtudiant.getIdU() + ";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -107,7 +113,7 @@ public class ModeleEtudiant {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de : " + requete);
+			System.out.println("Errer d'exï¿½cution de : " + requete);
 		}
 	}
 }

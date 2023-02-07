@@ -15,7 +15,7 @@ public class Billet {
 		this.dateheure = dateheure;
 		this.raison = raison;
 	}
-	public Billet(int idAd, int idE) {
+	public Billet(int idAd, int idE, String raison) {
 		this.idAd = idAd;
 		this.idE = idE;
 		this.dateB = "";

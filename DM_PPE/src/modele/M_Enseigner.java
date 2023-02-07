@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import controleur.Enseigner;
 
-public class ModeleEnseigner {
-	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "");
+public class M_Enseigner {
+	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertEnseigner(Enseigner unEnseig) {
 		String requete = "insert into enseigner values('"
@@ -22,7 +22,7 @@ public class ModeleEnseigner {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static ArrayList<Enseigner> selectAllEnseigners() {
@@ -57,7 +57,7 @@ public class ModeleEnseigner {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'exï¿½cution de : " + requete);
 		}
 	}
 	public static Enseigner selectWhereEnseigner(int idM, int idPf) {
@@ -77,7 +77,7 @@ public class ModeleEnseigner {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'exï¿½cution de : " + requete);
 		}
 		return unEnseig;
 	}

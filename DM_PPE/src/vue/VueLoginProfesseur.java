@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controleur.ControleurProfesseur;
+import controleur.C_Professeur;
 import controleur.Professeur;
 
 public class VueLoginProfesseur extends JFrame implements ActionListener, KeyListener {
@@ -54,9 +54,9 @@ public class VueLoginProfesseur extends JFrame implements ActionListener, KeyLis
 	}
 	
 	private void authentification() {
-		Professeur userProfesseur = ControleurProfesseur.authentificationProfesseur(this.email.getText(), new String (this.mdp.getPassword()));
+		Professeur userProfesseur = C_Professeur.authentificationProfesseur(this.email.getText(), new String (this.mdp.getPassword()));
 		if(userProfesseur != null) {
-			JOptionPane.showMessageDialog(this, "Vous etes connecté en tant que " + userProfesseur.getNom() + " " + userProfesseur.getPrenom());
+			JOptionPane.showMessageDialog(this, "Vous etes connectï¿½ en tant que " + userProfesseur.getNom() + " " + userProfesseur.getPrenom());
 		} else {
 			JOptionPane.showMessageDialog(this, "Vos identifiants sont incorrectes");
 		}

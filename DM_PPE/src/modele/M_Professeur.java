@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import controleur.Professeur;
 
-public class ModeleProfesseur {
+public class M_Professeur {
 	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "");
 	
 	public static void insertProfesseur(Professeur unProfesseur) {
@@ -26,7 +26,7 @@ public class ModeleProfesseur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de : " + requete);
+			System.out.println("Errer d'exï¿½cution de : " + requete);
 		}
 	}
 	public static ArrayList<Professeur> selectAllProfesseurs() {
@@ -66,7 +66,7 @@ public class ModeleProfesseur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'exï¿½cution de : " + requete);
 		}
 	}
 	public static Professeur selectWhereProfesseur(int idPf) {
@@ -91,7 +91,7 @@ public class ModeleProfesseur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'exï¿½cution de : " + requete);
 		}
 		return unProfesseur;
 	}
@@ -117,7 +117,7 @@ public class ModeleProfesseur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'exécution de : " + requete);
+			System.out.println("Erreur d'exï¿½cution de : " + requete);
 		}
 		return unProfesseur;
 	}
@@ -137,7 +137,7 @@ public class ModeleProfesseur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'exécution de : " + requete);
+			System.out.println("Errer d'exï¿½cution de : " + requete);
 		}
 	}
 }

@@ -5,16 +5,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Classe;
+import controleur.Matiere;
 
-public class ModeleClasse {
-	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "root");
+public class M_Matiere {
+	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "");
 	
-	public static void insertClasse(Classe uneClasse) {
-		String requete = "insert into classe values(null, '"
-				+uneClasse.getNom()+"', '"
-				+uneClasse.getDiplomePrepare()+"', '"
-				+uneClasse.getPromotion()+"');";
+	public static void insertMatiere(Matiere uneMatiere) {
+		String requete = "insert into matiere values(null, '"
+				+uneMatiere.getIntitule()+"');";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -23,24 +21,22 @@ public class ModeleClasse {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Errer d'ex�cution de : " + requete);
 		}
 	}
-	public static ArrayList<Classe> selectAllClasses() {
-		ArrayList<Classe> lesClasses = new ArrayList<Classe>();
-		String requete = "select * from classe;";
+	public static ArrayList<Matiere> selectAllMatieres() {
+		ArrayList<Matiere> lesMatieres = new ArrayList<Matiere>();
+		String requete = "select * from matiere;";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
-				Classe uneClasse = new Classe(
-						desResultats.getInt("idCl"),
-						desResultats.getString("nom"),
-						desResultats.getString("diplomePrepare"),
-						desResultats.getString("promotion")
+				Matiere uneMatiere = new Matiere(
+						desResultats.getInt("idM"),
+						desResultats.getString("intitule")
 						);
-				lesClasses.add(uneClasse);
+				lesMatieres.add(uneMatiere);
 			}
 			unStat.close();
 			uneBdd.seDeConnecter();
@@ -48,10 +44,10 @@ public class ModeleClasse {
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
 		}
-		return lesClasses;
+		return lesMatieres;
 	}
-	public static void supprimerClasse(int idCl) {
-		String requete = "delete from classe where idCl = " + idCl + ";";
+	public static void supprimerMatiere(int idM) {
+		String requete = "delete from matiere where idM = " + idM;
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -63,19 +59,17 @@ public class ModeleClasse {
 			System.out.println("Erreur d'ex�cution de : " + requete);
 		}
 	}
-	public static Classe selectWhereClasse(int idCl) {
-		String requete = "select * from classe where idCl = " + idCl;
-		Classe uneClasse = null;
+	public static Matiere selectWhereMatiere(int idM) {
+		String requete = "select * from matiere where idM = " + idM;
+		Matiere uneMatiere = null;
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
-				uneClasse = new Classe (
-						unResultat.getInt("idCl"),
-						unResultat.getString("nom"),
-						unResultat.getString("diplomePrepare"),
-						unResultat.getString("promotion")
+				uneMatiere = new Matiere (
+						unResultat.getInt("idM"),
+						unResultat.getString("intitule")
 						);
 			}
 			unStat.close();
@@ -84,13 +78,10 @@ public class ModeleClasse {
 		catch(SQLException exp) {
 			System.out.println("Erreur d'ex�cution de : " + requete);
 		}
-		return uneClasse;
+		return uneMatiere;
 	}
-	public static void updateClasse(Classe uneClasse) {
-		String requete = "update classe set nom = '"+uneClasse.getNom()
-				+"', diplomePrepare = '"+uneClasse.getDiplomePrepare()
-				+"', promotion = '"+uneClasse.getPromotion()
-				+"' where idCl = " + uneClasse.getIdCl() + ";";
+	public static void updateMatiere(Matiere uneMatiere) {
+		String requete = "update matiere set intitule = '"+uneMatiere.getIntitule()+"';";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
