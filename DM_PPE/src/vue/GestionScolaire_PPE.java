@@ -1,6 +1,6 @@
 package vue;
 
-public class GestionScholaire_PPE {
+public class GestionScolaire_PPE {
 	private static VueLoginProfesseur uneVueLoginProfesseur;
 	
 	public static void main(String args[]) {

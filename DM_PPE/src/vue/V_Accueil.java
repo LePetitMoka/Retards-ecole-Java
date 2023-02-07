@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import vue.GREI;
 
-public class V_Acceuil extends JFrame implements ActionListener {
+public class V_Accueil extends JFrame implements ActionListener {
 	private JButton btProfesseurs = new JButton("Professeurs");
 	private JButton btEtudiants = new JButton("Etudiants");
 	private JButton btClasses = new JButton ("Classes");
@@ -25,7 +25,7 @@ public class V_Acceuil extends JFrame implements ActionListener {
 	private P_Classes unPanelClasses = new P_Classes();
 	private P_Billets unPanelBillets = new P_Billets();
 	
-	public V_Acceuil() {
+	public V_Accueil() {
 		this.setTitle("Gestion des Billets d'Orange");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 900, 500);
