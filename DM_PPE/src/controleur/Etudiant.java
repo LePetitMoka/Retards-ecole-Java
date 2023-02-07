@@ -1,28 +1,30 @@
 package controleur;
 
 public class Etudiant extends Utilisateur {
-	private int idCl;
+	private String diplome;
 
 	public Etudiant() {
 		super();
-		this.idCl = 0;
+		this.diplome= "";
 	}
 
-	public Etudiant(String nom, String prenom, String adresse, String telephone, String email, String mdp, int idCl) {
+	public Etudiant(String nom, String prenom, String adresse, String telephone, String email, String mdp, String diplome) {
 		super(nom, prenom, adresse, telephone, email, mdp);
-		this.idCl = idCl;
+		this.diplome = diplome;
 	}
 
-	public Etudiant(int idU, String nom, String prenom, String adresse, String telephone, String email, String mdp, int idCl) {
+	public Etudiant(int idU, String nom, String prenom, String adresse, String telephone, String email, String mdp, String diplome) {
 		super(idU, nom, prenom, adresse, telephone, email, mdp);
-		this.idCl = idCl;
+		this.diplome = diplome;
 	}
 
-	public int getIdCl() {
-		return idCl;
+	public String getDiplome() {
+		return diplome;
 	}
 
-	public void setIdCl(int idCl) {
-		this.idCl = idCl;
+	public void setDiplome(String diplome) {
+		this.diplome = diplome;
 	}
+
+	
 }

@@ -1,6 +1,6 @@
 package controleur;
 
-public class Utilisateur {
+public abstract class Utilisateur {
 	protected int idU;
 	protected String nom, prenom, adresse, telephone, email, mdp;
 	

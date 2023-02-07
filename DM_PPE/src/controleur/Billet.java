@@ -15,6 +15,26 @@ public class Billet {
 		this.dateheure = dateheure;
 		this.raison = raison;
 	}
+	public Billet(int idAd, int idE) {
+		this.idAd = idAd;
+		this.idE = idE;
+		this.dateB = "";
+		this.heureB = "";
+		this.dureeRetard = "";
+		this.urlSignature = "";
+		this.dateheure = "";
+		this.raison = "";
+	}
+	public Billet() {
+		this.idAd = 0;
+		this.idE = 0;
+		this.dateB = "";
+		this.heureB = "";
+		this.dureeRetard = "";
+		this.urlSignature = "";
+		this.dateheure = "";
+		this.raison = "";
+	}
 
 	public int getIdAd() {
 		return idAd;
