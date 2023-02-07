@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Professeur;
 
 public class M_Professeur {
-	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "");
+	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertProfesseur(Professeur unProfesseur) {
 		String requete = "insert into professeur values(null, '"
@@ -26,7 +26,7 @@ public class M_Professeur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static ArrayList<Professeur> selectAllProfesseurs() {
@@ -41,10 +41,11 @@ public class M_Professeur {
 						desResultats.getInt("idPf"),
 						desResultats.getString("nom"),
 						desResultats.getString("prenom"),
-						desResultats.getString("diplome"),
+						desResultats.getString("adresse"),
+						desResultats.getString("telephone"),
 						desResultats.getString("email"),
 						desResultats.getString("mdp"),
-						desResultats.getString("adresse")
+						desResultats.getString("diplome")
 						);
 				lesProfesseurs.add(unProfesseur);
 			}
@@ -66,7 +67,7 @@ public class M_Professeur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static Professeur selectWhereProfesseur(int idPf) {
@@ -81,43 +82,18 @@ public class M_Professeur {
 						unResultat.getInt("idPf"),
 						unResultat.getString("nom"),
 						unResultat.getString("prenom"),
-						unResultat.getString("diplome"),
+						unResultat.getString("adresse"),
+						unResultat.getString("telephone"),
 						unResultat.getString("email"),
 						unResultat.getString("mdp"),
-						unResultat.getString("adresse")
+						unResultat.getString("diplome")
 						);
 			}
 			unStat.close();
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
-		}
-		return unProfesseur;
-	}
-	public static Professeur authentificationProfesseur(String email, String mdp) {
-		String requete = "select * from professeur where email = '" + email + "' and mdp = '" + mdp + "';";
-		Professeur unProfesseur = null;
-		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			ResultSet unResultat = unStat.executeQuery(requete);
-			if(unResultat.next()) {
-				unProfesseur = new Professeur (
-						unResultat.getInt("idPf"),
-						unResultat.getString("nom"),
-						unResultat.getString("prenom"),
-						unResultat.getString("diplome"),
-						unResultat.getString("email"),
-						unResultat.getString("mdp"),
-						unResultat.getString("adresse")
-						);
-			}
-			unStat.close();
-			uneBdd.seDeConnecter();
-		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unProfesseur;
 	}
@@ -125,10 +101,11 @@ public class M_Professeur {
 		String requete = "update professeur set nom = '"+unProfesseur.getNom()
 				+"', prenom = '"+unProfesseur.getPrenom()
 				+"', diplome = '"+unProfesseur.getDiplome()
+				+"', telephone = '"+unProfesseur.getTelephone()
 				+"', email = '"+unProfesseur.getEmail()
 				+"', mdp = '"+unProfesseur.getMdp()
 				+"', adresse = '"+unProfesseur.getAdresse()
-				+"' where idPf = " + unProfesseur.getIdPf() + ";";
+				+"' where idPf = " + unProfesseur.getIdU() + ";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -137,7 +114,7 @@ public class M_Professeur {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class M_Classe {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static ArrayList<Classe> selectAllClasses() {
@@ -61,7 +61,7 @@ public class M_Classe {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static Classe selectWhereClasse(int idCl) {
@@ -85,7 +85,7 @@ public class M_Classe {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return uneClasse;
 	}
@@ -102,7 +102,7 @@ public class M_Classe {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 }
