@@ -11,8 +11,8 @@ public class M_Trajet {
 	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertTrajet(Trajet unTrajet) {
-		String requete = "insert into trajet values("
-				+unTrajet.getIdSt()+", "
+		String requete = "insert into trajet values('"
+				+unTrajet.getIdSt()+"', "
 				+unTrajet.getIdE()+");";
 		try {
 			uneBdd.seConnecter();
@@ -48,7 +48,7 @@ public class M_Trajet {
 		return lesunTrajets;
 	}
 	public static void supprimerTrajet(int IdSt, int IdE) {
-		String requete = "delete from trajet where IdSt = " + IdSt + " and IdE = " + IdE + ";";
+		String requete = "delete from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -61,7 +61,7 @@ public class M_Trajet {
 		}
 	}
 	public static Trajet selectWhereTrajet(int IdSt, int IdE) {
-		String requete = "select * from trajet where IdSt = " + IdSt + " and IdE = " + IdE + ";";
+		String requete = "select * from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		Trajet unTrajet = null;
 		try {
 			uneBdd.seConnecter();
