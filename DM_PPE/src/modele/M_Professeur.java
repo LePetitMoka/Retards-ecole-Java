@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Professeur;
 
 public class M_Professeur {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards2", "root", "");
 	
 	public static void insertProfesseur(Professeur unProfesseur) {
 		String requete = "insert into professeur values(null, '"

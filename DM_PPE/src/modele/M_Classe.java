@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Classe;
 
 public class M_Classe {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards2", "root", "");
 	
 	public static void insertClasse(Classe uneClasse) {
 		String requete = "insert into classe values(null, '"

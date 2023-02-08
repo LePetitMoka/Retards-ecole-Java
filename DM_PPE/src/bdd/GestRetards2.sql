@@ -25,7 +25,7 @@ create table Professeur (
     constraint pk_Professeur primary key (IdPf)
 );
 
-create table Administrateur (
+create table  Administrateur (
     IdAd int (6) not null,
     nom varchar (25) not null,
     prenom varchar (25) not null,
@@ -161,3 +161,5 @@ create table Concerner(
     constraint fk_Perturbation foreign key (IdPt) references Perturbation(IdPt) on delete cascade on update cascade,
     constraint fk_Station3 foreign key (IdSt) references Station(IdSt) on delete cascade on update cascade
 );
+
+insert into Administrateur values (1, 'Admin', 'gerant', 'a@gmail.com', '000000000', 'Paris', 'ok', 'signature');

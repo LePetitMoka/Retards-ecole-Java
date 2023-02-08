@@ -9,7 +9,7 @@ import controleur.Cours;
 
 public class M_Cours {
 	
-	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards2", "root", "");
 	
 	public static void insertCours(Cours unCours) {
 		String requete = "insert into cours values("+unCours.getIdCl()+","

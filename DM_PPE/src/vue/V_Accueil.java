@@ -31,11 +31,11 @@ public class V_Accueil extends JFrame implements ActionListener {
 		this.setBounds(100, 100, 900, 500);
 		this.setResizable(false);
 		this.setLayout(null);
-		this.getContentPane().setBackground(Color.ORANGE);
+		this.getContentPane().setBackground(new Color (249, 177, 4));
 		
 		//placement du Panel
 		this.panelMenu.setBounds(25, 20, 840, 40);
-		this.panelMenu.setBackground(Color.ORANGE);
+		this.panelMenu.setBackground(new Color (249, 177, 4));
 		this.panelMenu.setLayout(new GridLayout(1, 5));
 		this.panelMenu.add(this.btProfesseurs);
 		this.panelMenu.add(this.btEtudiants);
@@ -84,10 +84,10 @@ public class V_Accueil extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == this.btProfesseurs) {
 			this.afficherPanel(1);
-		}/*
+		}
 		else if(e.getSource() == this.btEtudiants) {
 			this.afficherPanel(2);
-		}
+		}/*
 		else if(e.getSource() == this.btClasses) {
 			this.afficherPanel(3);
 		}
