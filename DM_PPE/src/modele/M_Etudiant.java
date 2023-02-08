@@ -84,7 +84,7 @@ public class M_Etudiant {
 						unResultat.getString("nom"),
 						unResultat.getString("prenom"),
 						unResultat.getString("adresse"),
-						unResultat.getString("tel"),
+						unResultat.getString("telephone"),
 						unResultat.getString("email"),
 						unResultat.getString("mdp"),
 						unResultat.getInt("idCl")
