@@ -1,35 +1,35 @@
 package controleur;
 
-public class Station {
+public class Transport {
 	
-	private String IdSt;
+	private String IdTp;
 	private String nom;
 	private String type;
 	private String transporteur;
 	private String pictogramme;
 	private String etat;
 	
-	public Station(String IdSt, String nom, String type, String transporteur, String pictogramme, String etat) {
-		this.IdSt  = IdSt;
+	public Transport(String IdTp, String nom, String type, String transporteur, String pictogramme, String etat) {
+		this.IdTp  = IdTp;
 		this.nom = nom;
 		this.type = type;
 		this.transporteur = transporteur;
 		this.pictogramme = pictogramme;
 		this.etat = etat;
 	}
-	public Station() {
-		this.IdSt  = "";
+	public Transport() {
+		this.IdTp  = "";
 		this.nom = "";
 		this.type = "";
 		this.transporteur = "";
 		this.pictogramme = "";
 		this.etat = "";
 	}
-	public String getIdSt() {
-		return this.IdSt;
+	public String getIdTp() {
+		return this.IdTp;
 	}
-	public void setIdSt(String IdSt) {
-		this.IdSt = IdSt;
+	public void setIdTp(String IdTp) {
+		this.IdTp = IdTp;
 	}
 	public String getNom() {
 		return this.nom;

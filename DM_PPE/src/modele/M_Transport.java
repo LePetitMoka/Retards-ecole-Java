@@ -5,18 +5,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Station;
+import controleur.Transport;
 
-public class M_Station {
+public class M_Transport {
 	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertStation(Station uneStation) {
-		String requete = "insert into station values('"+uneStation.getIdSt()+"','"
-				+uneStation.getNom()+"','"
-				+uneStation.getType()+"','"
-				+uneStation.getTransporteur()+"','"
-				+uneStation.getPictogramme()+"','"
-				+uneStation.getEtat()+"');";
+	public static void insertTransport(Transport unTransport) {
+		String requete = "insert into transport values('"+unTransport.getIdTp()+"','"
+				+unTransport.getNom()+"','"
+				+unTransport.getType()+"','"
+				+unTransport.getTransporteur()+"','"
+				+unTransport.getPictogramme()+"','"
+				+unTransport.getEtat()+"');";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -28,23 +28,23 @@ public class M_Station {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
-	public static ArrayList<Station> selectAllStations() {
-		ArrayList<Station> lesStations = new ArrayList<Station>();
-		String requete = "select * from station;";
+	public static ArrayList<Transport> selectAllTransports() {
+		ArrayList<Transport> lesTransports = new ArrayList<Transport>();
+		String requete = "select * from transport;";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
-				Station uneStation = new Station(
-						desResultats.getString("IdSt"),
+				Transport unTransport = new Transport(
+						desResultats.getString("IdTp"),
 						desResultats.getString("nom"),
 						desResultats.getString("type"),
 						desResultats.getString("transporteur"),
 						desResultats.getString("pictogramme"),
 						desResultats.getString("etat")
 						);
-				lesStations.add(uneStation);
+				lesTransports.add(unTransport);
 			}
 			unStat.close();
 			uneBdd.seDeConnecter();
@@ -52,10 +52,10 @@ public class M_Station {
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
 		}
-		return lesStations;
+		return lesTransports;
 	}
-	public static void supprimerStation(int IdSt) {
-		String requete = "delete from station where IdSt = " + IdSt;
+	public static void supprimerTransport(int IdTp) {
+		String requete = "delete from transport where IdTp = " + IdTp;
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -67,16 +67,16 @@ public class M_Station {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
-	public static Station selectWhereStation(int IdSt) {
-		String requete = "select * from station where IdSt = " + IdSt;
-		Station uneStation = null;
+	public static Transport selectWhereTransport(int IdTp) {
+		String requete = "select * from transport where IdTp = " + IdTp;
+		Transport unTransport = null;
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
-				uneStation = new Station (
-						unResultat.getString("IdSt"),
+				unTransport = new Transport (
+						unResultat.getString("IdTp"),
 						unResultat.getString("nom"),
 						unResultat.getString("type"),
 						unResultat.getString("transporteur"),
@@ -88,17 +88,17 @@ public class M_Station {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
-		return uneStation;
+		return unTransport;
 	}
-	public static void updateStation(Station uneStation) {
-		String requete = "update station set nom = '"+uneStation.getNom()
-				+"', type = '"+uneStation.getType()
-				+"', transporteur = '"+uneStation.getTransporteur()
-				+"', pictogramme = '"+uneStation.getPictogramme()
-				+"', etat = '"+uneStation.getEtat()
-				+"' where IdSt = " + uneStation.getIdSt() + ";";
+	public static void updateTransport(Transport unTransport) {
+		String requete = "update transport set nom = '"+unTransport.getNom()
+				+"', type = '"+unTransport.getType()
+				+"', transporteur = '"+unTransport.getTransporteur()
+				+"', pictogramme = '"+unTransport.getPictogramme()
+				+"', etat = '"+unTransport.getEtat()
+				+"' where IdTp = " + unTransport.getIdTp() + ";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
