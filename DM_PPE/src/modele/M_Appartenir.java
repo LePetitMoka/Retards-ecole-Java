@@ -5,15 +5,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Concerner;
+import controleur.Appartenir;
 
-public class M_Concerner {
+public class M_Appartenir {
 	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertConcerner(Concerner unConcern) {
-		String requete = "insert into concerner values('"
-				+unConcern.getIdSt()+"','"
-				+unConcern.getIdPt()+"');";
+	public static void insertAppartenir(Appartenir uneAppartenance) {
+		String requete = "insert into appartenir values('"
+				+uneAppartenance.getIdSt()+"','"
+				+uneAppartenance.getIdTp()+"');";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -25,19 +25,19 @@ public class M_Concerner {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
-	public static ArrayList<Concerner> selectAllConcerners() {
-		ArrayList<Concerner> lesConcerns = new ArrayList<Concerner>();
-		String requete = "select * from concerner;";
+	public static ArrayList<Appartenir> selectAllAppartenirs() {
+		ArrayList<Appartenir> lesAppartenances = new ArrayList<Appartenir>();
+		String requete = "select * from appartenir;";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
-				Concerner unConcern = new Concerner(
+				Appartenir uneAppartenance = new Appartenir(
 						desResultats.getString("IdSt"),
-						desResultats.getString("IdPt")
+						desResultats.getString("IdTp")
 						);
-				lesConcerns.add(unConcern);
+				lesAppartenances.add(uneAppartenance);
 			}
 			unStat.close();
 			uneBdd.seDeConnecter();
@@ -45,10 +45,10 @@ public class M_Concerner {
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
 		}
-		return lesConcerns;
+		return lesAppartenances;
 	}
-	public static void supprimerConcerner(int IdSt, int IdPt) {
-		String requete = "delete from concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
+	public static void supprimerAppartenir(int IdSt, int IdTp) {
+		String requete = "delete from appartenir where IdSt = '" + IdSt + "' and IdTp = '" + IdTp + "';";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -60,17 +60,17 @@ public class M_Concerner {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
-	public static Concerner selectWhereConcerner(int IdSt, int IdPt) {
-		String requete = "select * from concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
-		Concerner unConcern = null;
+	public static Appartenir selectWhereAppartenir(int IdSt, int IdTp) {
+		String requete = "select * from appartenir where IdSt = '" + IdSt + "' and IdTp = '" + IdTp + "';";
+		Appartenir uneAppartenance = null;
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
-				unConcern = new Concerner (
+				uneAppartenance = new Appartenir (
 						unResultat.getString("IdSt"),
-						unResultat.getString("IdPt")
+						unResultat.getString("IdTp")
 						);
 			}
 			unStat.close();
@@ -79,6 +79,6 @@ public class M_Concerner {
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
-		return unConcern;
+		return uneAppartenance;
 	}
 }
