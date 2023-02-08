@@ -11,9 +11,9 @@ public class M_Enseigner {
 	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertEnseigner(Enseigner unEnseig) {
-		String requete = "insert into enseigner values('"
-				+unEnseig.getIdM()+"', '"
-				+unEnseig.getIdPf()+"');";
+		String requete = "insert into enseigner values("
+				+unEnseig.getIdM()+", "
+				+unEnseig.getIdPf()+");";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -57,7 +57,7 @@ public class M_Enseigner {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static Enseigner selectWhereEnseigner(int idM, int idPf) {
@@ -77,7 +77,7 @@ public class M_Enseigner {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unEnseig;
 	}

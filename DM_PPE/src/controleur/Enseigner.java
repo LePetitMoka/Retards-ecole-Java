@@ -7,9 +7,12 @@ public class Enseigner {
 		this.idM = idM;
 		this.idPf = idPf;
 	}
-
+	public Enseigner () {
+		this.idM = 0;
+		this.idPf = 0;
+	}
 	public int getIdM() {
-		return idM;
+		return this.idM;
 	}
 
 	public void setIdM(int idM) {
@@ -17,7 +20,7 @@ public class Enseigner {
 	}
 
 	public int getIdPf() {
-		return idPf;
+		return this.idPf;
 	}
 
 	public void setIdPf(int idPf) {
