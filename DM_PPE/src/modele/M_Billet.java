@@ -9,7 +9,7 @@ import controleur.Billet;
 
 public class M_Billet {
 	
-	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards2", "root", "");
+	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertBillet(Billet unBillet) {
 		String requete = "insert into billet values('"+unBillet.getDateB()+"','"
