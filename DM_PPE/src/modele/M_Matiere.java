@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Matiere;
 
 public class M_Matiere {
-	private static BDD uneBdd = new BDD("localhost:3307", "DM_PPE_JAVA", "root", "");
+	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
 	public static void insertMatiere(Matiere uneMatiere) {
 		String requete = "insert into matiere values(null, '"
@@ -21,7 +21,7 @@ public class M_Matiere {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static ArrayList<Matiere> selectAllMatieres() {
@@ -56,7 +56,7 @@ public class M_Matiere {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static Matiere selectWhereMatiere(int idM) {
@@ -76,7 +76,7 @@ public class M_Matiere {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return uneMatiere;
 	}
@@ -90,7 +90,7 @@ public class M_Matiere {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'ex�cution de : " + requete);
+			System.out.println("Errer d'execution de : " + requete);
 		}
 	}
 }
