@@ -15,6 +15,8 @@ public class M_Etudiant {
 				+unEtudiant.getNom()+"', '"
 				+unEtudiant.getPrenom()+"', '"
 				+unEtudiant.getEmail()+"', '"
+				+unEtudiant.getTelephone()+"', '"
+				+unEtudiant.getMdp()+"', '"
 				+unEtudiant.getAdresse()+"', '"
 				+unEtudiant.getIdCl()+"');";
 		try {
@@ -25,7 +27,7 @@ public class M_Etudiant {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'execution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
 	public static ArrayList<Etudiant> selectAllEtudiants() {
@@ -44,7 +46,6 @@ public class M_Etudiant {
 						desResultats.getString("telephone"),
 						desResultats.getString("email"),
 						desResultats.getString("mdp"),
-						desResultats.getString("diplome"),
 						desResultats.getInt("idCl")
 						);
 				lesEtudiants.add(unEtudiant);
@@ -86,7 +87,6 @@ public class M_Etudiant {
 						unResultat.getString("tel"),
 						unResultat.getString("email"),
 						unResultat.getString("mdp"),
-						unResultat.getString("diplome"),
 						unResultat.getInt("idCl")
 						);
 			}
@@ -94,7 +94,7 @@ public class M_Etudiant {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'ex�cution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unEtudiant;
 	}
@@ -103,6 +103,8 @@ public class M_Etudiant {
 				+"', prenom = '"+unEtudiant.getPrenom()
 				+"', idCl = '"+unEtudiant.getIdCl()
 				+"', email = '"+unEtudiant.getEmail()
+				+"', telephone = '"+unEtudiant.getTelephone()
+				+"', mdp = '"+unEtudiant.getEmail()
 				+"', adresse = '"+unEtudiant.getAdresse()
 				+"' where idE = " + unEtudiant.getIdU() + ";";
 		try {
@@ -113,7 +115,7 @@ public class M_Etudiant {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'ex�cution de : " + requete);
+			System.out.println("Errer d'execution de : " + requete);
 		}
 	}
 }
