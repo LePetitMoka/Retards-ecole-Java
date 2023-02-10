@@ -29,7 +29,7 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 	private JPasswordField txtMdp = new JPasswordField();
 	
 	public V_Connexion() {
-		this.setTitle("Gestion des Intreventions d'Orange");
+		this.setTitle("Gestion des retards ecole IRIS");
 		this.setBounds(100, 50, 600, 350);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -67,9 +67,9 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		
 		Administrateur unAdministrateur = C_Administrateur.selectWhereAdministrateur(email, mdp);
 		/*if(unAdministrateur == null) {
-			JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants");
+			JOptionPane.showMessageDialog(this, "Veuillez vï¿½rifier vos identifiants");
 		} else {
-			JOptionPane.showMessageDialog(this, "Vous etes connecté en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
+			JOptionPane.showMessageDialog(this, "Vous etes connectï¿½ en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
 			GREI.rendreVisibleVueConnexion(false);
 			GREI.creerDetruireVueGenerale(true);
 		}*/
