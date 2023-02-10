@@ -18,6 +18,9 @@ public class C_Etudiant {
 	public static Etudiant selectWhereEtudiant(int idE) {
 		return M_Etudiant.selectWhereEtudiant(idE);
 	}
+	public static Etudiant selectWhereEtudiant(String email) {
+		return M_Etudiant.selectWhereEtudiant(email);
+	}
 	public static void updateEtudiant(Etudiant unEtudiant) {
 		M_Etudiant.updateEtudiant(unEtudiant);
 	}

@@ -17,8 +17,8 @@ public class M_Etudiant {
 				+unEtudiant.getEmail()+"', '"
 				+unEtudiant.getTelephone()+"', '"
 				+unEtudiant.getMdp()+"', '"
-				+unEtudiant.getAdresse()+"', '"
-				+unEtudiant.getIdCl()+"');";
+				+unEtudiant.getAdresse()+"', "
+				+unEtudiant.getIdCl()+");";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -117,5 +117,32 @@ public class M_Etudiant {
 		catch(SQLException exp) {
 			System.out.println("Errer d'execution de : " + requete);
 		}
+	}
+	public static Etudiant selectWhereEtudiant(String email) {
+		String requete = "select * from etudiant where email = " + email;
+		Etudiant unEtudiant = null;
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet unResultat = unStat.executeQuery(requete);
+			if(unResultat.next()) {
+				unEtudiant = new Etudiant (
+						unResultat.getInt("idE"),
+						unResultat.getString("nom"),
+						unResultat.getString("prenom"),
+						unResultat.getString("adresse"),
+						unResultat.getString("telephone"),
+						unResultat.getString("email"),
+						unResultat.getString("mdp"),
+						unResultat.getInt("idCl")
+						);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		}
+		catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + requete);
+		}
+		return unEtudiant;
 	}
 }
