@@ -66,15 +66,13 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		String mdp = new String(this.txtMdp.getPassword());
 		
 		Administrateur unAdministrateur = C_Administrateur.selectWhereAdministrateur(email, mdp);
-		/*if(unAdministrateur == null) {
-			JOptionPane.showMessageDialog(this, "Veuillez v�rifier vos identifiants");
+		if(unAdministrateur == null) {
+			JOptionPane.showMessageDialog(this, "Veuillez verifier vos identifiants");
 		} else {
-			JOptionPane.showMessageDialog(this, "Vous etes connect� en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
+			JOptionPane.showMessageDialog(this, "Vous etes connecte en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
 			GREI.rendreVisibleVueConnexion(false);
 			GREI.creerDetruireVueGenerale(true);
-		}*/
-		GREI.rendreVisibleVueConnexion(false);
-		GREI.creerDetruireVueGenerale(true);
+		}
 	}
 
 	@Override

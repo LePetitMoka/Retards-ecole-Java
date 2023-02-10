@@ -56,7 +56,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelForm.add(this.txtEmail);
 		this.PanelForm.add(new JLabel("Mot de passe : "));
 		this.PanelForm.add(this.txtMdp);
-		this.PanelForm.add(new JLabel("Diplome Preparé : "));
+		this.PanelForm.add(new JLabel("Diplome Preparï¿½ : "));
 		this.PanelForm.add(this.txtDiplome);
 		this.PanelForm.add(new JLabel("Classe : "));
 		this.PanelForm.add(this.txtIdCl);
@@ -71,8 +71,8 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelTable.setBounds(350, 60, 450, 220);
 		this.PanelTable.setLayout(null);
 		
-		String entetes [] = {"ID Etudiant", "Nom", "Prénom", "Adresse","Telephone", "Email", "ID Classe"};
-		/*this.unTableau = new Tableau(this.obtenirDonnees(), entetes);*/
+		String entetes [] = {"ID Etudiant", "Nom", "Prï¿½nom", "Adresse","Telephone", "Email","mdp", "ID Classe"};
+		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
 		JScrollPane uneScroll = new JScrollPane(this.uneTable);
 		uneScroll.setBounds(0, 0, 450, 220);
@@ -80,7 +80,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.add(this.PanelTable);
 	}
 	
-	/*public Object[][] obtenirDonnees(){
+	public Object[][] obtenirDonnees(){
 		ArrayList<Etudiant> lesEtudiants = C_Etudiant.selectAllEtudiants();
 		Object[][] matrice = new Object [lesEtudiants.size()][8];
 		int i=0;
@@ -91,12 +91,12 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			matrice[i][3] = unEtudiant.getAdresse();
 			matrice[i][4] = unEtudiant.getTelephone();
 			matrice[i][5] = unEtudiant.getEmail();
-			matrice[i][6] = unEtudiant.getDiplome();
+			matrice[i][6] = unEtudiant.getMdp();
 			matrice[i][7] = unEtudiant.getIdCl();
 			i++;
 		}
 		return matrice;
-	}*/
+	}
 	
 	public void viderChamps() {
 		this.txtNom.setText("");
@@ -125,7 +125,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			C_Etudiant.insertEtudiant(unEtudiant);
 			unEtudiant = M_Etudiant.selectWhereEtudiant(email);
 			int ide = unEtudiant.getIdU();
-			JOptionPane.showMessageDialog(this, "L'Etudiant a bien été ajouté.");
+			JOptionPane.showMessageDialog(this, "L'Etudiant a bien ï¿½tï¿½ ajoutï¿½.");
 			this.viderChamps();
 			Object ligne[] = {ide, nom, prenom, adresse, email};
 			this.unTableau.insertLigne(ligne);*/
