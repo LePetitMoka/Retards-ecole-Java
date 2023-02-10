@@ -95,7 +95,7 @@ public class M_Administrateur {
 		return unAdministrateur;
 	}
 	public static Administrateur selectWhereAdministrateur(String email, String mdp) {
-		String requete = "select * from administrateur where email = '"+email+"' and mdp = '"+mdp+"';";
+		String requete = "select * from administrateur where email = '"+email+"' and mdp = sha1('"+mdp+"');";
 		Administrateur unAdministrateur = null;
 		try {
 			uneBDD.seConnecter();
@@ -115,6 +115,7 @@ public class M_Administrateur {
 			}
 			unStat.close();
 			uneBDD.seDeConnecter();
+			System.out.println(requete);
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
