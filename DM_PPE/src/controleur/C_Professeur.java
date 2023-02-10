@@ -17,6 +17,9 @@ public class C_Professeur {
 	public static Professeur selectWhereProfesseur(int idPf) {
 		return M_Professeur.selectWhereProfesseur(idPf);
 	}
+	public static Professeur selectWhereProfesseur(String email) {
+		return M_Professeur.selectWhereProfesseur(email);
+	}
 	public static void updateProfesseur(Professeur unProfesseur) {
 		M_Professeur.updateProfesseur(unProfesseur);
 	}

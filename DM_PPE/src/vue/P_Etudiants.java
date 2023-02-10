@@ -41,7 +41,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private Tableau unTableau;
 	
 	public P_Etudiants () {
-		super(new Color (249, 177, 4));
+		super(GREI.color1);
 
 		this.PanelForm.setBackground(GREI.color1);
 		this.PanelForm.setBounds(20, 60, 250, 220);
@@ -74,6 +74,14 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		String entetes [] = {"ID Etudiant", "Nom", "Prenom", "Adresse","Telephone", "Email","mdp", "ID Classe"};
 		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
+		ChangeName(this.uneTable,0,"ID_Etudiant");
+		ChangeName(this.uneTable,1,"Nom");
+		ChangeName(this.uneTable,2,"Prenom");
+		ChangeName(this.uneTable,3,"Adresse");
+		ChangeName(this.uneTable,4,"Tel");
+		ChangeName(this.uneTable,5,"Email");
+		ChangeName(this.uneTable,6,"mdp");
+		ChangeName(this.uneTable,7,"ID_Classe");
 		JScrollPane uneScroll = new JScrollPane(this.uneTable);
 		uneScroll.setBounds(0, 0, 450, 220);
 		this.PanelTable.add(uneScroll);
@@ -143,6 +151,9 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		} );
 		
 	}
+	public void ChangeName(JTable table, int col_index, String col_name){
+		  table.getColumnModel().getColumn(col_index).setHeaderValue(col_name);
+		  }
 	public void viderChamps() {
 		this.txtNom.setText("");
 		this.txtPrenom.setText("");
@@ -210,7 +221,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			String nom = this.txtNom.getText();
 			String prenom = this.txtPrenom.getText();
 			String adresse = this.txtAdresse.getText();
-			String telephone = this.txtAdresse.getText();
+			String telephone = this.txtTelephone.getText();
 			String email = this.txtEmail.getText();
 			String mdp = new String(this.txtMDP.getPassword());
 			int idclasse = Integer.parseInt(this.txtIdCl.getText());

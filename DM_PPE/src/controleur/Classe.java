@@ -13,9 +13,17 @@ public class Classe {
 		this.email = "";
 	}
 	
-	public Classe(int nbEtudiants, String nom, String diplomePrepare, String promotion, String email) {
+	public Classe(String nom, String diplomePrepare, String promotion, String email) {
 		this.idCl = 0;
-		this.nbEtudiants = nbEtudiants;
+		this.nbEtudiants = 0;
+		this.nom = nom;
+		this.diplomePrepare = diplomePrepare;
+		this.promotion = promotion;
+		this.email = email;
+	}
+	public Classe(int idCl, String nom, String diplomePrepare, String promotion, String email) {
+		this.idCl = idCl;
+		this.nbEtudiants = 0;
 		this.nom = nom;
 		this.diplomePrepare = diplomePrepare;
 		this.promotion = promotion;

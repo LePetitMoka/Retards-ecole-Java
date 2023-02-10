@@ -49,19 +49,25 @@ public class O_Gestion extends JPanel implements ActionListener {
 		this.add(this.unPanelClasses);
 		this.add(this.unPanelBillets);
 		
+		this.unPanelProfesseurs.setVisible(true);
+		this.btProfesseurs.setEnabled(false);
 		this.setVisible(true);
 	}
 	
 	public void afficherPanel(int choix) {
 		this.unPanelProfesseurs.setVisible(false);
+		this.btProfesseurs.setEnabled(true);
 		this.unPanelEtudiants.setVisible(false);
+		this.btEtudiants.setEnabled(true);
 		this.unPanelClasses.setVisible(false);
+		this.btClasses.setEnabled(true);
 		this.unPanelBillets.setVisible(false);
+		this.btBillets.setEnabled(true);
 		switch(choix) {
-			case 1 : this.unPanelProfesseurs.setVisible(true);break;
-			case 2 : this.unPanelEtudiants.setVisible(true);break;
-			case 3 : this.unPanelClasses.setVisible(true);break;
-			case 4 : this.unPanelBillets.setVisible(true);break;
+			case 1 : this.unPanelProfesseurs.setVisible(true);this.btProfesseurs.setEnabled(false);break;
+			case 2 : this.unPanelEtudiants.setVisible(true);this.btEtudiants.setEnabled(false);break;
+			case 3 : this.unPanelClasses.setVisible(true);this.btClasses.setEnabled(false);break;
+			case 4 : this.unPanelBillets.setVisible(true);this.btBillets.setEnabled(false);break;
 		}
 	}
 
@@ -74,10 +80,10 @@ public class O_Gestion extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == this.btEtudiants) {
 			this.afficherPanel(2);
-		}/*
+		}
 		else if(e.getSource() == this.btClasses) {
 			this.afficherPanel(3);
-		}
+		}/*
 		else if(e.getSource() == this.btBillets) {
 			this.afficherPanel(4);
 		}*/

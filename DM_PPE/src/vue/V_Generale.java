@@ -14,6 +14,8 @@ public class V_Generale extends JFrame implements ActionListener{
 	private JTabbedPane onglets = new JTabbedPane();
 	private JButton btQuitter = new JButton ("Quitter");
 	private O_Gestion Gestion = new O_Gestion();
+	private O_Trafic Trafic = new O_Trafic();
+
 	
 	public V_Generale() {
 		//fenetrage
@@ -28,6 +30,8 @@ public class V_Generale extends JFrame implements ActionListener{
 	    onglets.setBounds(50,50,800,400);
 		//Ajout onglets
 		this.onglets.add("Gestion",Gestion);
+		this.onglets.add("Trafic",Trafic);
+
 		//ajout a la fenetre
 		this.add(onglets);
 		
