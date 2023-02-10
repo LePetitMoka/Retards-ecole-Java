@@ -35,7 +35,7 @@ public class M_Administrateur {
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Administrateur unAdministrateur = new Administrateur(
-						desResultats.getInt("idU"),
+						desResultats.getInt("idAd"),
 						desResultats.getString("nom"),
 						desResultats.getString("prenom"),
 						desResultats.getString("adresse"),
@@ -76,7 +76,7 @@ public class M_Administrateur {
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unAdministrateur = new Administrateur (
-						unResultat.getInt("idU"),
+						unResultat.getInt("idAd"),
 						unResultat.getString("nom"),
 						unResultat.getString("prenom"),
 						unResultat.getString("adresse"),
@@ -103,7 +103,7 @@ public class M_Administrateur {
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unAdministrateur = new Administrateur (
-						unResultat.getInt("idU"),
+						unResultat.getInt("idAd"),
 						unResultat.getString("nom"),
 						unResultat.getString("prenom"),
 						unResultat.getString("adresse"),

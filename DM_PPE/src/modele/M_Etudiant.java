@@ -15,8 +15,10 @@ public class M_Etudiant {
 				+unEtudiant.getNom()+"', '"
 				+unEtudiant.getPrenom()+"', '"
 				+unEtudiant.getEmail()+"', '"
-				+unEtudiant.getAdresse()+"', '"
-				+unEtudiant.getIdCl()+"');";
+				+unEtudiant.getTelephone()+"', '"
+				+unEtudiant.getMdp()+"', '"
+				+unEtudiant.getAdresse()+"', "
+				+unEtudiant.getIdCl()+");";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -44,7 +46,6 @@ public class M_Etudiant {
 						desResultats.getString("telephone"),
 						desResultats.getString("email"),
 						desResultats.getString("mdp"),
-						desResultats.getString("diplome"),
 						desResultats.getInt("idCl")
 						);
 				lesEtudiants.add(unEtudiant);
@@ -58,7 +59,7 @@ public class M_Etudiant {
 		return lesEtudiants;
 	}
 	public static void supprimerEtudiant(int idE) {
-		String requete = "delete from etudiant where idE = " + idE;
+		String requete = "delete from etudiant where idE = " + idE + ";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -71,7 +72,7 @@ public class M_Etudiant {
 		}
 	}
 	public static Etudiant selectWhereEtudiant(int idE) {
-		String requete = "select * from etudiant where idE = " + idE;
+		String requete = "select * from etudiant where idE = " + idE + ";";
 		Etudiant unEtudiant = null;
 		try {
 			uneBdd.seConnecter();
@@ -86,7 +87,33 @@ public class M_Etudiant {
 						unResultat.getString("tel"),
 						unResultat.getString("email"),
 						unResultat.getString("mdp"),
-						unResultat.getString("diplome"),
+						unResultat.getInt("idCl")
+						);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		}
+		catch(SQLException exp) {
+			System.out.println("Erreur d'ex�cution de : " + requete);
+		}
+		return unEtudiant;
+	}
+	public static Etudiant selectWhereEtudiant(String email) {
+		String requete = "select * from etudiant where email = '" + email + "';";
+		Etudiant unEtudiant = null;
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet unResultat = unStat.executeQuery(requete);
+			if(unResultat.next()) {
+				unEtudiant = new Etudiant (
+						unResultat.getInt("idE"),
+						unResultat.getString("nom"),
+						unResultat.getString("prenom"),
+						unResultat.getString("adresse"),
+						unResultat.getString("tel"),
+						unResultat.getString("email"),
+						unResultat.getString("mdp"),
 						unResultat.getInt("idCl")
 						);
 			}

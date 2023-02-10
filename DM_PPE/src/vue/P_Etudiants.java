@@ -26,7 +26,6 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private JTextField txtTelephone = new JTextField();
 	private JTextField txtEmail = new JTextField();
 	private JTextField txtMdp = new JTextField();
-	private JTextField txtDiplome = new JTextField();
 	private JTextField txtIdCl = new JTextField();
 	
 	private JButton btAnnuler = new JButton("Annuler");
@@ -43,7 +42,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 
 		this.PanelForm.setBackground(new Color (249, 177, 4));
 		this.PanelForm.setBounds(40, 60, 250, 220);
-		this.PanelForm.setLayout(new GridLayout(5,2));
+		this.PanelForm.setLayout(new GridLayout(8,2));
 		this.PanelForm.add(new JLabel("Nom Etudiant : "));
 		this.PanelForm.add(this.txtNom);
 		this.PanelForm.add(new JLabel("Prenom Etudiant : "));
@@ -56,8 +55,6 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelForm.add(this.txtEmail);
 		this.PanelForm.add(new JLabel("Mot de passe : "));
 		this.PanelForm.add(this.txtMdp);
-		this.PanelForm.add(new JLabel("Diplome Preparé : "));
-		this.PanelForm.add(this.txtDiplome);
 		this.PanelForm.add(new JLabel("Classe : "));
 		this.PanelForm.add(this.txtIdCl);
 		this.PanelForm.add(this.btAnnuler);
@@ -71,8 +68,8 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelTable.setBounds(350, 60, 450, 220);
 		this.PanelTable.setLayout(null);
 		
-		String entetes [] = {"ID Etudiant", "Nom", "Prénom", "Adresse","Telephone", "Email", "ID Classe"};
-		/*this.unTableau = new Tableau(this.obtenirDonnees(), entetes);*/
+		String entetes [] = {"ID Etudiant", "Nom", "Prénom", "Adresse", "Telephone", "Email", "ID Classe"};
+		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
 		JScrollPane uneScroll = new JScrollPane(this.uneTable);
 		uneScroll.setBounds(0, 0, 450, 220);
@@ -80,7 +77,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.add(this.PanelTable);
 	}
 	
-	/*public Object[][] obtenirDonnees(){
+	public Object[][] obtenirDonnees(){
 		ArrayList<Etudiant> lesEtudiants = C_Etudiant.selectAllEtudiants();
 		Object[][] matrice = new Object [lesEtudiants.size()][8];
 		int i=0;
@@ -91,12 +88,11 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			matrice[i][3] = unEtudiant.getAdresse();
 			matrice[i][4] = unEtudiant.getTelephone();
 			matrice[i][5] = unEtudiant.getEmail();
-			matrice[i][6] = unEtudiant.getDiplome();
-			matrice[i][7] = unEtudiant.getIdCl();
+			matrice[i][6] = unEtudiant.getIdCl();
 			i++;
 		}
 		return matrice;
-	}*/
+	}
 	
 	public void viderChamps() {
 		this.txtNom.setText("");
@@ -118,17 +114,16 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			String telephone = this.txtTelephone.getText();
 			String email = this.txtEmail.getText();
 			String mdp = this.txtMdp.getText();
-			String diplome = this.txtDiplome.getText();
-			/*int idCl = int(this.txtIdCl.getText());
+			int idCl = Integer.parseInt(this.txtIdCl.getText());
 			
-			Etudiant unEtudiant = new Etudiant(nom, prenom, adresse, telephone, email, mdp, diplome, idCl);
+			Etudiant unEtudiant = new Etudiant(nom, prenom, adresse, telephone, email, mdp, idCl);
 			C_Etudiant.insertEtudiant(unEtudiant);
 			unEtudiant = M_Etudiant.selectWhereEtudiant(email);
 			int ide = unEtudiant.getIdU();
 			JOptionPane.showMessageDialog(this, "L'Etudiant a bien été ajouté.");
 			this.viderChamps();
 			Object ligne[] = {ide, nom, prenom, adresse, email};
-			this.unTableau.insertLigne(ligne);*/
+			this.unTableau.insertLigne(ligne);
 		}
 	}
 }

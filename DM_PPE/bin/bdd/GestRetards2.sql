@@ -3,7 +3,7 @@ create database GestRetards2;
 use GestRetards2;
 
 create table User(
-    IdU int not null,
+    IdU int not null auto_increment,
     nom varchar (25) not null,
     prenom varchar (25) not null,
     email varchar (50) not null unique,
@@ -14,7 +14,7 @@ create table User(
 );
 
 create table Professeur (
-    IdPf int (6) not null,
+    IdPf int (6) not null auto_increment,
     nom varchar (25) not null,
     prenom varchar (25) not null,
     diplome varchar (50) not null,
@@ -26,7 +26,7 @@ create table Professeur (
 );
 
 create table  Administrateur (
-    IdAd int (6) not null,
+    IdAd int (6) not null auto_increment,
     nom varchar (25) not null,
     prenom varchar (25) not null,
     email varchar (50) not null unique,
@@ -38,7 +38,7 @@ create table  Administrateur (
 );
 
 create table Transport (
-    IdTp varchar (30) not null,
+    IdTp varchar (30) not null auto_increment,
     nom varchar (30) not null,
     type varchar (15) not null,
     transporteur varchar (25) not null,
@@ -64,14 +64,14 @@ create table Matiere(
 );
 
 create table Station(
-    IdSt varchar (30) not null,
+    IdSt varchar (30) not null auto_increment,
     nom varchar (30) not null,
     ville varchar (30) not null,
     constraint pk_Station primary key (IdSt)
 );
 
 create table Etudiant (
-    IdE int (6) not null,
+    IdE int (6) not null auto_increment,
     nom varchar (25) not null,
     prenom varchar (25) not null,
     email varchar (50) not null unique,
@@ -92,7 +92,7 @@ create table HistoUser(
 );
 
 create table Perturbation(
-    IdPt varchar (90) not null,
+    IdPt varchar (90) not null auto_increment,
     raisonCourte varchar (250),
     raisonLongue varchar (250),
     dateDebMessage datetime,
@@ -101,7 +101,7 @@ create table Perturbation(
 );
 
 create table Cours(
-    IdCl int (6) not null,
+    IdCl int (6) not null auto_increment,
     IdPf int (6) not null,
     dateTS datetime not null,
     matiere varchar (25) not null,
@@ -117,7 +117,7 @@ create table Cours(
 );
 
 create table Trajet(
-    IdSt varchar (30) not null,
+    IdSt varchar (30) not null auto_increment,
     IdE int (6) not null,
     constraint pk_Trajet primary key(IdSt,IdE),
     constraint fk_Station foreign key (IdSt) references Station(IdSt) on delete cascade on update cascade,
@@ -125,7 +125,7 @@ create table Trajet(
 );
 
 create table Enseigner(
-    IdM int (6) not null,
+    IdM int (6) not null auto_increment,
     IdPf int (6) not null,
     constraint pk_Enseigner primary key (IdM,IdPf),
     constraint fk_Professeur3 foreign key (IdPf) references Professeur(IdPf) on delete cascade on update cascade,
@@ -162,4 +162,4 @@ create table Concerner(
     constraint fk_Station3 foreign key (IdSt) references Station(IdSt) on delete cascade on update cascade
 );
 
-insert into Administrateur values (1, 'Admin', 'gerant', 'a@gmail.com', '000000000', 'Paris', 'ok', 'signature');
+insert into Administrateur values (1, 'Admin', 'Gerant', 'a@gmail.com', '000000000', 'Paris', 'ok', 'signature');

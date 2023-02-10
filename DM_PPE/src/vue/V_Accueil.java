@@ -76,7 +76,7 @@ public class V_Accueil extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if(e.getSource() == this.btQuitter) {
 			int retour = JOptionPane.showConfirmDialog(this, 
-					"Voulez-vous quitter l'application ?",
+					"Voulez-vous quitter le logiciel ?",
 					"Quitter l'application", JOptionPane.YES_NO_OPTION);
 			if(retour == 0) {
 				GREI.creerDetruireVueGenerale(false);
