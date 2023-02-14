@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,7 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import controleur.C_Classe;
 import controleur.C_Etudiant;
+import controleur.Classe;
 import controleur.Etudiant;
 import controleur.Tableau;
 import modele.M_Etudiant;
@@ -28,7 +31,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private JTextField txtAdresse = new JTextField();
 	private JTextField txtTelephone = new JTextField();
 	private JTextField txtEmail = new JTextField();
-	private JTextField txtIdCl = new JTextField();
+	private JComboBox<String> cbxIdClasse = new JComboBox<String>();
 	private JPasswordField txtMDP = new JPasswordField();
 	
 	private JButton btAnnuler = new JButton("Annuler");
@@ -39,6 +42,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	
 	private JTable uneTable;
 	private Tableau unTableau;
+	
 	
 	public P_Etudiants () {
 		super(GREI.color1);
@@ -59,7 +63,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelForm.add(new JLabel("MDP : "));
 		this.PanelForm.add(this.txtMDP);
 		this.PanelForm.add(new JLabel("ID Classe : "));
-		this.PanelForm.add(this.txtIdCl);
+		this.PanelForm.add(this.cbxIdClasse);
 		this.PanelForm.add(this.btAnnuler);
 		this.PanelForm.add(this.btEnregistrer);
 		this.add(PanelForm);
@@ -86,6 +90,9 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		uneScroll.setBounds(0, 0, 450, 220);
 		this.PanelTable.add(uneScroll);
 		this.add(this.PanelTable);
+		
+		//remplir les CBX
+		this.remplirCBX();
 		//implementation de la supression et de la modification
 	
 		this.uneTable.addMouseListener(new MouseListener() {
@@ -144,12 +151,21 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 					txtEmail.setText(email);
 					txtTelephone.setText(telephone);
 					txtMDP.setText(mdp);
-					txtIdCl.setText(idclasse);
 					btEnregistrer.setText("Modifier");
 				}
 			}
 		} );
 		
+	}
+	public void remplirCBX(){
+		//remplir les clients
+		ArrayList<Classe> lesClasses = C_Classe.selectAllClasses();
+		//on vide le CBX
+		this.cbxIdClasse.removeAllItems();
+		//recuperer les clients
+		for(Classe  uneClasse: lesClasses){
+			this.cbxIdClasse.addItem(uneClasse.getIdCl()+"-"+uneClasse.getNom());
+		}
 	}
 	public void ChangeName(JTable table, int col_index, String col_name){
 		  table.getColumnModel().getColumn(col_index).setHeaderValue(col_name);
@@ -161,7 +177,6 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.txtAdresse.setText("");
 		this.txtTelephone.setText("");
 		this.txtMDP.setText("");
-		this.txtIdCl.setText("");
 		this.btEnregistrer.setText("Enregistrer");
 				
 	}
@@ -197,8 +212,12 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			String telephone = this.txtTelephone.getText();
 			String email = this.txtEmail.getText();
 			String mdp = new String(this.txtMDP.getPassword());
-			int idclasse = Integer.parseInt(this.txtIdCl.getText());
 
+			//recuperation des id dans les CBX
+			
+			String chaine = this.cbxIdClasse.getSelectedItem().toString();
+			String tab[] = chaine.split("-");
+			int idclasse = Integer.parseInt(tab[0]);
 			
 			//instancier un etudiant
 			
@@ -224,18 +243,21 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			String telephone = this.txtTelephone.getText();
 			String email = this.txtEmail.getText();
 			String mdp = new String(this.txtMDP.getPassword());
-			int idclasse = Integer.parseInt(this.txtIdCl.getText());
+			//recuperation des id dans les CBX
 			
+			String chaine = this.cbxIdClasse.getSelectedItem().toString();
+			String tab[] = chaine.split("-");
+			int idclasse = Integer.parseInt(tab[0]);			
 			//instancier un client
 			//		recuperer l'id dans le tableau
 			int numLigne = this.uneTable.getSelectedRow();
-			int idclient = Integer.parseInt(this.unTableau.getValueAt(numLigne, 0).toString());
-			Etudiant unEtudiant = new Etudiant(idclient,nom,prenom,adresse,telephone,email,mdp,idclasse);
+			int idetudiant = Integer.parseInt(this.unTableau.getValueAt(numLigne, 0).toString());
+			Etudiant unEtudiant = new Etudiant(idetudiant,nom,prenom,adresse,telephone,email,mdp,idclasse);
 			
 			//on realise la modif BDD
 			C_Etudiant.updateEtudiant(unEtudiant);
 			//actualisation de l'affichage
-			Object ligne []= {idclient,nom,prenom,adresse,telephone,email,mdp,idclasse};
+			Object ligne []= {idetudiant,nom,prenom,adresse,telephone,email,mdp,idclasse};
 			JOptionPane.showMessageDialog(this, "Etudiant modifie");
 			this.unTableau.modifierLigne(numLigne,ligne);;
 			this.viderChamps();

@@ -71,7 +71,7 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		} else {
 			JOptionPane.showMessageDialog(this, "Vous etes connecte en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
 			GREI.rendreVisibleVueConnexion(false);
-			GREI.creerDetruireVueGenerale(true);
+			GREI.creerDetruireVueGenerale(true, unAdministrateur);
 		}
 	}
 

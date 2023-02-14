@@ -198,12 +198,12 @@ public class P_Classes extends P_Principal implements ActionListener {
 			String adresse = this.txtPromotion.getText();
 			String email = this.txtEmail.getText();
 			
-			//instancier un client
-			//		recuperer l'id dans le tableau
+			//recuperer l'id dans le tableau
 			int numLigne = this.uneTable.getSelectedRow();
 			int idclasse = Integer.parseInt(this.unTableau.getValueAt(numLigne, 0).toString());
 			int nbEtudiants = Integer.parseInt(this.unTableau.getValueAt(numLigne, 5).toString());
 
+			//instancier une classe
 			Classe uneClasse = new Classe(idclasse,nom,diplomeprepare,adresse,email);
 			
 			//on realise la modif BDD

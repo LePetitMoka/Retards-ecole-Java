@@ -2,6 +2,8 @@ package vue;
 
 import java.awt.Color;
 
+import controleur.Administrateur;
+
 public class GREI {
 	
 	//couleurs
@@ -12,17 +14,14 @@ public class GREI {
 	private static V_Generale uneVueGenerale;
 	
 	public static void main(String args[]) {
-		uneVueGenerale = new V_Generale();
-		uneVueGenerale.setVisible(true);
-
-		//uneVueConnexion = new V_Connexion();
+		uneVueConnexion = new V_Connexion();
 	}
 	public static void rendreVisibleVueConnexion (boolean action) {
 		uneVueConnexion.setVisible(action);
 	}
-	public static void creerDetruireVueGenerale (boolean action) {
+	public static void creerDetruireVueGenerale (boolean action, Administrateur unAdministrateur) {
 		if(action == true) {
-			uneVueGenerale = new V_Generale();
+			uneVueGenerale = new V_Generale(unAdministrateur);
 			uneVueGenerale.setVisible(true);
 		} else {
 			uneVueGenerale.dispose();
