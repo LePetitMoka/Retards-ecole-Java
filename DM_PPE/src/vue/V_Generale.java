@@ -27,6 +27,7 @@ public class V_Generale extends JFrame implements ActionListener{
 	private O_Trafic Trafic = new O_Trafic();
 	
 	private Administrateur unAdministrateur;
+	public static int leIdAd;
 
 	
 	public V_Generale(Administrateur unAdministrateur) {
@@ -39,13 +40,16 @@ public class V_Generale extends JFrame implements ActionListener{
 		this.getContentPane().setBackground(GREI.color1);
 		
 		//instanciation profil
+		V_Generale.leIdAd = unAdministrateur.getIdU();
 		this.unAdministrateur = unAdministrateur;
 		this.panelProfil = new P_Profil(unAdministrateur);
 		this.add(this.panelProfil);
 		
 		//Parametrage onglets
 	    this.onglets.setBounds(50,50,800,400);
-		//Ajout onglets
+	    this.onglets.setBackground(GREI.color1);
+
+	    //Ajout onglets
 		this.onglets.add("Gestion",Gestion);
 		this.onglets.add("Trafic",Trafic);
 
