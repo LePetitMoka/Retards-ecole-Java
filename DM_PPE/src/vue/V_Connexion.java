@@ -1,6 +1,8 @@
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,14 +78,28 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		this.txtEmail.addKeyListener(this);
 		this.txtMdp.addKeyListener(this);
 		*/
+		
+		JLabel labelAD2 = new JLabel(this.IconAD);
+		labelAD2.setPreferredSize(new Dimension(200, 100));
+		this.labelPF.setPreferredSize(new Dimension(200, 100));
+		this.labelET.setPreferredSize(new Dimension(200, 100));
+		
 		this.txt1.setBounds(350, 5, 200, 20);
 		this.txt2.setBounds(325, 30, 200, 20);
 		this.txt3.setBounds(0, 500, 200, 20);
 		this.add(txt1);
 		this.add(txt2);
 		this.add(txt3);
+
+		ImageIcon imageAD = new ImageIcon("src/img/administrateur.png");
+		JLabel logoAD = new JLabel(imageAD);
+		logoAD.setBounds(0, 0, 200, 200);
 		
-		this.panelAD.setBackground(Color.blue);
+		this.panelAD.setBackground(Color.white);
+		this.panelAD.setLayout(new BorderLayout(2,1));
+		this.panelAD.add(logoAD);
+		this.panelAD.add(new JLabel("Administrateur"));
+		
 		this.panelPF.setBackground(Color.red);
 		this.panelET.setBackground(Color.green);
 		
