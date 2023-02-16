@@ -31,11 +31,11 @@ public class Tableau extends AbstractTableModel{
 		Object matrice [][] = new Object[this.donnees.length + 1][this.entetes.length];
 		int i;
 		for (i=0; i<this.donnees.length; i++) {
-			matrice[i] = this.donnees[i];
+			matrice[i] = this.donnees[i]; //recopier les donnees
 		}
-		matrice[this.donnees.length] = ligne;
-		this.donnees = matrice;
-		this.fireTableDataChanged();
+		matrice[this.donnees.length] = ligne; //ajout de la nouvelle ligne
+		this.donnees = matrice; //recopie de la matrice sur les donnees
+		this.fireTableDataChanged(); //actualiser les donnees
 	}
 	
 	public void supprimerLigne(int numLigne) {
@@ -43,12 +43,12 @@ public class Tableau extends AbstractTableModel{
 		int i, j = 0;
 		for (i=0; i<this.donnees.length; i++) {
 			if(i != numLigne) {
-				matrice[j] = this.donnees[i];
+				matrice[j] = this.donnees[i]; //recopie des donnees
 				j++;
 			}
 		}
-		this.donnees = matrice;
-		this.fireTableDataChanged();
+		this.donnees = matrice; //recopie de la matrice sur les donnees
+		this.fireTableDataChanged(); //actualiser les donnees
 	}
 	
 	public void modifierLigne(int numLigne, Object ligne[]) {
@@ -56,17 +56,18 @@ public class Tableau extends AbstractTableModel{
 		int i;
 		for (i=0; i<this.donnees.length; i++) {
 			if(i != numLigne) {
-				matrice[i] = this.donnees[i];
+				matrice[i] = this.donnees[i]; //recopie des donnees
 			}else {
-				matrice[i] = ligne;
+				matrice[i] = ligne; //on ecrase la ligne a modifier
 			}
 		}
-		this.donnees = matrice;
-		this.fireTableDataChanged();
+		this.donnees = matrice; //recopie de la matrice sur les donnees
+		this.fireTableDataChanged(); //actualiser les donnees
 	}
 	
 	public void setDonnees(Object donnees[][]) {
 		this.donnees = donnees;
-		this.fireTableDataChanged();
-}
+		this.fireTableDataChanged(); //actualiser les donnees
 	}
+
+}

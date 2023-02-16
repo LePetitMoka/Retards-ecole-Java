@@ -1,6 +1,5 @@
-/controleur/
-/modele/
-
-/bdd/
-/vue/
-/img/
+controleur/
+vue/
+modele/
+bdd/
+img/

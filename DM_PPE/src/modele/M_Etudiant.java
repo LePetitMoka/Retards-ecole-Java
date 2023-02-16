@@ -17,8 +17,8 @@ public class M_Etudiant {
 				+unEtudiant.getEmail()+"', '"
 				+unEtudiant.getTelephone()+"', '"
 				+unEtudiant.getMdp()+"', '"
-				+unEtudiant.getAdresse()+"', '"
-				+unEtudiant.getIdCl()+"');";
+				+unEtudiant.getAdresse()+"', "
+				+unEtudiant.getIdCl()+");";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -59,7 +59,7 @@ public class M_Etudiant {
 		return lesEtudiants;
 	}
 	public static void supprimerEtudiant(int idE) {
-		String requete = "delete from etudiant where idE = " + idE;
+		String requete = "delete from etudiant where idE = " + idE + ";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -72,7 +72,7 @@ public class M_Etudiant {
 		}
 	}
 	public static Etudiant selectWhereEtudiant(int idE) {
-		String requete = "select * from etudiant where idE = " + idE;
+		String requete = "select * from etudiant where idE = " + idE + ";";
 		Etudiant unEtudiant = null;
 		try {
 			uneBdd.seConnecter();
