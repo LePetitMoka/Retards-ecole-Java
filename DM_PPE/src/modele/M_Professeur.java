@@ -117,4 +117,31 @@ public class M_Professeur {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 	}
+	public static Professeur selectWhereProfesseur(String email) {
+		String requete = "select * from professeur where email = " + email;
+		Professeur unProfesseur = null;
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet unResultat = unStat.executeQuery(requete);
+			if(unResultat.next()) {
+				unProfesseur = new Professeur (
+						unResultat.getInt("idPf"),
+						unResultat.getString("nom"),
+						unResultat.getString("prenom"),
+						unResultat.getString("adresse"),
+						unResultat.getString("telephone"),
+						unResultat.getString("email"),
+						unResultat.getString("mdp"),
+						unResultat.getString("diplome")
+						);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		}
+		catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + requete);
+		}
+		return unProfesseur;
+	}
 }

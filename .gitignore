@@ -1,0 +1,6 @@
+DM_PPE/*.class
+DM_PPE/bin/
+.DS_Store
+DM_PPE/.DM_Store
+DM_PPE/.settings
+DM_PPE/.classpath

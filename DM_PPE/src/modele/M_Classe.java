@@ -36,6 +36,7 @@ public class M_Classe {
 			while (desResultats.next()) {
 				Classe uneClasse = new Classe(
 						desResultats.getInt("idCl"),
+						desResultats.getInt("nbEtudiants"),
 						desResultats.getString("nom"),
 						desResultats.getString("diplomePrepare"),
 						desResultats.getString("promotion"),
@@ -104,5 +105,30 @@ public class M_Classe {
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
+	}
+	public static Classe selectWhereClasse(String email) {
+		String requete = "select * from classe where email = " + email;
+		Classe uneClasse = null;
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet unResultat = unStat.executeQuery(requete);
+			if(unResultat.next()) {
+				uneClasse = new Classe (
+						unResultat.getInt("idCl"),
+						unResultat.getInt("nbEtudiants"),
+						unResultat.getString("nom"),
+						unResultat.getString("diplomePrepare"),
+						unResultat.getString("promotion"),
+						unResultat.getString("email")
+						);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		}
+		catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + requete);
+		}
+		return uneClasse;
 	}
 }
