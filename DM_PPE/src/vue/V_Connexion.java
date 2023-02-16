@@ -43,6 +43,10 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 	private JLabel labelPF = new JLabel(this.IconPF);
 	private JLabel labelET = new JLabel(this.IconET);
 	
+	private JButton btAD = new JButton("Administrateur");
+	private JButton btPF = new JButton("Professeur");
+	private JButton btET = new JButton("Etudiant");
+	
 	private JPanel panel1 = new JPanel();
 	private JPanel panelAD = new JPanel();
 	private JPanel panelPF = new JPanel();
@@ -106,10 +110,19 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		this.panel1.setBounds(40, 80, 700, 320);
 		this.panel1.setBackground(Color.white);
 		this.panel1.setLayout(new GridLayout(1,3));
+		/*
 		this.panel1.add(this.panelAD);
 		this.panel1.add(this.panelPF);
 		this.panel1.add(this.panelET);
+		*/
+		this.panel1.add(this.btAD);
+		this.panel1.add(this.btPF);
+		this.panel1.add(this.btET);
 		this.add(panel1);
+		
+		this.btAD.addActionListener(this);
+		this.btPF.addActionListener(this);
+		this.btET.addActionListener(this);
 		
 		this.setVisible(true);
 	}
@@ -139,6 +152,9 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		}
 		else if(e.getSource() == this.btConnexion) {
 			this.traitement();
+		}
+		else if(e.getSource() == this.btAD) {
+			
 		}
 	}
 

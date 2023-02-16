@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Appartenir;
 
 public class M_Appartenir {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "root");
 	
 	public static void insertAppartenir(Appartenir uneAppartenance) {
 		String requete = "insert into appartenir values('"

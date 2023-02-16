@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Trajet;
 
 public class M_Trajet {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "root");
 	
 	public static void insertTrajet(Trajet unTrajet) {
 		String requete = "insert into trajet values('"
