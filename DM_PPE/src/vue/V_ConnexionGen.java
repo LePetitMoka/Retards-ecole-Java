@@ -23,15 +23,6 @@ import vue.GREI;
 import controleur.Administrateur;
 
 public class V_ConnexionGen extends JFrame implements ActionListener, KeyListener {
-	private JPanel panelForm = new JPanel();
-	private JButton btAnnuler = new JButton("Annuler");
-	private JButton btConnexion = new JButton ("Connexion");
-	
-	private JTextField txtEmail = new JTextField();
-	private JPasswordField txtMdp = new JPasswordField();
-	
-	//
-
 	ImageIcon IconAD = new ImageIcon("src/img/administrateur.png");
 	ImageIcon IconPF = new ImageIcon("src/img/professeur.png");
 	ImageIcon IconET = new ImageIcon("src/img/aetudiant.png");
@@ -60,16 +51,6 @@ public class V_ConnexionGen extends JFrame implements ActionListener, KeyListene
 		this.getContentPane().setBackground(Color.white);
 		this.setLayout(null);
 		
-		this.panelForm.setBounds(270, 90, 300, 120);
-		this.panelForm.setBackground(Color.WHITE);
-		this.panelForm.setLayout(new GridLayout(3,2));
-		this.panelForm.add(new JLabel("Email : "));
-		this.panelForm.add(this.txtEmail);
-		this.panelForm.add(new JLabel("MDP : "));
-		this.panelForm.add(this.txtMdp);
-		this.panelForm.add(this.btAnnuler);
-		this.panelForm.add(this.btConnexion);
-		//this.add(panelForm);
 		/*
 		ImageIcon uneImage = new ImageIcon("src/img/android-chrome-192x192.png");
 		JLabel unLogo = new JLabel(uneImage);
@@ -126,34 +107,11 @@ public class V_ConnexionGen extends JFrame implements ActionListener, KeyListene
 		
 		this.setVisible(true);
 	}
-	
-	public void traitement() {
-		String email = this.txtEmail.getText();
-		String mdp = new String(this.txtMdp.getPassword());
-		
-		Administrateur unAdministrateur = C_Administrateur.selectWhereAdministrateur(email, mdp);
-		if(unAdministrateur == null) {
-			JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants");
-		} else {
-			JOptionPane.showMessageDialog(this, "Vous etes connecté en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
-			GREI.rendreVisibleVueConnexionGen(false);
-			GREI.creerDetruireVueGenerale(true);
-		}/*
-		GREI.rendreVisibleVueConnexion(false);
-		GREI.creerDetruireVueGenerale(true);*/
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == this.btAnnuler) {
-			this.txtEmail.setText("");
-			this.txtMdp.setText("");
-		}
-		else if(e.getSource() == this.btConnexion) {
-			this.traitement();
-		}
-		else if(e.getSource() == this.btAD) {
+		if(e.getSource() == this.btAD) {
 			GREI.rendreVisibleVueConnexionGen(false);
 			GREI.connexion("Administrateur");
 		}
@@ -178,9 +136,6 @@ public class V_ConnexionGen extends JFrame implements ActionListener, KeyListene
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
-			this.traitement();
-		}
 	}
 
 	@Override
