@@ -1,8 +1,6 @@
 package vue;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,49 +16,41 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controleur.C_Administrateur;
-import vue.GREI;
 import controleur.Administrateur;
+import controleur.C_Administrateur;
+import controleur.C_Etudiant;
+import controleur.C_Professeur;
+import controleur.Etudiant;
+import controleur.Professeur;
 
 public class V_Connexion extends JFrame implements ActionListener, KeyListener {
+	private String role;
+	
 	private JPanel panelForm = new JPanel();
 	private JButton btAnnuler = new JButton("Annuler");
-	private JButton btConnexion = new JButton ("Connexion");
+	private JButton btConnection = new JButton ("Connection");
+	private JButton btRetour = new JButton ("Changer de qualification");
+	
+	private JLabel txt1;
 	
 	private JTextField txtEmail = new JTextField();
 	private JPasswordField txtMdp = new JPasswordField();
 	
-	//
-
-	ImageIcon IconAD = new ImageIcon("src/img/administrateur.png");
-	ImageIcon IconPF = new ImageIcon("src/img/professeur.png");
-	ImageIcon IconET = new ImageIcon("src/img/aetudiant.png");
-	
-	private JLabel txt1 = new JLabel("Bienvenu sur GREI");
-	private JLabel txt2 = new JLabel("Quel est votre qualification?");
-	private JLabel txt3 = new JLabel("Si n'avez pas de compte vous pouvez en creer un sur le site web");
-	private JLabel labelAD = new JLabel(this.IconAD);
-	private JLabel labelPF = new JLabel(this.IconPF);
-	private JLabel labelET = new JLabel(this.IconET);
-	
-	private JButton btAD = new JButton("Administrateur");
-	private JButton btPF = new JButton("Professeur");
-	private JButton btET = new JButton("Etudiant");
-	
-	private JPanel panel1 = new JPanel();
-	private JPanel panelAD = new JPanel();
-	private JPanel panelPF = new JPanel();
-	private JPanel panelET = new JPanel();
-	
-	public V_Connexion() {
-		this.setTitle("GREI");
-		this.setBounds(100, 50, 800, 500);
+	public V_Connexion(String role) {
+		this.role = role;
+		this.txt1 = new JLabel("Connexion " + this.role);
+		
+		this.setTitle("Connexion " + this.role);
+		this.setBounds(100, 50, 600, 350);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.getContentPane().setBackground(Color.white);
+		this.getContentPane().setBackground(Color.WHITE);
 		this.setLayout(null);
 		
-		this.panelForm.setBounds(270, 90, 300, 120);
+		this.txt1.setBounds(235, 40, 200, 20);
+		this.add(this.txt1);
+		
+		this.panelForm.setBounds(150, 90, 300, 120);
 		this.panelForm.setBackground(Color.WHITE);
 		this.panelForm.setLayout(new GridLayout(3,2));
 		this.panelForm.add(new JLabel("Email : "));
@@ -68,61 +58,18 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		this.panelForm.add(new JLabel("MDP : "));
 		this.panelForm.add(this.txtMdp);
 		this.panelForm.add(this.btAnnuler);
-		this.panelForm.add(this.btConnexion);
-		//this.add(panelForm);
-		/*
-		ImageIcon uneImage = new ImageIcon("src/img/android-chrome-192x192.png");
-		JLabel unLogo = new JLabel(uneImage);
-		unLogo.setBounds(20, 40, 240, 230);
-		this.add(unLogo);
+		this.panelForm.add(this.btConnection);
+		this.add(panelForm);
+		
+		this.btRetour.setBounds(150, 220, 300, 40);
+		this.add(btRetour);
 		
 		this.btAnnuler.addActionListener(this);
-		this.btConnexion.addActionListener(this);
+		this.btConnection.addActionListener(this);
+		this.btRetour.addActionListener(this);
 		
 		this.txtEmail.addKeyListener(this);
 		this.txtMdp.addKeyListener(this);
-		*/
-		
-		JLabel labelAD2 = new JLabel(this.IconAD);
-		labelAD2.setPreferredSize(new Dimension(200, 100));
-		this.labelPF.setPreferredSize(new Dimension(200, 100));
-		this.labelET.setPreferredSize(new Dimension(200, 100));
-		
-		this.txt1.setBounds(350, 5, 200, 20);
-		this.txt2.setBounds(325, 30, 200, 20);
-		this.txt3.setBounds(0, 500, 200, 20);
-		this.add(txt1);
-		this.add(txt2);
-		this.add(txt3);
-
-		ImageIcon imageAD = new ImageIcon("src/img/administrateur.png");
-		JLabel logoAD = new JLabel(imageAD);
-		logoAD.setBounds(0, 0, 200, 200);
-		
-		this.panelAD.setBackground(Color.white);
-		this.panelAD.setLayout(new BorderLayout(2,1));
-		this.panelAD.add(logoAD);
-		this.panelAD.add(new JLabel("Administrateur"));
-		
-		this.panelPF.setBackground(Color.red);
-		this.panelET.setBackground(Color.green);
-		
-		this.panel1.setBounds(40, 80, 700, 320);
-		this.panel1.setBackground(Color.white);
-		this.panel1.setLayout(new GridLayout(1,3));
-		/*
-		this.panel1.add(this.panelAD);
-		this.panel1.add(this.panelPF);
-		this.panel1.add(this.panelET);
-		*/
-		this.panel1.add(this.btAD);
-		this.panel1.add(this.btPF);
-		this.panel1.add(this.btET);
-		this.add(panel1);
-		
-		this.btAD.addActionListener(this);
-		this.btPF.addActionListener(this);
-		this.btET.addActionListener(this);
 		
 		this.setVisible(true);
 	}
@@ -131,16 +78,40 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		String email = this.txtEmail.getText();
 		String mdp = new String(this.txtMdp.getPassword());
 		
-		Administrateur unAdministrateur = C_Administrateur.selectWhereAdministrateur(email, mdp);
-		if(unAdministrateur == null) {
-			JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants");
-		} else {
-			JOptionPane.showMessageDialog(this, "Vous etes connecté en tant que " + unAdministrateur.getNom() + " " + unAdministrateur.getPrenom());
-			GREI.rendreVisibleVueConnexion(false);
-			GREI.creerDetruireVueGenerale(true);
-		}/*
-		GREI.rendreVisibleVueConnexion(false);
-		GREI.creerDetruireVueGenerale(true);*/
+		switch(this.role) {
+			case "Administrateur" : 
+				Administrateur unAdministrateur = C_Administrateur.selectWhereAdministrateur(email, mdp);
+				if(unAdministrateur == null) {
+					JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants");
+				} else {
+					JOptionPane.showMessageDialog(this, "Vous etes connecter en temps que " + unAdministrateur.getPrenom() + " " + unAdministrateur.getNom());
+					GREI.creerDetruireVueGenerale(true);
+					this.dispose();
+				}
+			break;
+			/*
+			case "Professeur" : 
+				Professeur unProfesseur = C_Professeur.selectWhereProfesseur(email, mdp);
+				if(unProfesseur == null) {
+					JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants");
+				} else {
+					JOptionPane.showMessageDialog(this, "Vous etes connecter en temps que " + unProfesseur.getPrenom() + " " + unProfesseur.getNom());
+					GREI.creerDetruireVueGenerale(true);
+					this.dispose();
+				}
+			break;
+			case "Etudiant" : 
+				Etudiant unEtudiant = C_Etudiant.selectWhereEtudiant(email, mdp);
+				if(unEtudiant == null) {
+					JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants");
+				} else {
+					JOptionPane.showMessageDialog(this, "Vous etes connecter en temps que " + unEtudiant.getPrenom() + " " + unEtudiant.getNom());
+					GREI.creerDetruireVueGenerale(true);
+					this.dispose();
+				}
+			break;
+			*/
+		}
 	}
 
 	@Override
@@ -150,11 +121,12 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 			this.txtEmail.setText("");
 			this.txtMdp.setText("");
 		}
-		else if(e.getSource() == this.btConnexion) {
+		else if(e.getSource() == this.btConnection) {
 			this.traitement();
 		}
-		else if(e.getSource() == this.btAD) {
-			
+		else if(e.getSource() == this.btRetour) {
+			GREI.rendreVisibleVueConnexionGen(true);
+			this.dispose();
 		}
 	}
 
