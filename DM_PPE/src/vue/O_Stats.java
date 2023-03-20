@@ -8,14 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
-public class O_Trafic extends JPanel implements ActionListener {
+public class O_Stats extends JPanel implements ActionListener {
 	
-	private JButton btLPt = new JButton("Lignes perturbees");
+	private JButton btTotalRet = new JButton("Total retards");
 	
 	private JPanel panelMenu = new JPanel();
-	private P_VueLPt unPanelVueLPt = new P_VueLPt();
+	private P_VueLPt unPanelVueTotalRet = new P_VueLPt();
 	
-	public O_Trafic() {
+	public O_Stats() {
 		
 		//config du panel onglet
 		this.setLayout(null);
@@ -24,25 +24,25 @@ public class O_Trafic extends JPanel implements ActionListener {
 		this.panelMenu.setBounds(0, 0, 1080, 40);
 		this.panelMenu.setBackground(GREI.color1);
 		this.panelMenu.setLayout(new GridLayout(1, 4));
-		this.panelMenu.add(this.btLPt);
+		this.panelMenu.add(this.btTotalRet);
 		this.add(this.panelMenu);
 		
 		//rendre boutons ecoutables
-		this.btLPt.addActionListener(this);
+		this.btTotalRet.addActionListener(this);
 
-		this.add(this.unPanelVueLPt);
+		this.add(this.unPanelVueTotalRet);
 		
 		//visibilite du panel par defaut
-		this.unPanelVueLPt.setVisible(true);
-		this.btLPt.setEnabled(false);
+		this.unPanelVueTotalRet.setVisible(true);
+		this.btTotalRet.setEnabled(false);
 		this.setVisible(true);
 	}
 	
 	public void afficherPanel(int choix) {
-		this.unPanelVueLPt.setVisible(false);
-		this.btLPt.setEnabled(true);
+		this.unPanelVueTotalRet.setVisible(false);
+		this.btTotalRet.setEnabled(true);
 		switch(choix) {
-			case 1 : this.unPanelVueLPt.setVisible(true);this.btLPt.setEnabled(false);break;
+			case 1 : this.unPanelVueTotalRet.setVisible(true);this.btTotalRet.setEnabled(false);break;
 		}
 	}
 
@@ -50,7 +50,7 @@ public class O_Trafic extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
-		if(e.getSource() == this.btLPt) {
+		if(e.getSource() == this.btTotalRet) {
 			this.afficherPanel(1);
 		}
 	}
