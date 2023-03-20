@@ -15,6 +15,16 @@ public class Billet {
 		this.dateheure = dateheure;
 		this.raison = raison;
 	}
+	public Billet(int idadmin, int idetudiant, String dateheure, String raison) {
+		this.idAd = idadmin;
+		this.idE = idetudiant;
+		this.dateB = "";
+		this.heureB = "";
+		this.dureeRetard = "";
+		this.urlSignature = "";
+		this.dateheure = dateheure;
+		this.raison = raison;
+	}
 	public Billet(int idAd, int idE, String raison) {
 		this.idAd = idAd;
 		this.idE = idE;
@@ -23,7 +33,7 @@ public class Billet {
 		this.dureeRetard = "";
 		this.urlSignature = "";
 		this.dateheure = "";
-		this.raison = "";
+		this.raison = raison;
 	}
 	public Billet() {
 		this.idAd = 0;

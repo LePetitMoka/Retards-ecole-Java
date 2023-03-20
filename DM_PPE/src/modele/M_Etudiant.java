@@ -6,11 +6,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.Etudiant;
+import controleur.Professeur;
 
 public class M_Etudiant {
 	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertEtudiant(Etudiant unEtudiant) {
+	
+	public static String  insertEtudiant(Etudiant unEtudiant) {
+		String message = "";
 		String requete = "insert into etudiant values(null, '"
 				+unEtudiant.getNom()+"', '"
 				+unEtudiant.getPrenom()+"', '"
@@ -20,15 +23,19 @@ public class M_Etudiant {
 				+unEtudiant.getAdresse()+"', "
 				+unEtudiant.getIdCl()+");";
 		try {
+			
+		
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBdd.seDeConnecter();
+			message = "OK";
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
+		catch(SQLException exp){
+			message = exp.getMessage();
 		}
+		return message;
 	}
 	public static ArrayList<Etudiant> selectAllEtudiants() {
 		ArrayList<Etudiant> lesEtudiants = new ArrayList<Etudiant>();
@@ -58,7 +65,8 @@ public class M_Etudiant {
 		}
 		return lesEtudiants;
 	}
-	public static void supprimerEtudiant(int idE) {
+	public static String supprimerEtudiant(int idE) {
+		String message = "";
 		String requete = "delete from etudiant where idE = " + idE + ";";
 		try {
 			uneBdd.seConnecter();
@@ -66,10 +74,12 @@ public class M_Etudiant {
 			unStat.execute(requete);
 			unStat.close();
 			uneBdd.seDeConnecter();
+			message = "Supprime";
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
+			message = exp.getMessage();
 		}
+		return message;
 	}
 	public static Etudiant selectWhereEtudiant(int idE) {
 		String requete = "select * from etudiant where idE = " + idE + ";";
@@ -92,31 +102,36 @@ public class M_Etudiant {
 			}
 			unStat.close();
 			uneBdd.seDeConnecter();
+			
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
+			BDD.printSQLException(exp);
 		}
 		return unEtudiant;
 	}
-	public static void updateEtudiant(Etudiant unEtudiant) {
-		String requete = "update etudiant set nom = '"+unEtudiant.getNom()
-				+"', prenom = '"+unEtudiant.getPrenom()
-				+"', idCl = '"+unEtudiant.getIdCl()
-				+"', email = '"+unEtudiant.getEmail()
-				+"', telephone = '"+unEtudiant.getTelephone()
-				+"', mdp = '"+unEtudiant.getEmail()
-				+"', adresse = '"+unEtudiant.getAdresse()
-				+"' where idE = " + unEtudiant.getIdU() + ";";
-		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			unStat.execute(requete);
-			unStat.close();
-			uneBdd.seDeConnecter();
-		}
-		catch(SQLException exp) {
-			System.out.println("Errer d'execution de : " + requete);
-		}
+	public static String updateEtudiant(Etudiant unEtudiant) {
+			String message = "";
+			String requete = "update etudiant set nom = '"+unEtudiant.getNom()
+			+"', prenom = '"+unEtudiant.getPrenom()
+			+"', idCl = '"+unEtudiant.getIdCl()
+			+"', email = '"+unEtudiant.getEmail()
+			+"', telephone = '"+unEtudiant.getTelephone()
+			+"', mdp = '"+unEtudiant.getMdp()
+			+"', adresse = '"+unEtudiant.getAdresse()
+			+"' where idE = " + unEtudiant.getIdU() + ";";
+
+			try{
+				uneBdd.seConnecter();
+				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				unStat.execute(requete);
+				unStat.close();
+				uneBdd.seDeConnecter();
+				message = "Modifie";
+			}catch (SQLException exp) {
+				message = exp.getMessage();
+			}
+			return message;
 	}
 	public static Etudiant selectWhereEtudiant(String email) {
 		String requete = "select * from etudiant where email = " + email;
@@ -144,5 +159,49 @@ public class M_Etudiant {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unEtudiant;
+	}
+	public static ArrayList<Etudiant> selectSearch(String attribut, String mot) {
+		String requete = "";
+		 ArrayList<Etudiant> lesEtus = new ArrayList<Etudiant>();
+		 if (attribut.equals("Tous")) {
+			requete = "select * from Etudiant where IdE like '%"+mot+"%' "
+						+ "OR prenom like '%"+mot+"%'"
+						+ "OR nom like '%"+mot+"%'"
+						+ "OR adresse like '%"+mot+"%'"
+						+ "OR telephone like '%"+mot+"%'"
+						+ "OR email like '%"+mot+"%'"
+						+ "OR idCl like '%"+mot+"%';";
+
+		
+		
+		} else {
+			requete = "select * from Etudiant where "+attribut+" like '%"+mot+"%';";
+		}
+		try {
+			uneBdd.seConnecter();
+			//on instancie un curseur qui permet l'execution de la requete
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet desResultats = unStat.executeQuery(requete);
+			//parcourir les resultats et construire des objets vues
+			while (desResultats.next()) {
+				Etudiant unEtu = new Etudiant(
+						desResultats.getInt("idE"),
+						desResultats.getString("nom"),
+						desResultats.getString("prenom"),
+						desResultats.getString("adresse"),
+						desResultats.getString("telephone"),
+						desResultats.getString("email"),
+						desResultats.getString("mdp"),
+						desResultats.getInt("idCl")
+						);
+				//insertion de l'objet vue dans l'arraylist
+				lesEtus.add(unEtu);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		} catch (SQLException exp){
+			System.out.println("Erreur d'execution de :"+ requete);
+			}
+		return lesEtus;
 	}
 }

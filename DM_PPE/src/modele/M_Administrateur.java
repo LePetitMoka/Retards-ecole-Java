@@ -10,21 +10,17 @@ import controleur.Administrateur;
 public class M_Administrateur {
 	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertAdministrateur(Administrateur unAdministrateur) {
+	public static void insertAdministrateur(Administrateur unAdministrateur) throws SQLException{
 		String requete = "insert into administrateur values(null, '"+unAdministrateur.getNom()+"', '"
 				+unAdministrateur.getPrenom()+"', '"+unAdministrateur.getEmail()+"', '"
 				+unAdministrateur.getTelephone()+"', '"+unAdministrateur.getAdresse()+"', '"
 				+unAdministrateur.getMdp()+"', '"+unAdministrateur.getUrlSignature()+"');";
-		try {
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
-		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de :" + requete);
-		}
+		
 	}
 	public static ArrayList<Administrateur> selectAllAdministrateurs() {
 		ArrayList<Administrateur> lesAdministrateurs = new ArrayList<Administrateur>();
@@ -121,21 +117,16 @@ public class M_Administrateur {
 		}
 		return unAdministrateur;
 	}
-	public static void updateAdministrateur(Administrateur unAdministrateur) {
+	public static void updateAdministrateur(Administrateur unAdministrateur) throws SQLException{
 		String requete = "update administrateur set nom = '"+unAdministrateur.getNom()+"', prenom = '"
 				+unAdministrateur.getPrenom()+"', adresse = '"+unAdministrateur.getAdresse()+
 				"', telephone = '"+unAdministrateur.getTelephone()+"', mdp = '"+unAdministrateur.getMdp()+
 				"', URLSignature = '"+unAdministrateur.getUrlSignature()+"', email = '"
 				+unAdministrateur.getEmail()+"' where idAd = " + unAdministrateur.getIdU() + ";";
-		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
-			unStat.execute(requete);
-			unStat.close();
-			uneBDD.seDeConnecter();
-		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de :" + requete);
-		}
+		uneBDD.seConnecter();
+		Statement unStat = uneBDD.getMaConnexion().createStatement();
+		unStat.execute(requete);
+		unStat.close();
+		uneBDD.seDeConnecter();
 	}
 }

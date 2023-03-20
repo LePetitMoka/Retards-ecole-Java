@@ -11,21 +11,23 @@ public class M_Cours {
 	
 	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertCours(Cours unCours) {
+	public static String insertCours(Cours unCours){
+		String message = "";
 		String requete = "insert into cours values("+unCours.getIdCl()+","
-				+unCours.getIdPf()+", null,'"+unCours.getMatiere()+"', '"
+				+unCours.getIdPf()+","+unCours.getIdM()+", null, '"
 				+unCours.getDateC()+"', '"+unCours.getHeureDeb()+"', '"
 				+unCours.getHeureFin()+"', null, '"+unCours.getSalle()+"');";
-		try {
+		try {	
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
+			message = "Insere";
+		}catch (SQLException exp) {
+			message = exp.getMessage();
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de :" + requete);
-		}
+		return message;
 	}
 	public static ArrayList<Cours> selectAllCourss() {
 		ArrayList<Cours> lesCourss = new ArrayList<Cours>();
@@ -38,8 +40,8 @@ public class M_Cours {
 				Cours unCours = new Cours(
 						desResultats.getInt("idCl"),
 						desResultats.getInt("idPf"),
+						desResultats.getInt("idM"),
 						desResultats.getString("dateTS"),
-						desResultats.getString("matiere"),
 						desResultats.getString("dateC"),
 						desResultats.getString("heureDeb"),
 						desResultats.getString("heureFin"),
@@ -56,19 +58,21 @@ public class M_Cours {
 		}
 		return lesCourss;
 	}
-	public static void supprimerCours(int IdPf, int IdCl, String dateTS) {
+	public static String supprimerCours(int IdPf, int IdCl, int IdM, String dateTS) {
+		String message = "";
 		String requete = "delete from cours where IdPf = " +
-				IdPf +" and IdCl = "+IdCl+" and dateTS = '"+dateTS+"';";
-		try {
+				IdPf +" and IdCl = "+IdCl+" and IdM = "+IdM+" and dateTS = '"+dateTS+"';";
+		try {	
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
+			message = "Supprime";
+		}catch (SQLException exp) {
+			message = exp.getMessage();
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
-		}
+		return message;
 	}
 	public static Cours selectWhereCours(int IdCl, int IdPf, String dateTS) {
 		String requete = "select * from cours where IdCl = " +IdCl+" and IdPf = "+IdPf+" and dateTS = '"+dateTS+"';";
@@ -81,8 +85,8 @@ public class M_Cours {
 				unCours = new Cours (
 						unResultat.getInt("idCl"),
 						unResultat.getInt("idPf"),
+						unResultat.getInt("idM"),
 						unResultat.getString("dateTS"),
-						unResultat.getString("matiere"),
 						unResultat.getString("dateC"),
 						unResultat.getString("heureDeb"),
 						unResultat.getString("heureFin"),
@@ -98,20 +102,22 @@ public class M_Cours {
 		}
 		return unCours;
 	}
-	public static void updateCours(Cours unCours) {
-		String requete = "update cours set matiere = '"+unCours.getMatiere()+"', dateC = '"
+	public static String updateCours(Cours unCours){
+		String message = "";
+		String requete = "update cours set dateC = '"
 				+unCours.getDateC()+"', heureDeb = '"+unCours.getHeureDeb()+
 				"', heureFin = '"+unCours.getHeureFin()+"', salle = '"+unCours.getSalle()+"' where IdPf = " +
-				unCours.getIdPf() +" and IdCl = "+unCours.getIdCl()+" and dateTS = '"+unCours.getDateTS()+"';";
-		try {
+				unCours.getIdPf() +" and IdCl = "+unCours.getIdCl()+" and idM = "+unCours.getIdM()+" and dateTS = '"+unCours.getDateTS()+"';";
+		try {	
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
+			message = "Modifie";
+		}catch (SQLException exp) {
+			message = exp.getMessage();
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de :" + requete);
-		}
+		return message;
 	}
 }

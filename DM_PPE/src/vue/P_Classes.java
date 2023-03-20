@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,8 +20,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controleur.C_Classe;
+import controleur.C_Etudiant;
 import controleur.Classe;
+import controleur.Etudiant;
 import controleur.Tableau;
+import modele.BDD;
 import modele.M_Classe;
 
 public class P_Classes extends P_Principal implements ActionListener {
@@ -31,6 +36,11 @@ public class P_Classes extends P_Principal implements ActionListener {
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btEnregistrer = new JButton("Enregistrer");
 	
+	private JComboBox<String> cbxFiltre = new JComboBox<String>();
+	private JButton btFiltrer = new JButton("Filtrer");
+	private JPanel PanelFiltre = new JPanel();
+	private JTextField txtFiltre = new JTextField();
+	
 	private JPanel PanelForm = new JPanel();
 	private JPanel PanelTable = new JPanel();
 	
@@ -41,7 +51,7 @@ public class P_Classes extends P_Principal implements ActionListener {
 		super(GREI.color1);
 
 		this.PanelForm.setBackground(GREI.color1);
-		this.PanelForm.setBounds(20, 60, 250, 220);
+		this.PanelForm.setBounds(20, 60, 370, 220);
 		this.PanelForm.setLayout(new GridLayout(5,2));
 		this.PanelForm.add(new JLabel("Nom : "));
 		this.PanelForm.add(this.txtNom);
@@ -58,21 +68,36 @@ public class P_Classes extends P_Principal implements ActionListener {
 		this.btAnnuler.addActionListener(this);
 		this.btEnregistrer.addActionListener(this);
 		
-		this.PanelTable.setBackground(new Color (246, 111, 34));
-		this.PanelTable.setBounds(320, 60, 450, 220);
+		//installation du panel filtre
+		this.PanelFiltre.setBounds(420,30,650,25);
+		this.PanelFiltre.setBackground(GREI.color1);
+		this.PanelFiltre.setLayout(new GridLayout(1,4));
+		this.PanelFiltre.add(new JLabel ("Filtrer les Trajets :"));
+		this.PanelFiltre.add(this.cbxFiltre);
+		this.PanelFiltre.add(txtFiltre);
+		this.PanelFiltre.add(btFiltrer);
+		this.cbxFiltre.addItem("Tous");
+		this.cbxFiltre.addItem("IdCl");
+		this.cbxFiltre.addItem("Nom");
+		this.cbxFiltre.addItem("diplomePrepare");
+		this.cbxFiltre.addItem("email");
+		this.cbxFiltre.addItem("promotion");
+		this.cbxFiltre.addItem("NbEtudiants");
+
+
+		this.add(this.PanelFiltre);
+		this.btFiltrer.addActionListener(this);
+		
+		this.PanelTable.setBackground(GREI.color1);
+		this.PanelTable.setBounds(420, 60, 650, 620);
 		this.PanelTable.setLayout(null);
 		
-		String entetes [] = {"ID Classe", "Nom", "DiplomePrepare", "Promotion", "Email","nbEtudiant"};
+		String entetes [] = {"ID Classe", "Nom", "DiplomePrepare", "Promotion", "Email","nbEtudiants"};
 		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
-		ChangeName(this.uneTable,0,"ID_Classe");
-		ChangeName(this.uneTable,1,"Nom");
-		ChangeName(this.uneTable,2,"DiplomePrepare");
-		ChangeName(this.uneTable,3,"Promotion");
-		ChangeName(this.uneTable,4,"Email");
-		ChangeName(this.uneTable,5,"Nb_Etudiants");
-		JScrollPane uneScroll = new JScrollPane(this.uneTable);
-		uneScroll.setBounds(0, 0, 450, 220);
+		JScrollPane uneScroll = new JScrollPane(this.uneTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		uneScroll.setBounds(0, 0, 650, 620);
+		this.uneTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.PanelTable.add(uneScroll);
 		this.add(this.PanelTable);
 		//implementation de la supression et de la modification
@@ -110,33 +135,33 @@ public class P_Classes extends P_Principal implements ActionListener {
 				if (e.getClickCount() == 2) {
 					int idClasse = Integer.parseInt(uneTable.getValueAt(numLigne, 0).toString());
 					//suppression dans la BDD
-					C_Classe.supprimerClasse(idClasse);
-					//suppression dans l'affichage
-					unTableau.supprimerLigne(numLigne);
-					JOptionPane.showMessageDialog(null, "Classe supprime");
-
+					JOptionPane.showMessageDialog(null, C_Classe.supprimerClasse(idClasse));
+					viderChamps();
+					actualiser();
 				}
 				else if (e.getClickCount() == 1) {
 					
+					String promotion = "";
+					
 					String nom = uneTable.getValueAt(numLigne, 1).toString();
 					String diplomeprepare = uneTable.getValueAt(numLigne, 2).toString();
-					String adresse = uneTable.getValueAt(numLigne, 3).toString();
+					if (uneTable.getValueAt(numLigne, 3) != null) {
+					promotion = uneTable.getValueAt(numLigne, 3).toString();
+					}
 					String email = uneTable.getValueAt(numLigne, 4).toString();
 
 					
 					txtNom.setText(nom);
 					txtDiplomePrepare.setText(diplomeprepare);
-					txtPromotion.setText(adresse);
+					txtPromotion.setText(promotion);
 					txtEmail.setText(email);
+					
 					btEnregistrer.setText("Modifier");
 				}
 			}
 		} );
 		
 	}
-	public void ChangeName(JTable table, int col_index, String col_name){
-		  table.getColumnModel().getColumn(col_index).setHeaderValue(col_name);
-		  }
 	public void viderChamps() {
 		this.txtNom.setText("");
 		this.txtDiplomePrepare.setText("");
@@ -161,7 +186,23 @@ public class P_Classes extends P_Principal implements ActionListener {
 		}
 		return matrice;
 	}
-
+	public Object[][] obtenirDonnees(ArrayList<Classe> lesClasses){
+		Object[][] matrice = new Object [lesClasses.size()][6];
+		int i=0;
+		for (Classe uneClasse : lesClasses) {
+			matrice[i][0] = uneClasse.getIdCl();
+			matrice[i][1] = uneClasse.getNom();
+			matrice[i][2] = uneClasse.getDiplomePrepare();
+			matrice[i][3] = uneClasse.getPromotion();
+			matrice[i][4] = uneClasse.getEmail();
+			matrice[i][5] = uneClasse.getNbEtudiants();
+			i++;
+		}
+		return matrice;
+	}
+	public void actualiser() {
+		this.unTableau.setDonnees(this.obtenirDonnees());
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -171,49 +212,44 @@ public class P_Classes extends P_Principal implements ActionListener {
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Enregistrer")) {
 			String nom = this.txtNom.getText();
 			String diplomeprepare = this.txtDiplomePrepare.getText();
-			String adresse = this.txtPromotion.getText();
+			String promotion = this.txtPromotion.getText();
 			String email = this.txtEmail.getText();
 			
-			//instancier un etudiant
+			//instancier une classe
 			
-			Classe uneClasse = new Classe(nom, diplomeprepare, adresse, email);
+			Classe uneClasse = new Classe(nom, diplomeprepare, promotion, email);
 			
 			//insertion client dans BDD
-			C_Classe.insertClasse(uneClasse);
-			
-			//recuperer l'id du client insere
-			uneClasse = M_Classe.selectWhereClasse(email);
-			int idclasse = uneClasse.getIdCl();
-			int nbEtudiants = uneClasse.getNbEtudiants();
-			
+			JOptionPane.showMessageDialog(this, C_Classe.insertClasse(uneClasse));
 			this.viderChamps();
-			JOptionPane.showMessageDialog(this, "Classe insere");
-			//actualisation de l'affichage
-			Object ligne[] = {idclasse,nom,diplomeprepare,adresse,email,nbEtudiants};
-			this.unTableau.insertLigne(ligne);
+			this.actualiser();
 		}
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Modifier")) {
 			String nom = this.txtNom.getText();
 			String diplomeprepare = this.txtDiplomePrepare.getText();
-			String adresse = this.txtPromotion.getText();
+			String promotion = this.txtPromotion.getText();
 			String email = this.txtEmail.getText();
 			
 			//recuperer l'id dans le tableau
 			int numLigne = this.uneTable.getSelectedRow();
 			int idclasse = Integer.parseInt(this.unTableau.getValueAt(numLigne, 0).toString());
-			int nbEtudiants = Integer.parseInt(this.unTableau.getValueAt(numLigne, 5).toString());
 
 			//instancier une classe
-			Classe uneClasse = new Classe(idclasse,nom,diplomeprepare,adresse,email);
+			Classe uneClasse = new Classe(idclasse,nom,diplomeprepare,promotion,email);
 			
 			//on realise la modif BDD
-			C_Classe.updateClasse(uneClasse);
-			//actualisation de l'affichage
-			
-			Object ligne []= {idclasse,nom,diplomeprepare,adresse,email,nbEtudiants};
-			JOptionPane.showMessageDialog(this, "Classe modifie");
-			this.unTableau.modifierLigne(numLigne,ligne);
+			JOptionPane.showMessageDialog(this, C_Classe.updateClasse(uneClasse));
 			this.viderChamps();
+			this.actualiser();
+		}
+		else if (e.getSource() == this.btFiltrer) {
+			String attribut = this.cbxFiltre.getSelectedItem().toString();
+			String mot = this.txtFiltre.getText();
+			ArrayList<Classe> lesClasses = C_Classe.selectSearch(attribut,mot);
+			Object[][] matrice = this.obtenirDonnees(lesClasses);
+			//on actualise l'affichage
+			
+			this.unTableau.setDonnees(matrice);
 		}
 	}
 }

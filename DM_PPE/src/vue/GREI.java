@@ -16,8 +16,12 @@ public class GREI {
 	public static void main(String args[]) {
 		uneVueConnexion = new V_Connexion();
 	}
-	public static void rendreVisibleVueConnexion (boolean action) {
-		uneVueConnexion.setVisible(action);
+	public static void rendreVisibleVueConnexion(boolean action) {
+		if(action == true) {
+			uneVueConnexion.setVisible(true);
+		} else {
+			uneVueConnexion.dispose();
+		}
 	}
 	public static void creerDetruireVueGenerale (boolean action, Administrateur unAdministrateur) {
 		if(action == true) {

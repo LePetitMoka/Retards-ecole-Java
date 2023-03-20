@@ -34,7 +34,7 @@ public class V_Generale extends JFrame implements ActionListener{
 		//fenetrage
 		this.setTitle("Gestion des Retards IRIS");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 900, 500);
+		this.setBounds(100, 100, 1200, 900);
 		this.setResizable(false);
 		this.setLayout(null);
 		this.getContentPane().setBackground(GREI.color1);
@@ -46,7 +46,7 @@ public class V_Generale extends JFrame implements ActionListener{
 		this.add(this.panelProfil);
 		
 		//Parametrage onglets
-	    this.onglets.setBounds(50,50,800,400);
+	    this.onglets.setBounds(50,50,1100,800);
 	    this.onglets.setBackground(GREI.color1);
 
 	    //Ajout onglets
@@ -57,13 +57,13 @@ public class V_Generale extends JFrame implements ActionListener{
 		this.add(onglets);
 		
 		//ajout boutons
-		this.btQuitter.setBounds(830,0,70,50);
+		this.btQuitter.setBounds(1130,0,70,50);
 		this.add(this.btQuitter);
 		
-		this.btProfil.setBounds(780,0,50,50);
+		this.btProfil.setBounds(1080,0,50,50);
 		this.add(this.btProfil);
 		
-		this.btAccueil.setBounds(710,0,70,50);
+		this.btAccueil.setBounds(1010,0,70,50);
 		this.add(this.btAccueil);
 		
 		this.btAccueil.setEnabled(false);

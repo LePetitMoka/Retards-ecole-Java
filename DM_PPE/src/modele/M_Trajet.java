@@ -10,20 +10,23 @@ import controleur.Trajet;
 public class M_Trajet {
 	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertTrajet(Trajet unTrajet) {
-		String requete = "insert into trajet values('"
-				+unTrajet.getIdSt()+"', "
-				+unTrajet.getIdE()+");";
+	public static String insertTrajet(Trajet unTrajet) {
+		String message = "";
+		String requete = "insert into Trajet values('"
+				+unTrajet.getIdE()+"', "
+				+unTrajet.getIdSt()+");";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBdd.seDeConnecter();
+			message = "Insere";
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
+			message = exp.getMessage();
 		}
+		return message;
 	}
 	public static ArrayList<Trajet> selectAllTrajets() {
 		ArrayList<Trajet> lesunTrajets = new ArrayList<Trajet>();
@@ -47,7 +50,8 @@ public class M_Trajet {
 		}
 		return lesunTrajets;
 	}
-	public static void supprimerTrajet(int IdSt, int IdE) {
+	public static String supprimerTrajet(int IdSt, int IdE) {
+		String message = "";
 		String requete = "delete from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		try {
 			uneBdd.seConnecter();
@@ -55,10 +59,12 @@ public class M_Trajet {
 			unStat.execute(requete);
 			unStat.close();
 			uneBdd.seDeConnecter();
+			message = "Supprime";
 		}
 		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
+			message = exp.getMessage();
 		}
+		return message;
 	}
 	public static Trajet selectWhereTrajet(int IdSt, int IdE) {
 		String requete = "select * from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
@@ -80,5 +86,23 @@ public class M_Trajet {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return unTrajet;
+	}
+	public static String procTrajet(int IdE, String arretDeb, String arretFin) {
+		String message = "";
+		String requete = " call insertTj("
+				+IdE+", '"
+				+arretDeb+"','"+arretFin+"');";
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(requete);
+			unStat.close();
+			uneBdd.seDeConnecter();
+			message = "Insere";
+		}
+		catch(SQLException exp) {
+			message = exp.getMessage();
+		}
+		return message;
 	}
 }

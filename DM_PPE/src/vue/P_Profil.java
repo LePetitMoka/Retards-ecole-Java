@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 
 import controleur.Administrateur;
 import controleur.C_Administrateur;
+import modele.BDD;
 
 public class P_Profil extends P_Principal implements ActionListener {
 	
@@ -41,6 +43,8 @@ public class P_Profil extends P_Principal implements ActionListener {
 	public P_Profil(Administrateur unAdministrateur) {
 		super(GREI.color1);
 		
+		this.setBounds(0, 50, 880, 430);
+
 		//instanciation administrateur (attribut de classe) (note: toujours APRES le super())
 		this.unAdministrateur = unAdministrateur;
 		
@@ -57,12 +61,12 @@ public class P_Profil extends P_Principal implements ActionListener {
 		this.txtInfos.setBackground(GREI.color1);
 
 		this.txtInfos.setText(
-							"Nom du administrateur : "+ unAdministrateur.getNom()
-							+"\nPrenom du administrateur : "+ unAdministrateur.getPrenom()
-							+"\nAdresse administrateur : "+unAdministrateur.getTelephone()
-							+"\nTelephone administrateur : "+unAdministrateur.getTelephone()
-							+"\nEmail administrateur : "+unAdministrateur.getEmail()
-							+"\nURL signature administrateur : "+unAdministrateur.getEmail()
+							"Nom de l'administrateur : "+ unAdministrateur.getNom()
+							+"\n\nPrenom de l'administrateur : "+ unAdministrateur.getPrenom()
+							+"\n\nAdresse de l'administrateur : "+unAdministrateur.getTelephone()
+							+"\n\nTelephone de l'administrateur : "+unAdministrateur.getTelephone()
+							+"\n\nEmail de l'administrateur : "+unAdministrateur.getEmail()
+							+"\n\nURL signature de l'administrateur : "+unAdministrateur.getEmail()
 							);
 		this.add(this.txtInfos);
 		this.btModifier.setBounds(100,350,120,30);
@@ -83,7 +87,7 @@ public class P_Profil extends P_Principal implements ActionListener {
 		this.panelForm.add(this.txtEmail);
 		this.panelForm.add(new JLabel ("Telephone Admin :"));
 		this.panelForm.add(this.txtTelephone);
-		this.panelForm.add(new JLabel ("MDP Admin :"));
+		this.panelForm.add(new JLabel ("Nouveau MDP Admin :"));
 		this.panelForm.add(this.txtMDP);
 		this.panelForm.add(new JLabel ("URL Signature :"));
 		this.panelForm.add(this.txtURL);
@@ -112,7 +116,24 @@ public class P_Profil extends P_Principal implements ActionListener {
 		this.txtURL.setText("");
 		this.txtNom.setText("");
 	}
-
+	private void actualiser() {
+		this.unAdministrateur = C_Administrateur.selectWhereAdministrateur(this.unAdministrateur.getIdU());
+		this.txtInfos.setText(
+				"Nom du administrateur : "+ this.unAdministrateur.getNom()
+				+"\n\nPrenom du administrateur : "+ this.unAdministrateur.getPrenom()
+				+"\n\nAdresse administrateur : "+this.unAdministrateur.getTelephone()
+				+"\n\nTelephone administrateur : "+this.unAdministrateur.getTelephone()
+				+"\n\nEmail administrateur : "+this.unAdministrateur.getEmail()
+				+"\n\nURL signature administrateur :"+this.unAdministrateur.getEmail()
+				);
+		this.txtEmail.setText(this.unAdministrateur.getEmail());
+		this.txtMDP.setText(this.unAdministrateur.getMdp());
+		this.txtAdresse.setText(this.unAdministrateur.getAdresse());
+		this.txtPrenom.setText(this.unAdministrateur.getPrenom());
+		this.txtTelephone.setText(this.unAdministrateur.getTelephone());
+		this.txtURL.setText(this.unAdministrateur.getUrlSignature());
+		this.txtNom.setText(this.unAdministrateur.getNom());
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -137,23 +158,22 @@ public class P_Profil extends P_Principal implements ActionListener {
 			
 			
 			//instanciation de administrateur
-			this.unAdministrateur = new Administrateur(unAdministrateur.getIdU(),nom, prenom, adresse, telephone, email, mdp, URLSignature);
+			this.unAdministrateur = new Administrateur(this.unAdministrateur.getIdU(),nom, prenom, adresse, telephone, email, mdp, URLSignature);
 			
 			//modifications dans la BDD
-			C_Administrateur.updateAdministrateur(unAdministrateur);
-			this.viderChamps();
-			
-			//actualisation de l'affichage
-			this.txtInfos.setText(
-					"Nom du administrateur : "+ unAdministrateur.getNom()
-					+"\nPrenom du administrateur :"+ unAdministrateur.getPrenom()
-					+"\nAdresse administrateur"+unAdministrateur.getTelephone()
-					+"\nTelephone administrateur"+unAdministrateur.getTelephone()
-					+"\nEmail administrateur :"+unAdministrateur.getEmail()
-					+"\nURL signature administrateur :"+unAdministrateur.getEmail()
-					);
-			
-			JOptionPane.showMessageDialog(this, "L'administrateur a ete insere");
+			try {
+				C_Administrateur.updateAdministrateur(this.unAdministrateur);
+				JOptionPane.showMessageDialog(this, "L'administrateur a ete modifie");
+				this.viderChamps();
+				this.actualiser();
+			} catch (SQLException exp) {
+				//System.out.println("Erreur d'execution de l'update: ");
+				switch (exp.getSQLState().toString()){
+					case "45001": JOptionPane.showMessageDialog(this, exp.getMessage());break;
+					case "45002": JOptionPane.showMessageDialog(this, exp.getMessage());break;
+					default: BDD.printSQLException(exp);break;
+				}
+			}
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class O_Trafic extends JPanel implements ActionListener {
 		this.setLayout(null);
 
 		//placement du Panel menu
-		this.panelMenu.setBounds(0, 0, 780, 40);
+		this.panelMenu.setBounds(0, 0, 1080, 40);
 		this.panelMenu.setBackground(GREI.color1);
 		this.panelMenu.setLayout(new GridLayout(1, 4));
 		this.panelMenu.add(this.btLPt);

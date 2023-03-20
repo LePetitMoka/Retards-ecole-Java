@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,8 +20,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controleur.C_Professeur;
+import controleur.C_VSql_Vue_Trajet_Details;
 import controleur.Professeur;
 import controleur.Tableau;
+import controleur.VSql_Vue_Trajet_Details;
+import modele.BDD;
 import modele.M_Professeur;
 
 public class P_Professeur extends P_Principal implements ActionListener {
@@ -30,6 +35,11 @@ public class P_Professeur extends P_Principal implements ActionListener {
 	private JTextField txtEmail = new JTextField();
 	private JTextField txtDiplome = new JTextField();
 	private JPasswordField txtMDP = new JPasswordField();
+	
+	private JComboBox<String> cbxFiltre = new JComboBox<String>();
+	private JButton btFiltrer = new JButton("Filtrer");
+	private JPanel PanelFiltre = new JPanel();
+	private JTextField txtFiltre = new JTextField();
 	
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btEnregistrer = new JButton("Enregistrer");
@@ -44,8 +54,8 @@ public class P_Professeur extends P_Principal implements ActionListener {
 		super(GREI.color1);
 
 		this.PanelForm.setBackground(GREI.color1);
-		this.PanelForm.setBounds(20, 60, 250, 220);
-		this.PanelForm.setLayout(new GridLayout(5,2));
+		this.PanelForm.setBounds(20, 60, 370, 320);
+		this.PanelForm.setLayout(new GridLayout(8,2));
 		this.PanelForm.add(new JLabel("Nom : "));
 		this.PanelForm.add(this.txtNom);
 		this.PanelForm.add(new JLabel("Prenom : "));
@@ -64,26 +74,39 @@ public class P_Professeur extends P_Principal implements ActionListener {
 		this.PanelForm.add(this.btEnregistrer);
 		this.add(PanelForm);
 		
+		//installation du panel filtre
+		this.PanelFiltre.setBounds(420,30,650,25);
+		this.PanelFiltre.setBackground(GREI.color1);
+		this.PanelFiltre.setLayout(new GridLayout(1,4));
+		this.PanelFiltre.add(new JLabel ("Filtrer les Trajets :"));
+		this.PanelFiltre.add(this.cbxFiltre);
+		this.PanelFiltre.add(txtFiltre);
+		this.PanelFiltre.add(btFiltrer);
+		this.cbxFiltre.addItem("Tous");
+		this.cbxFiltre.addItem("IdPf");
+		this.cbxFiltre.addItem("Nom");
+		this.cbxFiltre.addItem("Prenom");
+		this.cbxFiltre.addItem("Diplome");
+		this.cbxFiltre.addItem("email");
+		this.cbxFiltre.addItem("telephone");
+		this.cbxFiltre.addItem("adresse");
+
+		this.add(this.PanelFiltre);
+		this.btFiltrer.addActionListener(this);
+		
 		this.btAnnuler.addActionListener(this);
 		this.btEnregistrer.addActionListener(this);
 		
-		this.PanelTable.setBackground(new Color (246, 111, 34));
-		this.PanelTable.setBounds(320, 60, 450, 220);
+		this.PanelTable.setBackground(GREI.color1);
+		this.PanelTable.setBounds(420, 60, 650, 620);
 		this.PanelTable.setLayout(null);
 		
 		String entetes [] = {"ID Professeur", "Nom", "Prenom", "Adresse","Telephone", "Email","mdp", "Diplome"};
 		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
-		ChangeName(this.uneTable,0,"ID_Prof");
-		ChangeName(this.uneTable,1,"Nom");
-		ChangeName(this.uneTable,2,"Prenom");
-		ChangeName(this.uneTable,3,"Adresse");
-		ChangeName(this.uneTable,4,"Tel");
-		ChangeName(this.uneTable,5,"Email");
-		ChangeName(this.uneTable,6,"mdp");
-		ChangeName(this.uneTable,7,"Diplome");
-		JScrollPane uneScroll = new JScrollPane(this.uneTable);
-		uneScroll.setBounds(0, 0, 450, 220);
+		JScrollPane uneScroll = new JScrollPane(this.uneTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		uneScroll.setBounds(0, 0, 650, 620);
+		this.uneTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.PanelTable.add(uneScroll);
 		this.add(this.PanelTable);
 		//implementation de la supression et de la modification
@@ -123,7 +146,7 @@ public class P_Professeur extends P_Principal implements ActionListener {
 					//suppression dans la BDD
 					C_Professeur.supprimerProfesseur(idProfesseur);
 					//suppression dans l'affichage
-					unTableau.supprimerLigne(numLigne);
+					actualiser();
 					JOptionPane.showMessageDialog(null, "Professeur supprime");
 
 				}
@@ -151,9 +174,6 @@ public class P_Professeur extends P_Principal implements ActionListener {
 		} );
 		
 	}
-	public void ChangeName(JTable table, int col_index, String col_name){
-		  table.getColumnModel().getColumn(col_index).setHeaderValue(col_name);
-		  }
 	public void viderChamps() {
 		this.txtNom.setText("");
 		this.txtPrenom.setText("");
@@ -183,12 +203,31 @@ public class P_Professeur extends P_Principal implements ActionListener {
 		}
 		return matrice;
 	}
-
+	public Object[][] obtenirDonnees(ArrayList<Professeur> lesProfs){
+		Object[][]matrice = new Object[lesProfs.size()][8];
+		int i = 0;
+		for (Professeur unProfesseur : lesProfs) {
+			matrice[i][0] = unProfesseur.getIdU();
+			matrice[i][1] = unProfesseur.getNom();
+			matrice[i][2] = unProfesseur.getPrenom();
+			matrice[i][3] = unProfesseur.getAdresse();
+			matrice[i][4] = unProfesseur.getTelephone();
+			matrice[i][5] = unProfesseur.getEmail();
+			matrice[i][6] = unProfesseur.getMdp();
+			matrice[i][7] = unProfesseur.getDiplome();
+			i++;
+		}
+		return matrice;
+	}
+	public void actualiser() {
+		this.unTableau.setDonnees(this.obtenirDonnees());
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == this.btAnnuler) {
 			this.viderChamps();
+			this.actualiser();
 		}
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Enregistrer")) {
 			String nom = this.txtNom.getText();
@@ -205,17 +244,11 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			Professeur unProfesseur = new Professeur(nom, prenom, adresse, telephone, email, mdp, diplome);
 			
 			//insertion client dans BDD
-			C_Professeur.insertProfesseur(unProfesseur);
 			
-			//recuperer l'id du client insere
-			unProfesseur = M_Professeur.selectWhereProfesseur(email);
-			int idclient = unProfesseur.getIdU();
-			
+			JOptionPane.showMessageDialog(this, C_Professeur.insertProfesseur(unProfesseur));
 			this.viderChamps();
-			JOptionPane.showMessageDialog(this, "Professeur insere");
 			//actualisation de l'affichage
-			Object ligne[] = {idclient,nom,prenom,adresse,telephone,email,mdp,diplome};
-			this.unTableau.insertLigne(ligne);
+			this.actualiser();
 		}
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Modifier")) {
 			String nom = this.txtNom.getText();
@@ -233,12 +266,19 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			Professeur unProfesseur = new Professeur(idprof,nom,prenom,adresse,telephone,email,mdp,diplome);
 			
 			//on realise la modif BDD
-			C_Professeur.updateProfesseur(unProfesseur);
-			//actualisation de l'affichage
-			Object ligne []= {idprof,nom,prenom,adresse,telephone,email,mdp,diplome};
-			JOptionPane.showMessageDialog(this, "Professeur modifie");
-			this.unTableau.modifierLigne(numLigne,ligne);;
+			JOptionPane.showMessageDialog(this, C_Professeur.updateProfesseur(unProfesseur));
 			this.viderChamps();
+			//actualisation de l'affichage
+			this.actualiser();
+		}
+		else if (e.getSource() == this.btFiltrer) {
+			String attribut = this.cbxFiltre.getSelectedItem().toString();
+			String mot = this.txtFiltre.getText();
+			ArrayList<Professeur> lesVues = C_Professeur.selectSearch(attribut,mot);
+			Object[][] matrice = this.obtenirDonnees(lesVues);
+			//on actualise l'affichage
+			
+			this.unTableau.setDonnees(matrice);
 		}
 	}
 }

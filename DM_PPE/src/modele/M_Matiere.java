@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import controleur.Etudiant;
 import controleur.Matiere;
 
 public class M_Matiere {
@@ -46,18 +47,20 @@ public class M_Matiere {
 		}
 		return lesMatieres;
 	}
-	public static void supprimerMatiere(int idM) {
+	public static String supprimerMatiere(int idM) {
 		String requete = "delete from matiere where idM = " + idM;
-		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
-			unStat.execute(requete);
-			unStat.close();
-			uneBdd.seDeConnecter();
-		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
-		}
+		String message = "";
+			try {
+				uneBdd.seConnecter();		
+				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				unStat.execute(requete);
+				unStat.close();
+				uneBdd.seDeConnecter();
+				message = "Supprime";
+			}catch (SQLException exp){
+				message = exp.getMessage();
+			}
+			return message;
 	}
 	public static Matiere selectWhereMatiere(int idM) {
 		String requete = "select * from matiere where idM = " + idM;
@@ -81,7 +84,7 @@ public class M_Matiere {
 		return uneMatiere;
 	}
 	public static void updateMatiere(Matiere uneMatiere) {
-		String requete = "update matiere set intitule = '"+uneMatiere.getIntitule()+"';";
+		String requete = "update matiere set intitule = '"+uneMatiere.getIntitule()+"' where IdM = "+ uneMatiere.getIdM()+";";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -90,7 +93,40 @@ public class M_Matiere {
 			uneBdd.seDeConnecter();
 		}
 		catch(SQLException exp) {
-			System.out.println("Errer d'execution de : " + requete);
+			System.out.println("Erreur d'execution de : " + requete);
 		}
+	}
+	public static ArrayList<Matiere> selectSearch(String attribut, String mot) {
+		String requete = "";
+		 ArrayList<Matiere> lesMats = new ArrayList<Matiere>();
+		 if (attribut.equals("Tous")) {
+			requete = "select * from Matiere where IdM like '%"+mot+"%' "
+						+ "OR intitule like '%"+mot+"%';";
+
+		
+		
+		} else {
+			requete = "select * from Matiere where "+attribut+" like '%"+mot+"%';";
+		}
+		try {
+			uneBdd.seConnecter();
+			//on instancie un curseur qui permet l'execution de la requete
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet desResultats = unStat.executeQuery(requete);
+			//parcourir les resultats et construire des objets vues
+			while (desResultats.next()) {
+				Matiere uneMat = new Matiere(
+						desResultats.getInt("idM"),
+						desResultats.getString("intitule")
+						);
+				//insertion de l'objet vue dans l'arraylist
+				lesMats.add(uneMat);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		} catch (SQLException exp){
+			System.out.println("Erreur d'execution de :"+ requete);
+			}
+		return lesMats;
 	}
 }

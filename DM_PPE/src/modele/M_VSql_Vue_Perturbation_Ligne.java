@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.VSql_Vue_Perturbation_Ligne;
+import controleur.VSql_Vue_Trajet_Details;
 
 public class M_VSql_Vue_Perturbation_Ligne {
 	
@@ -66,5 +67,47 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 			System.out.println("Erreur d'execution de : " + requete);
 		}
 		return uneVue;
+	}
+	public static ArrayList<VSql_Vue_Perturbation_Ligne> selectSearch(String attribut, String mot) {
+		String requete = "";
+		 ArrayList<VSql_Vue_Perturbation_Ligne> lesVues = new ArrayList<VSql_Vue_Perturbation_Ligne>();
+		 if (attribut.equals("Tous")) {
+			requete = "select * from Vue_Perturbation_Ligne where nom like '%"+mot+"%' "
+						+ "OR type like '%"+mot+"%'"
+						+ "OR transporteur like '%"+mot+"%'"
+						+ "OR etat like '%"+mot+"%'"
+						+ "OR raison like '%"+mot+"%'"
+						+ "OR idtp like '%"+mot+"%';";
+		
+		
+		} else {
+			requete = "select * from Vue_Perturbation_Ligne where "+attribut+" like '%"+mot+"%';";
+		}
+		try {
+			uneBdd.seConnecter();
+			//on instancie un curseur qui permet l'execution de la requete
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet desResultats = unStat.executeQuery(requete);
+			//parcourir les resultats et construire des objets vues
+			while (desResultats.next()) {
+				VSql_Vue_Perturbation_Ligne uneVue = new VSql_Vue_Perturbation_Ligne(
+						desResultats.getString("IdTp"),
+						desResultats.getString("nom"),
+						desResultats.getString("type"),
+						desResultats.getString("transporteur"),
+						desResultats.getString("pictogramme"),
+						desResultats.getString("etat"),
+						desResultats.getString("raison")
+						);
+				//insertion de l'objet vue dans l'arraylist
+				lesVues.add(uneVue);
+			}
+			unStat.close();
+			uneBdd.seDeConnecter();
+		} catch (SQLException exp){
+			System.out.println("Erreur d'execution de :"+ requete);
+			}
+			return lesVues;
+		
 	}
 }

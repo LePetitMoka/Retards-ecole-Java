@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -20,9 +21,12 @@ import javax.swing.JTextField;
 
 import controleur.C_Classe;
 import controleur.C_Etudiant;
+import controleur.C_Professeur;
 import controleur.Classe;
 import controleur.Etudiant;
+import controleur.Professeur;
 import controleur.Tableau;
+import modele.BDD;
 import modele.M_Etudiant;
 
 
@@ -35,6 +39,11 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private JComboBox<String> cbxIdClasse = new JComboBox<String>();
 	private JPasswordField txtMDP = new JPasswordField();
 	
+	private JComboBox<String> cbxFiltre = new JComboBox<String>();
+	private JButton btFiltrer = new JButton("Filtrer");
+	private JPanel PanelFiltre = new JPanel();
+	private JTextField txtFiltre = new JTextField();
+	
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btEnregistrer = new JButton("Enregistrer");
 	
@@ -44,13 +53,15 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private JTable uneTable;
 	private Tableau unTableau;
 	
+	private String tempMDP;
+	
 	
 	public P_Etudiants () {
 		super(GREI.color1);
 
 		this.PanelForm.setBackground(GREI.color1);
-		this.PanelForm.setBounds(20, 60, 250, 220);
-		this.PanelForm.setLayout(new GridLayout(5,2));
+		this.PanelForm.setBounds(20, 60, 370, 320);
+		this.PanelForm.setLayout(new GridLayout(8,2));
 		this.PanelForm.add(new JLabel("Nom : "));
 		this.PanelForm.add(this.txtNom);
 		this.PanelForm.add(new JLabel("Prenom : "));
@@ -72,25 +83,45 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.btAnnuler.addActionListener(this);
 		this.btEnregistrer.addActionListener(this);
 		
-		this.PanelTable.setBackground(new Color (246, 111, 34));
-		this.PanelTable.setBounds(320, 60, 450, 220);
+		//installation du panel filtre
+		this.PanelFiltre.setBounds(420,30,650,25);
+		this.PanelFiltre.setBackground(GREI.color1);
+		this.PanelFiltre.setLayout(new GridLayout(1,4));
+		this.PanelFiltre.add(new JLabel ("Filtrer les Trajets :"));
+		this.PanelFiltre.add(this.cbxFiltre);
+		this.PanelFiltre.add(txtFiltre);
+		this.PanelFiltre.add(btFiltrer);
+		this.cbxFiltre.addItem("Tous");
+		this.cbxFiltre.addItem("IdE");
+		this.cbxFiltre.addItem("Nom");
+		this.cbxFiltre.addItem("Prenom");
+		this.cbxFiltre.addItem("Adresse");
+		this.cbxFiltre.addItem("Telephone");
+		this.cbxFiltre.addItem("Email");
+		//this.cbxFiltre.addItem("Mdp");
+		this.cbxFiltre.addItem("IdCl");
+
+
+		this.add(this.PanelFiltre);
+		this.btFiltrer.addActionListener(this);
+		
+		this.PanelTable.setBackground(GREI.color1);
+		this.PanelTable.setBounds(420, 60, 650, 620);
 		this.PanelTable.setLayout(null);
 		
 		String entetes [] = {"ID Etudiant", "Nom", "Prenom", "Adresse","Telephone", "Email","mdp", "ID Classe"};
 		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
-		ChangeName(this.uneTable,0,"ID_Etudiant");
-		ChangeName(this.uneTable,1,"Nom");
-		ChangeName(this.uneTable,2,"Prenom");
-		ChangeName(this.uneTable,3,"Adresse");
-		ChangeName(this.uneTable,4,"Tel");
-		ChangeName(this.uneTable,5,"Email");
-		ChangeName(this.uneTable,6,"mdp");
-		ChangeName(this.uneTable,7,"ID_Classe");
-		JScrollPane uneScroll = new JScrollPane(this.uneTable);
-		uneScroll.setBounds(0, 0, 450, 220);
+		/*JScrollPane uneScroll = new JScrollPane(this.uneTable);
+		uneScroll.setBounds(0, 0, 650, 620);
+		this.PanelTable.add(uneScroll);*/
+		JScrollPane uneScroll = new JScrollPane(this.uneTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		uneScroll.setBounds(0, 0, 650, 620);
+		this.uneTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.PanelTable.add(uneScroll);
 		this.add(this.PanelTable);
+		
+		this.tempMDP = "";
 		
 		//remplir les CBX
 		this.remplirCBX();
@@ -131,7 +162,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 					//suppression dans la BDD
 					C_Etudiant.supprimerEtudiant(idEtudiant);
 					//suppression dans l'affichage
-					unTableau.supprimerLigne(numLigne);
+					actualiser();
 					JOptionPane.showMessageDialog(null, "Etudiant supprime");
 
 				}
@@ -152,6 +183,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 					txtEmail.setText(email);
 					txtTelephone.setText(telephone);
 					txtMDP.setText(mdp);
+					cbxIdClasse.setSelectedItem(whereisItemCBX(idclasse, cbxIdClasse));
 					btEnregistrer.setText("Modifier");
 				}
 			}
@@ -168,9 +200,19 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			this.cbxIdClasse.addItem(uneClasse.getIdCl()+"-"+uneClasse.getNom());
 		}
 	}
-	public void ChangeName(JTable table, int col_index, String col_name){
-		  table.getColumnModel().getColumn(col_index).setHeaderValue(col_name);
-		  }
+	public Object whereisItemCBX(String idTab, JComboBox<String> CBX) { //permet de trouver l'index d'un item CBX en fonction d'un ID int
+		Object item = new Object();
+		for (int i = 0; i < CBX.getItemCount() ; i++) {
+			//on recupere l'id de l'item en explosant le texte et en convertissant le premier morceau en int
+			String txtItem = CBX.getItemAt(i).toString();
+			String tab[] = txtItem.split("-");
+			//on le compare avec l'id recherche
+			if (tab[0].compareTo(idTab) == 0) {
+				item = CBX.getItemAt(i);
+			}
+		}
+		return item;
+	}
 	public void viderChamps() {
 		this.txtNom.setText("");
 		this.txtPrenom.setText("");
@@ -199,6 +241,25 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		}
 		return matrice;
 	}
+	public Object[][] obtenirDonnees(ArrayList<Etudiant> lesEtudiants){
+		Object[][]matrice = new Object[lesEtudiants.size()][8];
+		int i = 0;
+		for (Etudiant unEtudiant : lesEtudiants) {
+			matrice[i][0] = unEtudiant.getIdU();
+			matrice[i][1] = unEtudiant.getNom();
+			matrice[i][2] = unEtudiant.getPrenom();
+			matrice[i][3] = unEtudiant.getAdresse();
+			matrice[i][4] = unEtudiant.getTelephone();
+			matrice[i][5] = unEtudiant.getEmail();
+			matrice[i][6] = unEtudiant.getMdp();
+			matrice[i][7] = unEtudiant.getIdCl();
+			i++;
+		}
+		return matrice;
+	}
+	public void actualiser() {
+		this.unTableau.setDonnees(this.obtenirDonnees());
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -225,17 +286,11 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			Etudiant unEtudiant = new Etudiant(nom, prenom, adresse, telephone, email, mdp, idclasse);
 			
 			//insertion client dans BDD
-			C_Etudiant.insertEtudiant(unEtudiant);
-			
-			//recuperer l'id du client insere
-			unEtudiant = M_Etudiant.selectWhereEtudiant(email);
-			int idclient = unEtudiant.getIdU();
-			
+			JOptionPane.showMessageDialog(this, C_Etudiant.insertEtudiant(unEtudiant));
 			this.viderChamps();
-			JOptionPane.showMessageDialog(this, "Etudiant insere");
+			
 			//actualisation de l'affichage
-			Object ligne[] = {idclient,nom,prenom,adresse,telephone,email,mdp,idclasse};
-			this.unTableau.insertLigne(ligne);
+			this.actualiser();
 		}
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Modifier")) {
 			String nom = this.txtNom.getText();
@@ -256,12 +311,20 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			Etudiant unEtudiant = new Etudiant(idetudiant,nom,prenom,adresse,telephone,email,mdp,idclasse);
 			
 			//on realise la modif BDD
-			C_Etudiant.updateEtudiant(unEtudiant);
-			//actualisation de l'affichage
-			Object ligne []= {idetudiant,nom,prenom,adresse,telephone,email,mdp,idclasse};
-			JOptionPane.showMessageDialog(this, "Etudiant modifie");
-			this.unTableau.modifierLigne(numLigne,ligne);;
+			JOptionPane.showMessageDialog(this, C_Etudiant.updateEtudiant(unEtudiant));
 			this.viderChamps();
+			
+			//actualisation de l'affichage
+			this.actualiser();
+		}
+		else if (e.getSource() == this.btFiltrer) {
+			String attribut = this.cbxFiltre.getSelectedItem().toString();
+			String mot = this.txtFiltre.getText();
+			ArrayList<Etudiant> lesEtudiants = C_Etudiant.selectSearch(attribut,mot);
+			Object[][] matrice = this.obtenirDonnees(lesEtudiants);
+			//on actualise l'affichage
+			
+			this.unTableau.setDonnees(matrice);
 		}
 	}
 }
