@@ -1,7 +1,8 @@
 package vue;
 
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import controleur.C_Etudiant;
 import controleur.C_Trajet;
@@ -108,6 +111,7 @@ public class P_Trajet extends P_Principal implements ActionListener{
 		uneScroll.setBounds(0, 0, 650, 620);
 		this.uneTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.PanelTable.add(uneScroll);
+		this.resizeTable();
 		this.add(this.PanelTable);
 		
 		
@@ -200,9 +204,6 @@ public class P_Trajet extends P_Principal implements ActionListener{
 		}
 		return matrice;
 	}
-	public void actualiser() {
-		this.unTableau.setDonnees(this.obtenirDonnees());
-	}
 	public void remplirCBX(){
 		//remplir les eleves
 		ArrayList<Etudiant> lesEtudiants = C_Etudiant.selectAllEtudiants();
@@ -234,7 +235,38 @@ public class P_Trajet extends P_Principal implements ActionListener{
 			this.cbxIdSt2.addItem(uneVue.getIdSt()+"-"+uneVue.getNomArret());
 		}
 	}
-	
+	public void actualiser() {
+		this.unTableau.setDonnees(this.obtenirDonnees());
+		this.resizeTable();
+	}
+	public void resizeTable() {
+		for (int column = 0; column < this.uneTable.getColumnCount(); column++)
+		{
+		    TableColumn tableColumn = this.uneTable.getColumnModel().getColumn(column);
+		    Rectangle tableHeader = this.uneTable.getTableHeader().getHeaderRect(column);
+		    //int preferredWidth = tableColumn.getMinWidth();
+		    int preferredWidth = (int) Math.ceil(tableHeader.getWidth());
+		    int maxWidth = tableColumn.getMaxWidth();
+
+		    for (int row = 0; row < this.uneTable.getRowCount(); row++)
+		    {
+		        TableCellRenderer cellRenderer = this.uneTable.getCellRenderer(row, column);
+		        Component c = this.uneTable.prepareRenderer(cellRenderer, row, column);
+		        int width = c.getPreferredSize().width + this.uneTable.getIntercellSpacing().width;
+		        preferredWidth = Math.max(preferredWidth, width);
+
+		        //  We've exceeded the maximum width, no need to check other rows
+
+		        if (preferredWidth >= maxWidth)
+		        {
+		            preferredWidth = maxWidth;
+		            break;
+		        }
+		    }
+
+		    tableColumn.setPreferredWidth( preferredWidth );
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

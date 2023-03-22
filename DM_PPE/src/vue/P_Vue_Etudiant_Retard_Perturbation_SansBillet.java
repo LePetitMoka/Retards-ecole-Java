@@ -17,12 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import controleur.C_VSql_Vue_Perturbation_Ligne;
+import controleur.C_VSql_Vue_Etudiant_Retard_Perturbation_SansBillet;
 import controleur.Tableau;
-import controleur.VSql_Vue_Perturbation_Ligne;
+import controleur.VSql_Vue_Etudiant_Retard_Perturbation_SansBillet;
 
-public class P_VueLPt extends P_Principal implements ActionListener {
-	
+public class P_Vue_Etudiant_Retard_Perturbation_SansBillet extends P_Principal implements ActionListener {
 	private JComboBox<String> cbxFiltre = new JComboBox<String>();
 	private JButton btFiltrer = new JButton("Filtrer");
 	private JPanel PanelFiltre = new JPanel();
@@ -34,7 +33,7 @@ public class P_VueLPt extends P_Principal implements ActionListener {
 	private JTable uneTable;
 	private Tableau unTableau;
 	
-	public P_VueLPt () {
+	public P_Vue_Etudiant_Retard_Perturbation_SansBillet () {
 		super(GREI.color1);
 				
 		this.PanelTable.setBackground(GREI.color1);
@@ -50,19 +49,17 @@ public class P_VueLPt extends P_Principal implements ActionListener {
 		this.PanelFiltre.add(txtFiltre);
 		this.PanelFiltre.add(btFiltrer);
 		this.cbxFiltre.addItem("Tous");
-		this.cbxFiltre.addItem("IdTp");
+		this.cbxFiltre.addItem("IdE");
 		this.cbxFiltre.addItem("nom");
-		this.cbxFiltre.addItem("type");
-		this.cbxFiltre.addItem("transporteur");
-		this.cbxFiltre.addItem("etat");
-		this.cbxFiltre.addItem("raison");
+		this.cbxFiltre.addItem("prenom");
+		this.cbxFiltre.addItem("date");
 		this.PanelFiltre.add(this.btAnnuler);
 
 		this.add(this.PanelFiltre);
 		this.btFiltrer.addActionListener(this);
 		this.btAnnuler.addActionListener(this);
 		
-		String entetes [] = {"ID Transport", "Nom", "Type", "Transporteur", "Etat", "Raison"};
+		String entetes [] = {"ID Etudiant", "Nom Prenom", "nb Billets", "date"};
 		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
 		this.uneTable = new JTable(this.unTableau);
 		JScrollPane uneScroll = new JScrollPane(this.uneTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -71,6 +68,10 @@ public class P_VueLPt extends P_Principal implements ActionListener {
 		this.PanelTable.add(uneScroll);
 		this.resizeTable();
 		this.add(this.PanelTable);
+	}
+	public void actualiser() {
+		this.unTableau.setDonnees(this.obtenirDonnees());
+		this.resizeTable();
 	}
 	public void resizeTable() {
 		for (int column = 0; column < this.uneTable.getColumnCount(); column++)
@@ -100,40 +101,31 @@ public class P_VueLPt extends P_Principal implements ActionListener {
 		    tableColumn.setPreferredWidth( preferredWidth );
 		}
 	}
-	public void actualiser() {
-		this.unTableau.setDonnees(this.obtenirDonnees());
-		this.resizeTable();
-	}
 	public void viderChamps() {
 		this.txtFiltre.setText("");
 	}
 	
 	public Object[][] obtenirDonnees(){
-		ArrayList<VSql_Vue_Perturbation_Ligne> lesVueLPts = C_VSql_Vue_Perturbation_Ligne.selectAllVues();
-		Object[][] matrice = new Object [lesVueLPts.size()][6];
+		ArrayList<VSql_Vue_Etudiant_Retard_Perturbation_SansBillet> lesVueLPts = C_VSql_Vue_Etudiant_Retard_Perturbation_SansBillet.selectAllVues();
+		Object[][] matrice = new Object [lesVueLPts.size()][4];
 		int i=0;
-		for (VSql_Vue_Perturbation_Ligne uneVueLPt : lesVueLPts) {
-			matrice[i][0] = uneVueLPt.getIdTp();
+		for (VSql_Vue_Etudiant_Retard_Perturbation_SansBillet uneVueLPt : lesVueLPts) {
+			matrice[i][0] = uneVueLPt.getIdE();
 			matrice[i][1] = uneVueLPt.getNom();
-			matrice[i][2] = uneVueLPt.getType();
-			matrice[i][3] = uneVueLPt.getTransporteur();
-			matrice[i][4] = uneVueLPt.getEtat();
-			matrice[i][5] = uneVueLPt.getRaison();
-			//matrice[i][5] = uneVueLPt.getPictogramme();
+			matrice[i][2] = uneVueLPt.getPrenom();
+			matrice[i][3] = uneVueLPt.getDuree();
 			i++;
 		}
 		return matrice;
 	}
-	public Object[][] obtenirDonnees(ArrayList<VSql_Vue_Perturbation_Ligne> lesVues){
-		Object[][]matrice = new Object[lesVues.size()][6];
+	public Object[][] obtenirDonnees(ArrayList<VSql_Vue_Etudiant_Retard_Perturbation_SansBillet> lesVues){
+		Object[][]matrice = new Object[lesVues.size()][4];
 		int i = 0;
-		for (VSql_Vue_Perturbation_Ligne uneVueLPt : lesVues) {
-			matrice[i][0] = uneVueLPt.getIdTp();
+		for (VSql_Vue_Etudiant_Retard_Perturbation_SansBillet uneVueLPt : lesVues) {
+			matrice[i][0] = uneVueLPt.getIdE();
 			matrice[i][1] = uneVueLPt.getNom();
-			matrice[i][2] = uneVueLPt.getType();
-			matrice[i][3] = uneVueLPt.getTransporteur();
-			matrice[i][4] = uneVueLPt.getEtat();
-			matrice[i][5] = uneVueLPt.getRaison();
+			matrice[i][2] = uneVueLPt.getPrenom();
+			matrice[i][3] = uneVueLPt.getDuree();
 			i++;
 		}
 		return matrice;
@@ -149,7 +141,7 @@ public class P_VueLPt extends P_Principal implements ActionListener {
 		else if (e.getSource() == this.btFiltrer) {
 			String attribut = this.cbxFiltre.getSelectedItem().toString();
 			String mot = this.txtFiltre.getText();
-			ArrayList<VSql_Vue_Perturbation_Ligne> lesVues = C_VSql_Vue_Perturbation_Ligne.selectSearch(attribut,mot);
+			ArrayList<VSql_Vue_Etudiant_Retard_Perturbation_SansBillet> lesVues = C_VSql_Vue_Etudiant_Retard_Perturbation_SansBillet.selectSearch(attribut,mot);
 			Object[][] matrice = this.obtenirDonnees(lesVues);
 			//on actualise l'affichage
 			

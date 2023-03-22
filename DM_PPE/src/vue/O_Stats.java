@@ -13,7 +13,7 @@ public class O_Stats extends JPanel implements ActionListener {
 	private JButton btTotalRet = new JButton("Total retards");
 	
 	private JPanel panelMenu = new JPanel();
-	private P_VueLPt unPanelVueTotalRet = new P_VueLPt();
+	private P_VueTotalRet unPanelVueTotalRet = new P_VueTotalRet();
 	
 	public O_Stats() {
 		

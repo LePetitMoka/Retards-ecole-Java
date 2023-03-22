@@ -1,13 +1,11 @@
 package vue;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import controleur.Administrateur;
@@ -25,6 +23,8 @@ public class V_Generale extends JFrame implements ActionListener{
 	
 	private O_Gestion Gestion = new O_Gestion();
 	private O_Trafic Trafic = new O_Trafic();
+	private O_Stats Stats = new O_Stats();
+
 	
 	private Administrateur unAdministrateur;
 	public static int leIdAd;
@@ -50,8 +50,9 @@ public class V_Generale extends JFrame implements ActionListener{
 	    this.onglets.setBackground(GREI.color1);
 
 	    //Ajout onglets
-		this.onglets.add("Gestion",Gestion);
-		this.onglets.add("Trafic",Trafic);
+		this.onglets.add("Gestion",this.Gestion);
+		this.onglets.add("Trafic",this.Trafic);
+		this.onglets.add("Stats",this.Stats);
 
 		//ajout a la fenetre
 		this.add(onglets);

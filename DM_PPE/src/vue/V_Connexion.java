@@ -1,10 +1,6 @@
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,7 +16,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controleur.C_Administrateur;
-import vue.GREI;
 import controleur.Administrateur;
 
 public class V_Connexion extends JFrame implements ActionListener, KeyListener {
@@ -32,19 +27,19 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 	private JPasswordField txtMdp = new JPasswordField();
 	
 	public V_Connexion() {
-		this.setTitle("Gestion des Intreventions d'Orange");
+		this.setTitle("Gestion des Interventions d'Orange");
 		this.setBounds(100, 50, 600, 350);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.getContentPane().setBackground(new Color (249, 177, 4));
+		this.getContentPane().setBackground(GREI.color1);
 		this.setLayout(null);
 		
 		this.panelForm.setBounds(270, 90, 300, 120);
-		this.panelForm.setBackground(Color.WHITE);
+		this.panelForm.setBackground(GREI.color1);
 		this.panelForm.setLayout(new GridLayout(3,2));
-		this.panelForm.add(new JLabel("Email : "));
+		this.panelForm.add(new JLabel(" Email : "));
 		this.panelForm.add(this.txtEmail);
-		this.panelForm.add(new JLabel("MDP : "));
+		this.panelForm.add(new JLabel(" Mot de passe : "));
 		this.panelForm.add(this.txtMdp);
 		this.panelForm.add(this.btAnnuler);
 		this.panelForm.add(this.btConnexion);
