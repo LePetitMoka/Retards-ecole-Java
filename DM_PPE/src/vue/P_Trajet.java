@@ -222,6 +222,7 @@ public class P_Trajet extends P_Principal implements ActionListener{
 		for(Transport  unTransport: lesTransports){
 			this.cbxIdTp.addItem(unTransport.getIdTp()+"-"+unTransport.getNom()+" / "+unTransport.getTransporteur()+" / "+unTransport.getType());
 		}
+		
 	}
 	public void remplirCBXST(String IdTp) {
 		//remplir les stations

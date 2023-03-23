@@ -1,5 +1,6 @@
 package modele;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -91,12 +92,14 @@ public class M_Administrateur {
 		return unAdministrateur;
 	}
 	public static Administrateur selectWhereAdministrateur(String email, String mdp) {
-		String requete = "select * from administrateur where email = '"+email+"' and mdp = sha1('"+mdp+"');";
+		String requete = "select * from administrateur where email = ? and mdp = sha1(?);";
 		Administrateur unAdministrateur = null;
 		try {
 			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
-			ResultSet unResultat = unStat.executeQuery(requete);
+			PreparedStatement pstmt = uneBDD.getMaConnexion().prepareStatement(requete);
+			pstmt.setString(1,email);  
+			pstmt.setString(2,mdp); 
+			ResultSet unResultat = pstmt.executeQuery();
 			if(unResultat.next()) {
 				unAdministrateur = new Administrateur (
 						unResultat.getInt("idAd"),
@@ -109,7 +112,7 @@ public class M_Administrateur {
 						unResultat.getString("URLSignature")
 						);
 			}
-			unStat.close();
+			pstmt.close();
 			uneBDD.seDeConnecter();
 		}
 		catch(SQLException exp) {

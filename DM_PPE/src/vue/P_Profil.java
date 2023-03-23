@@ -126,12 +126,62 @@ public class P_Profil extends P_Principal implements ActionListener {
 				+"\n\nURL signature administrateur :"+this.unAdministrateur.getEmail()
 				);
 		this.txtEmail.setText(this.unAdministrateur.getEmail());
-		this.txtMDP.setText(this.unAdministrateur.getMdp());
 		this.txtAdresse.setText(this.unAdministrateur.getAdresse());
 		this.txtPrenom.setText(this.unAdministrateur.getPrenom());
 		this.txtTelephone.setText(this.unAdministrateur.getTelephone());
 		this.txtURL.setText(this.unAdministrateur.getUrlSignature());
 		this.txtNom.setText(this.unAdministrateur.getNom());
+	}
+	public Boolean verifMDP(String mdp) {
+		boolean cond = true;
+		if (mdp == null || mdp.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Mot de passe vide");
+			cond = false;
+		} else if (mdp.length() < 4 && mdp.length() > 15){
+			JOptionPane.showMessageDialog(this,"Taille du mot de passe incorrecte (entre 3 et 15)");
+			cond = false;
+		} else if (!mdp.matches("/[a-z]/")) {
+			JOptionPane.showMessageDialog(this,"Il manque une minuscule");
+			cond = false;
+		} else if (!mdp.matches("/[A-Z]/")) {
+			JOptionPane.showMessageDialog(this,"Il manque une majuscule");
+			cond = false;
+		} else if (!mdp.matches("/\\W/")) {
+			JOptionPane.showMessageDialog(this,"Il manque un caractere special");
+			cond = false;
+		} else if (!mdp.matches("/[0-9]/")) {
+			JOptionPane.showMessageDialog(this,"Il manque un chiffre");
+			cond = false;
+		}
+		
+		
+		if (cond = false){
+			this.txtMDP.setText("");
+		}
+		return true;
+	}
+	public Boolean verifEmail(String email) {
+		boolean cond = true;
+		if (email == null || email.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Email vide");
+			cond = false;
+		} else if (email.length() < 4 && email.length() > 15){
+			JOptionPane.showMessageDialog(this,"Taille du mot de passe incorrecte (entre 3 et 15)");
+			cond = false;
+		} else if (!email.matches("/./")) {
+			JOptionPane.showMessageDialog(this,"Il manque un point");
+			cond = false;
+		} else if (!email.matches("/@/")) {
+			JOptionPane.showMessageDialog(this,"Il manque un @");
+			cond = false;
+		}
+		
+		email.tr
+		
+		if (cond = false){
+			this.txtEmail.setText("");
+		}
+		return true;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -156,21 +206,23 @@ public class P_Profil extends P_Principal implements ActionListener {
 			String URLSignature = this.txtURL.getText();
 			
 			
-			//instanciation de administrateur
-			this.unAdministrateur = new Administrateur(this.unAdministrateur.getIdU(),nom, prenom, adresse, telephone, email, mdp, URLSignature);
-			
-			//modifications dans la BDD
-			try {
-				C_Administrateur.updateAdministrateur(this.unAdministrateur);
-				JOptionPane.showMessageDialog(this, "L'administrateur a ete modifie");
-				this.viderChamps();
-				this.actualiser();
-			} catch (SQLException exp) {
-				//System.out.println("Erreur d'execution de l'update: ");
-				switch (exp.getSQLState().toString()){
-					case "45001": JOptionPane.showMessageDialog(this, exp.getMessage());break;
-					case "45002": JOptionPane.showMessageDialog(this, exp.getMessage());break;
-					default: BDD.printSQLException(exp);break;
+			if (this.verifMDP(mdp) == true) {
+				//instanciation de administrateur
+				this.unAdministrateur = new Administrateur(this.unAdministrateur.getIdU(),nom, prenom, adresse, telephone, email, mdp, URLSignature);
+				
+				//modifications dans la BDD
+				try {
+					C_Administrateur.updateAdministrateur(this.unAdministrateur);
+					JOptionPane.showMessageDialog(this, "L'administrateur a ete modifie");
+					this.viderChamps();
+					this.actualiser();
+				} catch (SQLException exp) {
+					//System.out.println("Erreur d'execution de l'update: ");
+					switch (exp.getSQLState().toString()){
+						case "45001": JOptionPane.showMessageDialog(this, exp.getMessage());break;
+						case "45002": JOptionPane.showMessageDialog(this, exp.getMessage());break;
+						default: BDD.printSQLException(exp);break;
+					}
 				}
 			}
 		}
