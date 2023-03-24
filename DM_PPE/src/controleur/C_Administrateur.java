@@ -1,11 +1,12 @@
 package controleur;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import modele.M_Administrateur;
 
 public class C_Administrateur {
-	public static void insertAdministrateur(Administrateur unAdministrateur) {
+	public static void insertAdministrateur(Administrateur unAdministrateur) throws SQLException {
 		M_Administrateur.insertAdministrateur(unAdministrateur);
 	}
 	
@@ -25,7 +26,7 @@ public class C_Administrateur {
 		return M_Administrateur.selectWhereAdministrateur(email, mdp);
 	}
 	
-	public static void updateAdministrateur(Administrateur unAdministrateur) {
+	public static void updateAdministrateur(Administrateur unAdministrateur) throws SQLException {
 		M_Administrateur.updateAdministrateur(unAdministrateur);
 	}
 }

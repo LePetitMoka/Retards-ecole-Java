@@ -6,26 +6,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.Billet;
+import controleur.Etudiant;
 
 public class M_Billet {
 	
-	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards2", "root", "");
+	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
 	
-	public static void insertBillet(Billet unBillet) {
-		String requete = "insert into billet values('"+unBillet.getDateB()+"','"
-				+unBillet.getHeureB()+"','"+unBillet.getDureeRetard()+"','"+unBillet.getUrlSignature()+"','"+unBillet.getDateheure()+"','"
+	public static String insertBillet(Billet unBillet) {
+		String message = "";
+		String requete = "insert into billet values(null,null,null,null,null,'"
 				+unBillet.getRaison()+"',"+unBillet.getIdAd()+","
-				+unBillet.getIdAd()+");";
-		try {
+				+unBillet.getIdE()+");";
+		System.out.println(requete);
+		try {	
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
+			message = "Insere";
+		}catch (SQLException exp) {
+			message = exp.getMessage();
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de :" + requete);
-		}
+		return message;
 	}
 	public static ArrayList<Billet> selectAllBillets() {
 		ArrayList<Billet> lesBillets = new ArrayList<Billet>();
@@ -55,19 +58,22 @@ public class M_Billet {
 		}
 		return lesBillets;
 	}
-	public static void supprimerBillet(int IdAd, int IdE, String dateheure) {
+	public static String supprimerBillet(int IdAd, int IdE, String dateheure){
+		String message = "";
 		String requete = "delete from billet where IdAd = " +
 				IdAd +" and IdE = "+IdE+" and dateheure = '"+dateheure+"';";
-		try {
+		System.out.println(requete);
+		try {	
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
+			message = "Supprime";
+		}catch (SQLException exp) {
+			message = exp.getMessage();
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de : " + requete);
-		}
+		return message;
 	}
 	public static Billet selectWhereBillet(int IdAd, int IdE, String dateheure) {
 		String requete = "select * from billet where IdAd = " +
@@ -97,20 +103,65 @@ public class M_Billet {
 		}
 		return unBillet;
 	}
-	public static void updateBillet(Billet unBillet) {
-		String requete = "update billet set heureB = '"+unBillet.getHeureB()+"', dateB = '"
-				+unBillet.getDateB()+"', raison = '"+unBillet.getRaison()+
-				"', URLSignature = '"+unBillet.getUrlSignature()+"', dureeRetard = '"+unBillet.getDureeRetard()+"' where IdAd = " +
-				unBillet.getIdAd() +" and IdE = "+unBillet.getIdE()+" and dateheure = '"+unBillet.getDateheure()+"';";
-		try {
+	public static String updateBillet(Billet unBillet){
+		String message = "";
+		String requete = "update billet set raison = '"+unBillet.getRaison()+
+				"' where IdAd = " +unBillet.getIdAd() +" and IdE = "+unBillet.getIdE()+" and dateheure = '"+unBillet.getDateheure()+"';";
+		try {	
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnexion().createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			uneBDD.seDeConnecter();
+			message = "Modifie";
+		}catch (SQLException exp) {
+			message = exp.getMessage();
 		}
-		catch(SQLException exp) {
-			System.out.println("Erreur d'execution de :" + requete);
+		return message;
+	}
+	public static ArrayList<Billet> selectSearch(String attribut, String mot) {
+		String requete = "";
+		 ArrayList<Billet> lesBillets = new ArrayList<Billet>();
+		 if (attribut.equals("Tous")) {
+			requete = "select * from Billet where IdAd like '%"+mot+"%' "
+						+ "OR IdE like '%"+mot+"%'"
+						+ "OR dateB like '%"+mot+"%'"
+						+ "OR heureB like '%"+mot+"%'"
+						+ "OR dureeRetard like '%"+mot+"%'"
+						+ "OR URLSignature like '%"+mot+"%'"
+						+ "OR raison like '%"+mot+"%'"
+						+ "OR dateheure like '%"+mot+"%';";
+
+		
+		
+		} else {
+			requete = "select * from Billet where "+attribut+" like '%"+mot+"%';";
 		}
+		try {
+			uneBDD.seConnecter();
+			//on instancie un curseur qui permet l'execution de la requete
+			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			ResultSet desResultats = unStat.executeQuery(requete);
+			//parcourir les resultats et construire des objets vues
+			while (desResultats.next()) {
+				Billet unBillet = new Billet(
+						desResultats.getInt("IdAd"),
+						desResultats.getInt("IdE"),
+						desResultats.getString("dateB"),
+						desResultats.getString("heureB"),
+						desResultats.getString("dureeRetard"),
+						desResultats.getString("URLSignature"),
+						desResultats.getString("dateHeure"),
+						desResultats.getString("raison")
+						);
+				//insertion de l'objet vue dans l'arraylist
+				lesBillets.add(unBillet);
+			}
+			unStat.close();
+			uneBDD.seDeConnecter();
+		} catch (SQLException exp){
+			System.out.println("Erreur d'execution de :"+ requete);
+			}
+		return lesBillets;
 	}
 }

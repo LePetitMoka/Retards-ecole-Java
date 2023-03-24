@@ -30,7 +30,7 @@ public class M_Transport {
 	}
 	public static ArrayList<Transport> selectAllTransports() {
 		ArrayList<Transport> lesTransports = new ArrayList<Transport>();
-		String requete = "select * from transport;";
+		String requete = "select * from transport order by nom;";
 		try {
 			uneBdd.seConnecter();
 			Statement unStat = uneBdd.getMaConnexion().createStatement();

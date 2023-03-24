@@ -13,9 +13,17 @@ public class Classe {
 		this.email = "";
 	}
 	
-	public Classe(int nbEtudiants, String nom, String diplomePrepare, String promotion, String email) {
+	public Classe(String nom, String diplomePrepare, String promotion, String email) {
 		this.idCl = 0;
-		this.nbEtudiants = nbEtudiants;
+		this.nbEtudiants = 0;
+		this.nom = nom;
+		this.diplomePrepare = diplomePrepare;
+		this.promotion = promotion;
+		this.email = email;
+	}
+	public Classe(int idCl, String nom, String diplomePrepare, String promotion, String email) {
+		this.idCl = idCl;
+		this.nbEtudiants = 0;
 		this.nom = nom;
 		this.diplomePrepare = diplomePrepare;
 		this.promotion = promotion;
@@ -32,7 +40,7 @@ public class Classe {
 	}
 
 	public int getIdCl() {
-		return idCl;
+		return this.idCl;
 	}
 
 	public void setIdCl(int idCl) {
@@ -40,7 +48,7 @@ public class Classe {
 	}
 
 	public int getNbEtudiants() {
-		return nbEtudiants;
+		return this.nbEtudiants;
 	}
 
 	public void setNbEtudiants(int nbEtudiants) {
@@ -48,7 +56,7 @@ public class Classe {
 	}
 
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
 
 	public void setNom(String nom) {
@@ -56,7 +64,7 @@ public class Classe {
 	}
 
 	public String getDiplomePrepare() {
-		return diplomePrepare;
+		return this.diplomePrepare;
 	}
 
 	public void setDiplomePrepare(String diplomePrepare) {
@@ -64,7 +72,7 @@ public class Classe {
 	}
 
 	public String getPromotion() {
-		return promotion;
+		return this.promotion;
 	}
 
 	public void setPromotion(String promotion) {
@@ -72,7 +80,7 @@ public class Classe {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {

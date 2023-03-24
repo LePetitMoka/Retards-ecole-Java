@@ -1,25 +1,34 @@
 package vue;
 
+import java.awt.Color;
+
+import controleur.Administrateur;
+
 public class GREI {
-	private static V_ConnexionGen uneVueConnexionGen;
-	private static V_Accueil uneVueAccueil;
-	private static V_Connexion uneConnexion;
+	
+	//couleurs
+	
+	public static Color color1 = new Color (249, 177, 4);
+	
+	private static V_Connexion uneVueConnexion;
+	private static V_Generale uneVueGenerale;
 	
 	public static void main(String args[]) {
-		uneVueConnexionGen = new V_ConnexionGen();
+		uneVueConnexion = new V_Connexion();
 	}
-	public static void rendreVisibleVueConnexionGen (boolean action) {
-		uneVueConnexionGen.setVisible(action);
-	}
-	public static void creerDetruireVueGenerale (boolean action) {
+	public static void rendreVisibleVueConnexion(boolean action) {
 		if(action == true) {
-			uneVueAccueil = new V_Accueil();
-			uneVueAccueil.setVisible(true);
+			uneVueConnexion.setVisible(true);
 		} else {
-			uneVueAccueil.dispose();
+			uneVueConnexion.dispose();
 		}
 	}
-	public static void connexion(String role) {
-		uneConnexion = new V_Connexion(role);
+	public static void creerDetruireVueGenerale (boolean action, Administrateur unAdministrateur) {
+		if(action == true) {
+			uneVueGenerale = new V_Generale(unAdministrateur);
+			uneVueGenerale.setVisible(true);
+		} else {
+			uneVueGenerale.dispose();
+		}
 	}
 }
