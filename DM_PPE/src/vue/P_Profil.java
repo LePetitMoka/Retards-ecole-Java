@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -42,7 +44,7 @@ public class P_Profil extends P_Principal implements ActionListener {
 	public P_Profil(Administrateur unAdministrateur) {
 		super(GREI.color1);
 		
-		this.setBounds(0, 50, 880, 430);
+		this.setBounds(0, 200, 1080, 430);
 
 		//instanciation administrateur (attribut de classe) (note: toujours APRES le super())
 		this.unAdministrateur = unAdministrateur;
@@ -56,25 +58,25 @@ public class P_Profil extends P_Principal implements ActionListener {
 		this.txtURL.setText(unAdministrateur.getUrlSignature());
 
 		
-		this.txtInfos.setBounds(100,100,300,200);
+		this.txtInfos.setBounds(100,100,450,200);
 		this.txtInfos.setBackground(GREI.color1);
 
 		this.txtInfos.setText(
 							"Nom de l'administrateur : "+ unAdministrateur.getNom()
 							+"\n\nPrenom de l'administrateur : "+ unAdministrateur.getPrenom()
-							+"\n\nAdresse de l'administrateur : "+unAdministrateur.getTelephone()
+							+"\n\nAdresse de l'administrateur : "+unAdministrateur.getAdresse()
 							+"\n\nTelephone de l'administrateur : "+unAdministrateur.getTelephone()
 							+"\n\nEmail de l'administrateur : "+unAdministrateur.getEmail()
-							+"\n\nURL signature de l'administrateur : "+unAdministrateur.getEmail()
+							+"\n\nURL signature de l'administrateur : "+unAdministrateur.getUrlSignature()
 							);
 		this.add(this.txtInfos);
-		this.btModifier.setBounds(100,350,120,30);
+		this.btModifier.setBounds(100,300,120,30);
 		this.add(this.btModifier);
 		
 		
 		//placement du panel form
 		this.panelForm.setBackground(GREI.color1);
-		this.panelForm.setBounds(500,60,300,280);
+		this.panelForm.setBounds(550,60,500,280);
 		this.panelForm.setLayout(new GridLayout (8,2));
 		this.panelForm.add(new JLabel ("Nom Admin :"));
 		this.panelForm.add(this.txtNom);
@@ -120,10 +122,10 @@ public class P_Profil extends P_Principal implements ActionListener {
 		this.txtInfos.setText(
 				"Nom du administrateur : "+ this.unAdministrateur.getNom()
 				+"\n\nPrenom du administrateur : "+ this.unAdministrateur.getPrenom()
-				+"\n\nAdresse administrateur : "+this.unAdministrateur.getTelephone()
+				+"\n\nAdresse administrateur : "+this.unAdministrateur.getAdresse()
 				+"\n\nTelephone administrateur : "+this.unAdministrateur.getTelephone()
 				+"\n\nEmail administrateur : "+this.unAdministrateur.getEmail()
-				+"\n\nURL signature administrateur :"+this.unAdministrateur.getEmail()
+				+"\n\nURL signature administrateur : "+this.unAdministrateur.getUrlSignature()
 				);
 		this.txtEmail.setText(this.unAdministrateur.getEmail());
 		this.txtAdresse.setText(this.unAdministrateur.getAdresse());
@@ -133,55 +135,91 @@ public class P_Profil extends P_Principal implements ActionListener {
 		this.txtNom.setText(this.unAdministrateur.getNom());
 	}
 	public Boolean verifMDP(String mdp) {
-		boolean cond = true;
+	    
 		if (mdp == null || mdp.isBlank()) {
-			JOptionPane.showMessageDialog(this, "Mot de passe vide");
+			JOptionPane.showMessageDialog(this, "Erreur MDP: Mot de passe vide");
+			return false;
+		}
+		
+		boolean cond = true;
+		Pattern patternMin = Pattern.compile("[a-z]");
+	    Matcher matcherMin = patternMin.matcher(mdp);
+	    Pattern patternMaj = Pattern.compile("[A-Z]");
+	    Matcher matcherMaj = patternMaj.matcher(mdp);
+	    Pattern patternSpec = Pattern.compile("\\W");
+	    Matcher matcherSpec = patternSpec.matcher(mdp);
+	    Pattern patternNum = Pattern.compile("[0-9]");
+	    Matcher matcherNum = patternNum.matcher(mdp);
+		
+		if (mdp.length() < 4 && mdp.length() > 15){
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Taille du mot de passe incorrecte (entre 3 et 15)");
 			cond = false;
-		} else if (mdp.length() < 4 && mdp.length() > 15){
-			JOptionPane.showMessageDialog(this,"Taille du mot de passe incorrecte (entre 3 et 15)");
+		} else if (!matcherMin.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque une minuscule");
 			cond = false;
-		} else if (!mdp.matches("/[a-z]/")) {
-			JOptionPane.showMessageDialog(this,"Il manque une minuscule");
+		} else if (!matcherMaj.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque une majuscule");
 			cond = false;
-		} else if (!mdp.matches("/[A-Z]/")) {
-			JOptionPane.showMessageDialog(this,"Il manque une majuscule");
+		} else if (!matcherSpec.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque un caractere special");
 			cond = false;
-		} else if (!mdp.matches("/\\W/")) {
-			JOptionPane.showMessageDialog(this,"Il manque un caractere special");
-			cond = false;
-		} else if (!mdp.matches("/[0-9]/")) {
-			JOptionPane.showMessageDialog(this,"Il manque un chiffre");
+		} else if (!matcherNum.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque un chiffre");
 			cond = false;
 		}
 		
 		
-		if (cond = false){
+		if (!cond){
 			this.txtMDP.setText("");
 		}
-		return true;
+		return cond;
 	}
 	public Boolean verifEmail(String email) {
-		boolean cond = true;
+
 		if (email == null || email.isBlank()) {
-			JOptionPane.showMessageDialog(this, "Email vide");
+			JOptionPane.showMessageDialog(this, "Erreur Email: Email vide");
+			return false;
+		}
+		
+		boolean cond = true;
+		Pattern patternDot = Pattern.compile("\\.");
+	    Matcher matcherDot = patternDot.matcher(email);
+	    Pattern patternAt = Pattern.compile("\\@");
+	    Matcher matcherAt = patternAt.matcher(email);
+		
+	    if (email.length() < 4 && email.length() > 15){
+			JOptionPane.showMessageDialog(this,"Erreur Email: Taille du mot de passe incorrecte (entre 3 et 15)");
 			cond = false;
-		} else if (email.length() < 4 && email.length() > 15){
-			JOptionPane.showMessageDialog(this,"Taille du mot de passe incorrecte (entre 3 et 15)");
+		} else if (!matcherAt.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur Email: Il manque un @");
 			cond = false;
-		} else if (!email.matches("/./")) {
-			JOptionPane.showMessageDialog(this,"Il manque un point");
+		} else if (!matcherDot.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur Email: Il manque un point");
 			cond = false;
-		} else if (!email.matches("/@/")) {
-			JOptionPane.showMessageDialog(this,"Il manque un @");
+		}
+		// on parcours l'email pour compter les points et les @
+		int c1 = 0, c2 = 0;
+		for (int i = 0; i < email.length(); i++) {
+			if (email.charAt(i) == '@') {
+				c1 ++;
+			}
+			else if (email.charAt(i) == '.') {
+				c2++;
+			}
+		}
+		
+		if (c1 > 1) {
+			JOptionPane.showMessageDialog(this,"Il y a trop d'@");
+			cond = false;
+		} else if (c2 > 1) {
+			JOptionPane.showMessageDialog(this,"Il y a trop de point");
 			cond = false;
 		}
 		
-		email.tr
-		
-		if (cond = false){
+		if (cond == false){
 			this.txtEmail.setText("");
 		}
-		return true;
+		return cond;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -206,7 +244,7 @@ public class P_Profil extends P_Principal implements ActionListener {
 			String URLSignature = this.txtURL.getText();
 			
 			
-			if (this.verifMDP(mdp) == true) {
+			if (this.verifMDP(mdp) == true && this.verifEmail(email)) {
 				//instanciation de administrateur
 				this.unAdministrateur = new Administrateur(this.unAdministrateur.getIdU(),nom, prenom, adresse, telephone, email, mdp, URLSignature);
 				
