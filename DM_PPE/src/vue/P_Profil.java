@@ -176,7 +176,7 @@ public class P_Profil extends P_Principal implements ActionListener {
 			cond = false;
 		}
 		
-		email.tr
+		//email.tr
 		
 		if (cond = false){
 			this.txtEmail.setText("");

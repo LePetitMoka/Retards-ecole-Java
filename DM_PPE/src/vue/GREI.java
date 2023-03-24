@@ -3,6 +3,8 @@ package vue;
 import java.awt.Color;
 
 import controleur.Administrateur;
+import vue.V_Connexion;
+import vue.V_Generale;
 
 public class GREI {
 	
