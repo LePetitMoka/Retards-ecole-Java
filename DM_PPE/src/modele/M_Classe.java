@@ -9,7 +9,7 @@ import controleur.Classe;
 import controleur.Etudiant;
 
 public class M_Classe {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static String insertClasse(Classe uneClasse) {
 		String message = "";

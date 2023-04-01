@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Concerner;
 
 public class M_Concerner {
-	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static void insertConcerner(Concerner unConcern) {
 		String requete = "insert into concerner values('"

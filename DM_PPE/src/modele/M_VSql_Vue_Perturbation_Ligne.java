@@ -10,7 +10,7 @@ import controleur.VSql_Vue_Trajet_Details;
 
 public class M_VSql_Vue_Perturbation_Ligne {
 	
-private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 
 //Fait reference a une VUE donc pas d'inserts ni update !
 	

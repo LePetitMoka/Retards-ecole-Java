@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import controleur.Administrateur;
 
 public class M_Administrateur {
-	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static void insertAdministrateur(Administrateur unAdministrateur) throws SQLException{
 		String requete = "insert into administrateur values(null, '"+unAdministrateur.getNom()+"', '"

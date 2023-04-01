@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Transport;
 
 public class M_Transport {
-	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static void insertTransport(Transport unTransport) {
 		String requete = "insert into transport values('"+unTransport.getIdTp()+"','"

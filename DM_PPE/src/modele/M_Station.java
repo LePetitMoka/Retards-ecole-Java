@@ -9,7 +9,7 @@ import controleur.Station;
 
 public class M_Station {
 	
-	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards", "root", "root");
+	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static void insertStation(Station uneStation) {
 		String requete = "insert into station values('"+uneStation.getIdSt()+"','"

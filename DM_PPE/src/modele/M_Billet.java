@@ -10,7 +10,7 @@ import controleur.Etudiant;
 
 public class M_Billet {
 	
-	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBDD = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static String insertBillet(Billet unBillet) {
 		String message = "";

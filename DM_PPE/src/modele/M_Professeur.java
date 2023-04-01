@@ -9,7 +9,7 @@ import controleur.Professeur;
 import controleur.VSql_Vue_Trajet_Details;
 
 public class M_Professeur {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static String insertProfesseur(Professeur unProfesseur) {
 		String message = "";

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import controleur.Perturbation;
 
 public class M_Perturbation {
-	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static void insertPerturbation(Perturbation unePerturbation) {
 		String requete = "insert into perturbation values('"+unePerturbation.getIdPt()+"','"

@@ -9,7 +9,7 @@ import controleur.Etudiant;
 import controleur.Matiere;
 
 public class M_Matiere {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+	private static BDD uneBdd = new BDD("localhost:3307", "GestRetards", "root", "");
 	
 	public static void insertMatiere(Matiere uneMatiere) {
 		String requete = "insert into matiere values(null, '"
