@@ -7,10 +7,8 @@ import java.util.ArrayList;
 
 import controleur.Cours;
 
-public class M_Cours {
-	
-	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
-	
+public class M_Cours  {
+		
 	public static String insertCours(Cours unCours){
 		String message = "";
 		String requete = "insert into cours values("+unCours.getIdCl()+","
@@ -18,11 +16,11 @@ public class M_Cours {
 				+unCours.getDateC()+"', '"+unCours.getHeureDeb()+"', '"
 				+unCours.getHeureFin()+"', null, '"+unCours.getSalle()+"');";
 		try {	
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Insere";
 		}catch (SQLException exp) {
 			message = exp.getMessage();
@@ -33,8 +31,8 @@ public class M_Cours {
 		ArrayList<Cours> lesCourss = new ArrayList<Cours>();
 		String requete = "select * from cours;";
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Cours unCours = new Cours(
@@ -51,7 +49,7 @@ public class M_Cours {
 				lesCourss.add(unCours);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -63,11 +61,11 @@ public class M_Cours {
 		String requete = "delete from cours where IdPf = " +
 				IdPf +" and IdCl = "+IdCl+" and IdM = "+IdM+" and dateTS = '"+dateTS+"';";
 		try {	
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Supprime";
 		}catch (SQLException exp) {
 			message = exp.getMessage();
@@ -78,8 +76,8 @@ public class M_Cours {
 		String requete = "select * from cours where IdCl = " +IdCl+" and IdPf = "+IdPf+" and dateTS = '"+dateTS+"';";
 		Cours unCours = null;
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unCours = new Cours (
@@ -95,7 +93,7 @@ public class M_Cours {
 						);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -109,11 +107,11 @@ public class M_Cours {
 				"', heureFin = '"+unCours.getHeureFin()+"', salle = '"+unCours.getSalle()+"' where IdPf = " +
 				unCours.getIdPf() +" and IdCl = "+unCours.getIdCl()+" and idM = "+unCours.getIdM()+" and dateTS = '"+unCours.getDateTS()+"';";
 		try {	
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Modifie";
 		}catch (SQLException exp) {
 			message = exp.getMessage();

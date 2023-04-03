@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 import controleur.Perturbation;
 
-public class M_Perturbation {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_Perturbation  {
 	
 	public static void insertPerturbation(Perturbation unePerturbation) {
 		String requete = "insert into perturbation values('"+unePerturbation.getIdPt()+"','"
@@ -17,11 +16,11 @@ public class M_Perturbation {
 				+unePerturbation.getDateDebMessage()+"','"
 				+unePerturbation.getDateFinMessage()+"');";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -31,8 +30,8 @@ public class M_Perturbation {
 		ArrayList<Perturbation> lesPerturbations = new ArrayList<Perturbation>();
 		String requete = "select * from perturbation;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Perturbation unePerturbation = new Perturbation(
@@ -45,7 +44,7 @@ public class M_Perturbation {
 				lesPerturbations.add(unePerturbation);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -55,11 +54,11 @@ public class M_Perturbation {
 	public static void supprimerPerturbation(int IdPt) {
 		String requete = "delete from perturbation where IdPt = " + IdPt;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -69,8 +68,8 @@ public class M_Perturbation {
 		String requete = "select * from perturbation where IdPt = " + IdPt;
 		Perturbation unePerturbation = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unePerturbation = new Perturbation (
@@ -82,7 +81,7 @@ public class M_Perturbation {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'ex�cution de : " + requete);
@@ -96,11 +95,11 @@ public class M_Perturbation {
 				+"', raisonLongue = '"+unePerturbation.getRaisonLongue()
 				+"' where idPt = " + unePerturbation.getIdPt() + ";";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);

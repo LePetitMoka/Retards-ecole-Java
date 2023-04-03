@@ -5,21 +5,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Etudiant;
 import controleur.Matiere;
 
-public class M_Matiere {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_Matiere  {
 	
 	public static void insertMatiere(Matiere uneMatiere) {
 		String requete = "insert into matiere values(null, '"
 				+uneMatiere.getIntitule()+"');";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -29,8 +27,8 @@ public class M_Matiere {
 		ArrayList<Matiere> lesMatieres = new ArrayList<Matiere>();
 		String requete = "select * from matiere;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Matiere uneMatiere = new Matiere(
@@ -40,7 +38,7 @@ public class M_Matiere {
 				lesMatieres.add(uneMatiere);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -51,11 +49,11 @@ public class M_Matiere {
 		String requete = "delete from matiere where idM = " + idM;
 		String message = "";
 			try {
-				uneBdd.seConnecter();		
-				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				BDD.seConnecter();		
+				Statement unStat = BDD.maConnexion.createStatement();
 				unStat.execute(requete);
 				unStat.close();
-				uneBdd.seDeConnecter();
+				BDD.seDeConnecter();
 				message = "Supprime";
 			}catch (SQLException exp){
 				message = exp.getMessage();
@@ -66,8 +64,8 @@ public class M_Matiere {
 		String requete = "select * from matiere where idM = " + idM;
 		Matiere uneMatiere = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				uneMatiere = new Matiere (
@@ -76,7 +74,7 @@ public class M_Matiere {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -86,11 +84,11 @@ public class M_Matiere {
 	public static void updateMatiere(Matiere uneMatiere) {
 		String requete = "update matiere set intitule = '"+uneMatiere.getIntitule()+"' where IdM = "+ uneMatiere.getIdM()+";";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -109,9 +107,9 @@ public class M_Matiere {
 			requete = "select * from Matiere where "+attribut+" like '%"+mot+"%';";
 		}
 		try {
-			uneBdd.seConnecter();
+			BDD.seConnecter();
 			//on instancie un curseur qui permet l'execution de la requete
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			//parcourir les resultats et construire des objets vues
 			while (desResultats.next()) {
@@ -123,7 +121,7 @@ public class M_Matiere {
 				lesMats.add(uneMat);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		} catch (SQLException exp){
 			System.out.println("Erreur d'execution de :"+ requete);
 			}

@@ -7,19 +7,18 @@ import java.util.ArrayList;
 
 import controleur.Concerner;
 
-public class M_Concerner {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_Concerner  {
 	
 	public static void insertConcerner(Concerner unConcern) {
 		String requete = "insert into concerner values('"
 				+unConcern.getIdSt()+"','"
 				+unConcern.getIdPt()+"');";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -29,8 +28,8 @@ public class M_Concerner {
 		ArrayList<Concerner> lesConcerns = new ArrayList<Concerner>();
 		String requete = "select * from concerner;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Concerner unConcern = new Concerner(
@@ -40,7 +39,7 @@ public class M_Concerner {
 				lesConcerns.add(unConcern);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -50,11 +49,11 @@ public class M_Concerner {
 	public static void supprimerConcerner(int IdSt, int IdPt) {
 		String requete = "delete from concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -64,8 +63,8 @@ public class M_Concerner {
 		String requete = "select * from concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
 		Concerner unConcern = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unConcern = new Concerner (
@@ -74,7 +73,7 @@ public class M_Concerner {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);

@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 import controleur.Trajet;
 
-public class M_Trajet {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_Trajet  {
 	
 	public static String insertTrajet(Trajet unTrajet) {
 		String message = "";
@@ -16,11 +15,11 @@ public class M_Trajet {
 				+unTrajet.getIdE()+"', "
 				+unTrajet.getIdSt()+");";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Insere";
 		}
 		catch(SQLException exp) {
@@ -32,8 +31,8 @@ public class M_Trajet {
 		ArrayList<Trajet> lesunTrajets = new ArrayList<Trajet>();
 		String requete = "select * from trajet;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Trajet unTrajet = new Trajet(
@@ -43,7 +42,7 @@ public class M_Trajet {
 				lesunTrajets.add(unTrajet);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -54,11 +53,11 @@ public class M_Trajet {
 		String message = "";
 		String requete = "delete from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Supprime";
 		}
 		catch(SQLException exp) {
@@ -70,8 +69,8 @@ public class M_Trajet {
 		String requete = "select * from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		Trajet unTrajet = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unTrajet = new Trajet (
@@ -80,7 +79,7 @@ public class M_Trajet {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -93,11 +92,11 @@ public class M_Trajet {
 				+IdE+", '"
 				+arretDeb+"','"+arretFin+"');";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Insere";
 		}
 		catch(SQLException exp) {

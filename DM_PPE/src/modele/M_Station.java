@@ -7,19 +7,17 @@ import java.util.ArrayList;
 
 import controleur.Station;
 
-public class M_Station {
-	
-	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
-	
+public class M_Station  {
+		
 	public static void insertStation(Station uneStation) {
 		String requete = "insert into station values('"+uneStation.getIdSt()+"','"
 				+uneStation.getNom()+"','"+uneStation.getVille()+"');";
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de :" + requete);
@@ -29,8 +27,8 @@ public class M_Station {
 		ArrayList<Station> desStations = new ArrayList<Station>();
 		String requete = "select * from station;";
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Station uneStation = new Station(
@@ -41,7 +39,7 @@ public class M_Station {
 				desStations.add(uneStation);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -51,11 +49,11 @@ public class M_Station {
 	public static void supprimerStation(int IdSt) {
 		String requete = "delete from station where IdSt = '"+IdSt+"';";
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -65,8 +63,8 @@ public class M_Station {
 		String requete = "select * from station where IdSt = '"+IdSt+"';";
 		Station uneStation = null;
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				uneStation = new Station (
@@ -76,7 +74,7 @@ public class M_Station {
 						);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -87,11 +85,11 @@ public class M_Station {
 		String requete = "update station set nom = '"+uneStation.getNom()+"', ville = '"+uneStation.getVille()+"' where IdSt = '" +
 				uneStation.getIdSt() +"';";
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de :" + requete);

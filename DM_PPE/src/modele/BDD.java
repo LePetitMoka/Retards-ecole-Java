@@ -1,22 +1,47 @@
 package modele;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class BDD {
-	private String serveur,bdd,user,mdp;
-	Connection maConnexion;
+	public static String serveur,bdd,user,mdp;
+	public static Connection maConnexion;
 	
 	public BDD(String serveur, String bdd, String user, String mdp) {
-		this.maConnexion = null;
-		this.serveur = serveur;
-		this.bdd = bdd;
-		this.user = user;
-		this.mdp = mdp;
+		maConnexion = null;
+		BDD.serveur = serveur;
+		BDD.bdd = bdd;
+		BDD.user = user;
+		BDD.mdp = mdp;
 	}
 	
-	public void chargerPilote() {
+	public BDD() {
+		try {
+			maConnexion = null;
+			Properties prop = new Properties();
+			URL url = getClass().getResource("config.properties");
+			FileInputStream input = new FileInputStream("config.properties");
+			prop.load(input);
+			
+			BDD.serveur = prop.getProperty("db.host");
+			BDD.bdd= prop.getProperty("db.database");
+			BDD.user = prop.getProperty("db.username");
+			BDD.mdp = prop.getProperty("db.password");
+
+		    input.close();
+             
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
+	public static void chargerPilote() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
@@ -24,30 +49,29 @@ public class BDD {
 			System.out.println("Absence de pilote JDBC");
 		}
 	}
-	public void seConnecter() {
-		String url = "jdbc:mysql://"+this.serveur+"/"+this.bdd;
+	public static void seConnecter() {
+		String url = "jdbc:mysql://"+BDD.serveur+"/"+BDD.bdd;
 		url +="?verifyServerCertificate=false&useSSL=false&requireSSL=false"; // desactivation verification du certificat SSL (MAC bruh)
-		this.chargerPilote();
+		chargerPilote();
 		try {
-			this.maConnexion = DriverManager.getConnection(url, this.user, this.mdp);
+			maConnexion = DriverManager.getConnection(url, BDD.user, BDD.mdp);
 		}
 		catch(SQLException exp) {
+			printSQLException(exp);
 			System.out.println("Erreur de connexion a "+ url);
 			exp.printStackTrace();
 		}
 	}
-	public void seDeConnecter() {
+	public static void seDeConnecter() {
 		try {
-			if(this.maConnexion != null) {
-				this.maConnexion.close();
+			if(maConnexion != null) {
+				maConnexion.close();
 			}
 		} catch (SQLException exp) {
 			System.out.println("Erreur de fermeture de la connexion");
+			printSQLException(exp);
 		}
 		
-	}
-	public Connection getMaConnexion() {
-		return this.maConnexion;
 	}
 	
 	public static boolean ignoreSQLException(String sqlState) {
@@ -93,6 +117,24 @@ public class BDD {
 	            }
 	        }
 	    }
+	}
+	public static void modifConfigProperties (String H,String B,String U,String P) throws IOException {
+		
+		BDD.serveur = H;
+        BDD.bdd = B;
+        BDD.user = U;
+        BDD.mdp = P;
+        
+		Properties props = new Properties();
+		
+		props.setProperty("db.host",BDD.serveur);
+		props.setProperty("db.database",BDD.bdd);
+		props.setProperty("db.username",BDD.user);
+		props.setProperty("db.password",BDD.mdp);
+		
+		FileOutputStream out = new FileOutputStream("config.properties");
+		props.store(out, "Database Configuration");
+		out.close();
 	}
 }
 

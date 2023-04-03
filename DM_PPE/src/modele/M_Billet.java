@@ -6,12 +6,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.Billet;
-import controleur.Etudiant;
 
-public class M_Billet {
-	
-	private static BDD uneBDD = new BDD("localhost:8889", "GestRetards", "root", "root");
-	
+public class M_Billet  {
+		
 	public static String insertBillet(Billet unBillet) {
 		String message = "";
 		String requete = "insert into billet values(null,null,null,null,null,'"
@@ -19,11 +16,11 @@ public class M_Billet {
 				+unBillet.getIdE()+");";
 		System.out.println(requete);
 		try {	
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Insere";
 		}catch (SQLException exp) {
 			message = exp.getMessage();
@@ -34,8 +31,8 @@ public class M_Billet {
 		ArrayList<Billet> lesBillets = new ArrayList<Billet>();
 		String requete = "select * from billet;";
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Billet unBillet = new Billet(
@@ -51,7 +48,7 @@ public class M_Billet {
 				lesBillets.add(unBillet);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -64,11 +61,11 @@ public class M_Billet {
 				IdAd +" and IdE = "+IdE+" and dateheure = '"+dateheure+"';";
 		System.out.println(requete);
 		try {	
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Supprime";
 		}catch (SQLException exp) {
 			message = exp.getMessage();
@@ -80,8 +77,8 @@ public class M_Billet {
 				IdAd +" and IdE = "+IdE+" and dateheure = '"+dateheure+"';";
 		Billet unBillet = null;
 		try {
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unBillet = new Billet (
@@ -96,7 +93,7 @@ public class M_Billet {
 						);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -108,11 +105,11 @@ public class M_Billet {
 		String requete = "update billet set raison = '"+unBillet.getRaison()+
 				"' where IdAd = " +unBillet.getIdAd() +" and IdE = "+unBillet.getIdE()+" and dateheure = '"+unBillet.getDateheure()+"';";
 		try {	
-			uneBDD.seConnecter();
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Modifie";
 		}catch (SQLException exp) {
 			message = exp.getMessage();
@@ -138,9 +135,9 @@ public class M_Billet {
 			requete = "select * from Billet where "+attribut+" like '%"+mot+"%';";
 		}
 		try {
-			uneBDD.seConnecter();
+			BDD.seConnecter();
 			//on instancie un curseur qui permet l'execution de la requete
-			Statement unStat = uneBDD.getMaConnexion().createStatement();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			//parcourir les resultats et construire des objets vues
 			while (desResultats.next()) {
@@ -158,7 +155,7 @@ public class M_Billet {
 				lesBillets.add(unBillet);
 			}
 			unStat.close();
-			uneBDD.seDeConnecter();
+			BDD.seDeConnecter();
 		} catch (SQLException exp){
 			System.out.println("Erreur d'execution de :"+ requete);
 			}

@@ -6,11 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.Etudiant;
-import controleur.Professeur;
 
-public class M_Etudiant {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
-	
+public class M_Etudiant  {	
 	
 	public static String  insertEtudiant(Etudiant unEtudiant) {
 		String message = "";
@@ -25,11 +22,11 @@ public class M_Etudiant {
 		try {
 			
 		
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "OK";
 		}
 		catch(SQLException exp){
@@ -41,8 +38,8 @@ public class M_Etudiant {
 		ArrayList<Etudiant> lesEtudiants = new ArrayList<Etudiant>();
 		String requete = "select * from etudiant;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Etudiant unEtudiant = new Etudiant(
@@ -58,7 +55,7 @@ public class M_Etudiant {
 				lesEtudiants.add(unEtudiant);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -69,11 +66,11 @@ public class M_Etudiant {
 		String message = "";
 		String requete = "delete from etudiant where idE = " + idE + ";";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 			message = "Supprime";
 		}
 		catch(SQLException exp) {
@@ -85,8 +82,8 @@ public class M_Etudiant {
 		String requete = "select * from etudiant where idE = " + idE + ";";
 		Etudiant unEtudiant = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unEtudiant = new Etudiant (
@@ -101,7 +98,7 @@ public class M_Etudiant {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 			
 		}
 		catch(SQLException exp) {
@@ -122,11 +119,11 @@ public class M_Etudiant {
 			+"' where idE = " + unEtudiant.getIdU() + ";";
 
 			try{
-				uneBdd.seConnecter();
-				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				BDD.seConnecter();
+				Statement unStat = BDD.maConnexion.createStatement();
 				unStat.execute(requete);
 				unStat.close();
-				uneBdd.seDeConnecter();
+				BDD.seDeConnecter();
 				message = "Modifie";
 			}catch (SQLException exp) {
 				message = exp.getMessage();
@@ -137,8 +134,8 @@ public class M_Etudiant {
 		String requete = "select * from etudiant where email = " + email;
 		Etudiant unEtudiant = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unEtudiant = new Etudiant (
@@ -153,7 +150,7 @@ public class M_Etudiant {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -178,9 +175,9 @@ public class M_Etudiant {
 			requete = "select * from Etudiant where "+attribut+" like '%"+mot+"%';";
 		}
 		try {
-			uneBdd.seConnecter();
+			BDD.seConnecter();
 			//on instancie un curseur qui permet l'execution de la requete
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			//parcourir les resultats et construire des objets vues
 			while (desResultats.next()) {
@@ -198,7 +195,7 @@ public class M_Etudiant {
 				lesEtus.add(unEtu);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		} catch (SQLException exp){
 			System.out.println("Erreur d'execution de :"+ requete);
 			}

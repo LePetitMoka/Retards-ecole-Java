@@ -7,19 +7,19 @@ import java.util.ArrayList;
 
 import controleur.Appartenir;
 
-public class M_Appartenir {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_Appartenir  {
+
 	
 	public static void insertAppartenir(Appartenir uneAppartenance) {
 		String requete = "insert into appartenir values('"
 				+uneAppartenance.getIdSt()+"','"
 				+uneAppartenance.getIdTp()+"');";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -29,8 +29,8 @@ public class M_Appartenir {
 		ArrayList<Appartenir> lesAppartenances = new ArrayList<Appartenir>();
 		String requete = "select * from appartenir;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Appartenir uneAppartenance = new Appartenir(
@@ -40,7 +40,7 @@ public class M_Appartenir {
 				lesAppartenances.add(uneAppartenance);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -50,11 +50,11 @@ public class M_Appartenir {
 	public static void supprimerAppartenir(int IdSt, int IdTp) {
 		String requete = "delete from appartenir where IdSt = '" + IdSt + "' and IdTp = '" + IdTp + "';";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -64,8 +64,8 @@ public class M_Appartenir {
 		String requete = "select * from appartenir where IdSt = '" + IdSt + "' and IdTp = '" + IdTp + "';";
 		Appartenir uneAppartenance = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				uneAppartenance = new Appartenir (
@@ -74,7 +74,7 @@ public class M_Appartenir {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);

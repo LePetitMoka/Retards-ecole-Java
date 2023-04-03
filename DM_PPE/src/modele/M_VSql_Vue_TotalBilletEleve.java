@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 import controleur.VSql_Vue_TotalBilletEleve;
 
-public class M_VSql_Vue_TotalBilletEleve {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_VSql_Vue_TotalBilletEleve  {
 
 	//Fait reference a une VUE donc pas d'inserts ni update !
 	
@@ -16,8 +15,8 @@ public class M_VSql_Vue_TotalBilletEleve {
 		ArrayList<VSql_Vue_TotalBilletEleve> lesuneVues = new ArrayList<VSql_Vue_TotalBilletEleve>();
 		String requete = "select * from vue_totalbilleteleve;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				VSql_Vue_TotalBilletEleve uneVue = new VSql_Vue_TotalBilletEleve(
@@ -29,7 +28,7 @@ public class M_VSql_Vue_TotalBilletEleve {
 				lesuneVues.add(uneVue);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -41,8 +40,8 @@ public class M_VSql_Vue_TotalBilletEleve {
 		String requete = "select * from vue_totalbilleteleve where IdE = " + IdE +"';";
 		VSql_Vue_TotalBilletEleve uneVue = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				uneVue = new VSql_Vue_TotalBilletEleve (
@@ -53,7 +52,7 @@ public class M_VSql_Vue_TotalBilletEleve {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -74,9 +73,9 @@ public class M_VSql_Vue_TotalBilletEleve {
 			requete = "select * from Vue_TotalBilletEleve where "+attribut+" like '%"+mot+"%';";
 		}
 		try {
-			uneBdd.seConnecter();
+			BDD.seConnecter();
 			//on instancie un curseur qui permet l'execution de la requete
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			//parcourir les resultats et construire des objets vues
 			while (desResultats.next()) {
@@ -90,7 +89,7 @@ public class M_VSql_Vue_TotalBilletEleve {
 				lesVues.add(uneVue);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		} catch (SQLException exp){
 			System.out.println("Erreur d'execution de :"+ requete);
 			}

@@ -5,12 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import controleur.Etudiant;
 import controleur.VSql_Vue_Cours_Details;
 
-public class M_VSql_Vue_Cours_Details {
+public class M_VSql_Vue_Cours_Details  {
 	
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
 
 	//Fait reference a une VUE donc pas d'inserts ni update !
 		
@@ -18,8 +16,8 @@ public class M_VSql_Vue_Cours_Details {
 			ArrayList<VSql_Vue_Cours_Details> lesuneVues = new ArrayList<VSql_Vue_Cours_Details>();
 			String requete = "select * from vue_cours_details;";
 			try {
-				uneBdd.seConnecter();
-				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				BDD.seConnecter();
+				Statement unStat = BDD.maConnexion.createStatement();
 				ResultSet desResultats = unStat.executeQuery(requete);
 				while (desResultats.next()) {
 					VSql_Vue_Cours_Details uneVue = new VSql_Vue_Cours_Details(
@@ -39,7 +37,7 @@ public class M_VSql_Vue_Cours_Details {
 					lesuneVues.add(uneVue);
 				}
 				unStat.close();
-				uneBdd.seDeConnecter();
+				BDD.seDeConnecter();
 			}
 			catch(SQLException exp){
 				System.out.println("Erreur d'execution de : " + requete);
@@ -51,8 +49,8 @@ public class M_VSql_Vue_Cours_Details {
 			String requete = "select * from vue_cours_details where IdM = " + IdM + " and IdPf = " + IdPf +" and IdCl ="+IdCl+" and dateTS = '"+dateTS+"';";
 			VSql_Vue_Cours_Details uneVue = null;
 			try {
-				uneBdd.seConnecter();
-				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				BDD.seConnecter();
+				Statement unStat = BDD.maConnexion.createStatement();
 				ResultSet unResultat = unStat.executeQuery(requete);
 				if(unResultat.next()) {
 					uneVue = new VSql_Vue_Cours_Details (
@@ -71,7 +69,7 @@ public class M_VSql_Vue_Cours_Details {
 							);
 				}
 				unStat.close();
-				uneBdd.seDeConnecter();
+				BDD.seDeConnecter();
 			}
 			catch(SQLException exp) {
 				System.out.println("Erreur d'execution de : " + requete);
@@ -100,9 +98,9 @@ public class M_VSql_Vue_Cours_Details {
 				requete = "select * from Vue_Cours_Details where "+attribut+" like '%"+mot+"%';";
 			}
 			try {
-				uneBdd.seConnecter();
+				BDD.seConnecter();
 				//on instancie un curseur qui permet l'execution de la requete
-				Statement unStat = uneBdd.getMaConnexion().createStatement();
+				Statement unStat = BDD.maConnexion.createStatement();
 				ResultSet desResultats = unStat.executeQuery(requete);
 				//parcourir les resultats et construire des objets vues
 				while (desResultats.next()) {
@@ -124,7 +122,7 @@ public class M_VSql_Vue_Cours_Details {
 					lesVues.add(uneVue);
 				}
 				unStat.close();
-				uneBdd.seDeConnecter();
+				BDD.seDeConnecter();
 			} catch (SQLException exp){
 				System.out.println("Erreur d'execution de :"+ requete);
 				}

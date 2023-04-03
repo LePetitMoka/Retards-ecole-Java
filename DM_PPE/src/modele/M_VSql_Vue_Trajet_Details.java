@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import controleur.VSql_Vue_Trajet_Details;
 
-public class M_VSql_Vue_Trajet_Details {
-
-private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_VSql_Vue_Trajet_Details  {
 
 	//Fait reference a une VUE donc pas d'inserts ni update !
 	
@@ -17,8 +15,8 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 		ArrayList<VSql_Vue_Trajet_Details> lesuneVues = new ArrayList<VSql_Vue_Trajet_Details>();
 		String requete = "select * from vue_trajet_details;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				VSql_Vue_Trajet_Details uneVue = new VSql_Vue_Trajet_Details(
@@ -32,7 +30,7 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 				lesuneVues.add(uneVue);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -44,8 +42,8 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 		String requete = "select * from vue_trajet_details where IdE = " + IdE + " and IdSt = '" + IdSt +"';";
 		VSql_Vue_Trajet_Details uneVue = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				uneVue = new VSql_Vue_Trajet_Details (
@@ -58,7 +56,7 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -81,9 +79,9 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 			requete = "select * from Vue_Trajet_Details where "+attribut+" like '%"+mot+"%';";
 		}
 		try {
-			uneBdd.seConnecter();
+			BDD.seConnecter();
 			//on instancie un curseur qui permet l'execution de la requete
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			//parcourir les resultats et construire des objets vues
 			while (desResultats.next()) {
@@ -99,7 +97,7 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 				lesVues.add(uneVue);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		} catch (SQLException exp){
 			System.out.println("Erreur d'execution de :"+ requete);
 			}

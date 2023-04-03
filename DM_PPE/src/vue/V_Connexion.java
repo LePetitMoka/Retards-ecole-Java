@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,7 @@ import controleur.Administrateur;
 
 public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 	private JPanel panelForm = new JPanel();
+	private JButton btConfig = new JButton();
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btConnexion = new JButton ("Connexion");
 	
@@ -33,6 +35,15 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		this.setResizable(false);
 		this.getContentPane().setBackground(GREI.color1);
 		this.setLayout(null);
+		
+		//bouton config
+		this.btConfig.setBounds(575, 0, 25, 25);
+		ImageIcon Database = new ImageIcon("src/img/database.png");
+		Image image = Database.getImage();
+		Image newimage = image.getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING);
+		ImageIcon NewDatabase = new ImageIcon(newimage);
+		this.btConfig.setIcon(NewDatabase);
+		this.add(this.btConfig);
 		
 		this.panelForm.setBounds(270, 90, 300, 120);
 		this.panelForm.setBackground(GREI.color1);
@@ -52,6 +63,7 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		
 		this.btAnnuler.addActionListener(this);
 		this.btConnexion.addActionListener(this);
+		this.btConfig.addActionListener(this);
 		
 		this.txtEmail.addKeyListener(this);
 		this.txtMdp.addKeyListener(this);
@@ -82,6 +94,10 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 		}
 		else if(e.getSource() == this.btConnexion) {
 			this.traitement();
+		}
+		else if (e.getSource() == this.btConfig) {
+			GREI.creerDetruireVueConfig(true);
+			GREI.rendreVisibleVueConnexion(false);
 		}
 	}
 

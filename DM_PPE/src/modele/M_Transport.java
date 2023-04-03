@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 import controleur.Transport;
 
-public class M_Transport {
-	private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
+public class M_Transport  {
 	
 	public static void insertTransport(Transport unTransport) {
 		String requete = "insert into transport values('"+unTransport.getIdTp()+"','"
@@ -18,11 +17,11 @@ public class M_Transport {
 				+unTransport.getPictogramme()+"','"
 				+unTransport.getEtat()+"');";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -32,8 +31,8 @@ public class M_Transport {
 		ArrayList<Transport> lesTransports = new ArrayList<Transport>();
 		String requete = "select * from transport order by nom;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				Transport unTransport = new Transport(
@@ -47,7 +46,7 @@ public class M_Transport {
 				lesTransports.add(unTransport);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -57,11 +56,11 @@ public class M_Transport {
 	public static void supprimerTransport(int IdTp) {
 		String requete = "delete from transport where IdTp = " + IdTp;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -71,8 +70,8 @@ public class M_Transport {
 		String requete = "select * from transport where IdTp = " + IdTp;
 		Transport unTransport = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				unTransport = new Transport (
@@ -85,7 +84,7 @@ public class M_Transport {
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -100,11 +99,11 @@ public class M_Transport {
 				+"', etat = '"+unTransport.getEtat()
 				+"' where IdTp = " + unTransport.getIdTp() + ";";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);

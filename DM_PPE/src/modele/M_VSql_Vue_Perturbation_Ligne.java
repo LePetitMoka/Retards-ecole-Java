@@ -6,20 +6,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import controleur.VSql_Vue_Perturbation_Ligne;
-import controleur.VSql_Vue_Trajet_Details;
 
-public class M_VSql_Vue_Perturbation_Ligne {
-	
-private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "root");
-
-//Fait reference a une VUE donc pas d'inserts ni update !
+public class M_VSql_Vue_Perturbation_Ligne  {
+		
+	//Fait reference a une VUE donc pas d'inserts ni update !
 	
 	public static ArrayList<VSql_Vue_Perturbation_Ligne> selectAllVues() {
 		ArrayList<VSql_Vue_Perturbation_Ligne> lesuneVues = new ArrayList<VSql_Vue_Perturbation_Ligne>();
 		String requete = "select * from Vue_Perturbation_Ligne;";
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			while (desResultats.next()) {
 				VSql_Vue_Perturbation_Ligne uneVue = new VSql_Vue_Perturbation_Ligne(
@@ -34,7 +31,7 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 				lesuneVues.add(uneVue);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp){
 			System.out.println("Erreur d'execution de : " + requete);
@@ -46,8 +43,8 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 		String requete = "select * from Vue_Perturbation_Ligne where IdTp = '" + IdTp + "' ;";
 		VSql_Vue_Perturbation_Ligne uneVue = null;
 		try {
-			uneBdd.seConnecter();
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			BDD.seConnecter();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet unResultat = unStat.executeQuery(requete);
 			if(unResultat.next()) {
 				uneVue = new VSql_Vue_Perturbation_Ligne (
@@ -61,7 +58,7 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 						);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
@@ -84,9 +81,9 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 			requete = "select * from Vue_Perturbation_Ligne where "+attribut+" like '%"+mot+"%';";
 		}
 		try {
-			uneBdd.seConnecter();
+			BDD.seConnecter();
 			//on instancie un curseur qui permet l'execution de la requete
-			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			Statement unStat = BDD.maConnexion.createStatement();
 			ResultSet desResultats = unStat.executeQuery(requete);
 			//parcourir les resultats et construire des objets vues
 			while (desResultats.next()) {
@@ -103,7 +100,7 @@ private static BDD uneBdd = new BDD("localhost:8889", "GestRetards", "root", "ro
 				lesVues.add(uneVue);
 			}
 			unStat.close();
-			uneBdd.seDeConnecter();
+			BDD.seDeConnecter();
 		} catch (SQLException exp){
 			System.out.println("Erreur d'execution de :"+ requete);
 			}

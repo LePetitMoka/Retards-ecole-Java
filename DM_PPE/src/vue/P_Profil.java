@@ -249,19 +249,10 @@ public class P_Profil extends P_Principal implements ActionListener {
 				this.unAdministrateur = new Administrateur(this.unAdministrateur.getIdU(),nom, prenom, adresse, telephone, email, mdp, URLSignature);
 				
 				//modifications dans la BDD
-				try {
-					C_Administrateur.updateAdministrateur(this.unAdministrateur);
-					JOptionPane.showMessageDialog(this, "L'administrateur a ete modifie");
-					this.viderChamps();
-					this.actualiser();
-				} catch (SQLException exp) {
-					//System.out.println("Erreur d'execution de l'update: ");
-					switch (exp.getSQLState().toString()){
-						case "45001": JOptionPane.showMessageDialog(this, exp.getMessage());break;
-						case "45002": JOptionPane.showMessageDialog(this, exp.getMessage());break;
-						default: BDD.printSQLException(exp);break;
-					}
-				}
+				JOptionPane.showMessageDialog(this,C_Administrateur.updateAdministrateur(this.unAdministrateur));
+				this.viderChamps();
+				//actualiser affichage
+				this.actualiser();
 			}
 		}
 	}
