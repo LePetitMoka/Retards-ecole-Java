@@ -10,7 +10,7 @@ import controleur.Matiere;
 public class M_Matiere  {
 	
 	public static void insertMatiere(Matiere uneMatiere) {
-		String requete = "insert into matiere values(null, '"
+		String requete = "insert into Matiere values(null, '"
 				+uneMatiere.getIntitule()+"');";
 		try {
 			BDD.seConnecter();
@@ -25,7 +25,7 @@ public class M_Matiere  {
 	}
 	public static ArrayList<Matiere> selectAllMatieres() {
 		ArrayList<Matiere> lesMatieres = new ArrayList<Matiere>();
-		String requete = "select * from matiere;";
+		String requete = "select * from Matiere;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -46,7 +46,7 @@ public class M_Matiere  {
 		return lesMatieres;
 	}
 	public static String supprimerMatiere(int idM) {
-		String requete = "delete from matiere where idM = " + idM;
+		String requete = "delete from Matiere where idM = " + idM;
 		String message = "";
 			try {
 				BDD.seConnecter();		
@@ -61,7 +61,7 @@ public class M_Matiere  {
 			return message;
 	}
 	public static Matiere selectWhereMatiere(int idM) {
-		String requete = "select * from matiere where idM = " + idM;
+		String requete = "select * from Matiere where idM = " + idM;
 		Matiere uneMatiere = null;
 		try {
 			BDD.seConnecter();
@@ -82,7 +82,7 @@ public class M_Matiere  {
 		return uneMatiere;
 	}
 	public static void updateMatiere(Matiere uneMatiere) {
-		String requete = "update matiere set intitule = '"+uneMatiere.getIntitule()+"' where IdM = "+ uneMatiere.getIdM()+";";
+		String requete = "update Matiere set intitule = '"+uneMatiere.getIntitule()+"' where IdM = "+ uneMatiere.getIdM()+";";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();

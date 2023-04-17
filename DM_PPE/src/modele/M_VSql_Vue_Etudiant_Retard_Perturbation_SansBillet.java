@@ -13,7 +13,7 @@ public class M_VSql_Vue_Etudiant_Retard_Perturbation_SansBillet  {
 	
 	public static ArrayList<VSql_Vue_Etudiant_Retard_Perturbation_SansBillet> selectAllVues() {
 		ArrayList<VSql_Vue_Etudiant_Retard_Perturbation_SansBillet> lesuneVues = new ArrayList<VSql_Vue_Etudiant_Retard_Perturbation_SansBillet>();
-		String requete = "select * from vue_etudiant_Retard_Perturbation_sansbillet;";
+		String requete = "select * from Vue_Etudiant_Retard_Perturbation_SansBillet;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();

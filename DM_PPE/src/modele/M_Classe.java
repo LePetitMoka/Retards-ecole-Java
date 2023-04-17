@@ -11,7 +11,7 @@ public class M_Classe {
 	
 	public static String insertClasse(Classe uneClasse) {
 		String message = "";
-		String requete = "insert into classe values(null, '"
+		String requete = "insert into Classe values(null, '"
 				+uneClasse.getNom()+"', '"
 				+uneClasse.getDiplomePrepare()+"', '"
 				+uneClasse.getPromotion()+"');";
@@ -29,7 +29,7 @@ public class M_Classe {
 	}
 	public static ArrayList<Classe> selectAllClasses() {
 		ArrayList<Classe> lesClasses = new ArrayList<Classe>();
-		String requete = "select * from classe;";
+		String requete = "select * from Classe;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -55,7 +55,7 @@ public class M_Classe {
 	}
 	public static String supprimerClasse(int idCl) {
 		String message = "";
-		String requete = "delete from classe where idCl = " + idCl + ";";
+		String requete = "delete from Classe where idCl = " + idCl + ";";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -72,7 +72,7 @@ public class M_Classe {
 		return message;
 	}
 	public static Classe selectWhereClasse(int idCl) {
-		String requete = "select * from classe where idCl = " + idCl;
+		String requete = "select * from Classe where idCl = " + idCl;
 		Classe uneClasse = null;
 		try {
 			BDD.seConnecter();
@@ -98,7 +98,7 @@ public class M_Classe {
 	}
 	public static String updateClasse(Classe uneClasse) {
 		String message = "";
-		String requete = "update classe set nom = '"+uneClasse.getNom()
+		String requete = "update Classe set nom = '"+uneClasse.getNom()
 				+"', diplomePrepare = '"+uneClasse.getDiplomePrepare()
 				+"', promotion = '"+uneClasse.getPromotion()
 				+"' where idCl = " + uneClasse.getIdCl() + ";";
@@ -115,7 +115,7 @@ public class M_Classe {
 			return message;
 	}
 	public static Classe selectWhereClasse(String email) {
-		String requete = "select * from classe where email = " + email;
+		String requete = "select * from Classe where email = " + email;
 		Classe uneClasse = null;
 		try {
 			BDD.seConnecter();

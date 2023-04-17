@@ -13,7 +13,7 @@ public class M_VSql_Vue_TotalBilletEleve  {
 	
 	public static ArrayList<VSql_Vue_TotalBilletEleve> selectAllVues() {
 		ArrayList<VSql_Vue_TotalBilletEleve> lesuneVues = new ArrayList<VSql_Vue_TotalBilletEleve>();
-		String requete = "select * from vue_totalbilleteleve;";
+		String requete = "select * from Vue_TotalBilletEleve;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -37,7 +37,7 @@ public class M_VSql_Vue_TotalBilletEleve  {
 	}
 	// gadget
 	public static VSql_Vue_TotalBilletEleve selectWhereVue(int IdE) {
-		String requete = "select * from vue_totalbilleteleve where IdE = " + IdE +"';";
+		String requete = "select * from Vue_TotalBilletEleve where IdE = " + IdE +"';";
 		VSql_Vue_TotalBilletEleve uneVue = null;
 		try {
 			BDD.seConnecter();

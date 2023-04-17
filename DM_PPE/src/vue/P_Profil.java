@@ -151,7 +151,7 @@ public class P_Profil extends P_Principal implements ActionListener {
 	    Pattern patternNum = Pattern.compile("[0-9]");
 	    Matcher matcherNum = patternNum.matcher(mdp);
 		
-		if (mdp.length() < 4 && mdp.length() > 15){
+		if (mdp.length() < 4 || mdp.length() > 15){
 			JOptionPane.showMessageDialog(this,"Erreur MDP: Taille du mot de passe incorrecte (entre 3 et 15)");
 			cond = false;
 		} else if (!matcherMin.find()) {

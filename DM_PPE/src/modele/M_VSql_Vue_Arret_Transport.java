@@ -14,7 +14,7 @@ public class M_VSql_Vue_Arret_Transport  {
 		
 	public static ArrayList<VSql_Vue_Arret_Transport> selectAllVues() {
 		ArrayList<VSql_Vue_Arret_Transport> lesVues = new ArrayList<VSql_Vue_Arret_Transport>();
-		String requete = "select * from vue_arret_transport;";
+		String requete = "select * from Vue_Arret_Transport;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -41,7 +41,7 @@ public class M_VSql_Vue_Arret_Transport  {
 	// gadget
 	public static ArrayList<VSql_Vue_Arret_Transport> selectWhereVue(String IdTp) {
 		ArrayList<VSql_Vue_Arret_Transport> lesVues = new ArrayList<VSql_Vue_Arret_Transport>();
-		String requete = "select * from vue_arret_transport where IdTp = '"+IdTp+"';";
+		String requete = "select * from Vue_Arret_Transport where IdTp = '"+IdTp+"';";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();

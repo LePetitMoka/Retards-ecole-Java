@@ -11,7 +11,7 @@ public class M_Professeur  {
 	
 	public static String insertProfesseur(Professeur unProfesseur) {
 		String message = "";
-		String requete = "insert into professeur values(null, '"
+		String requete = "insert into Professeur values(null, '"
 				+unProfesseur.getNom()+"', '"
 				+unProfesseur.getPrenom()+"', '"
 				+unProfesseur.getDiplome()+"', '"
@@ -33,7 +33,7 @@ public class M_Professeur  {
 	}
 	public static ArrayList<Professeur> selectAllProfesseurs() {
 		ArrayList<Professeur> lesProfesseurs = new ArrayList<Professeur>();
-		String requete = "select * from professeur;";
+		String requete = "select * from Professeur;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -60,7 +60,7 @@ public class M_Professeur  {
 		return lesProfesseurs;
 	}
 	public static void supprimerProfesseur(int idPf) {
-		String requete = "delete from professeur where idPf = " + idPf;
+		String requete = "delete from Professeur where idPf = " + idPf;
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -73,7 +73,7 @@ public class M_Professeur  {
 		}
 	}
 	public static Professeur selectWhereProfesseur(int idPf) {
-		String requete = "select * from professeur where idPf = " + idPf;
+		String requete = "select * from Professeur where idPf = " + idPf;
 		Professeur unProfesseur = null;
 		try {
 			BDD.seConnecter();
@@ -101,7 +101,7 @@ public class M_Professeur  {
 	}
 	public static String updateProfesseur(Professeur unProfesseur) {
 		String message = "";
-		String requete = "update professeur set nom = '"+unProfesseur.getNom()
+		String requete = "update Professeur set nom = '"+unProfesseur.getNom()
 				+"', prenom = '"+unProfesseur.getPrenom()
 				+"', diplome = '"+unProfesseur.getDiplome()
 				+"', telephone = '"+unProfesseur.getTelephone()
@@ -112,6 +112,7 @@ public class M_Professeur  {
 			try{
 				BDD.seConnecter();
 				Statement unStat = BDD.maConnexion.createStatement();
+				System.out.println(requete);
 				unStat.execute(requete);
 				unStat.close();
 				BDD.seDeConnecter();
@@ -122,7 +123,7 @@ public class M_Professeur  {
 			return message;
 	}
 	public static Professeur selectWhereProfesseur(String email) {
-		String requete = "select * from professeur where email = " + email;
+		String requete = "select * from Professeur where email = " + email;
 		Professeur unProfesseur = null;
 		try {
 			BDD.seConnecter();

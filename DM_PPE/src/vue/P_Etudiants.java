@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,11 +38,15 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private JTextField txtEmail = new JTextField();
 	private JComboBox<String> cbxIdClasse = new JComboBox<String>();
 	private JPasswordField txtMDP = new JPasswordField();
+	private JComboBox<String> cbxStatut = new JComboBox<String>();
+
 	
 	private JComboBox<String> cbxFiltre = new JComboBox<String>();
 	private JButton btFiltrer = new JButton("Filtrer");
 	private JPanel PanelFiltre = new JPanel();
 	private JTextField txtFiltre = new JTextField();
+	
+	private JLabel labelTotal = new JLabel();
 	
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btEnregistrer = new JButton("Enregistrer");
@@ -57,9 +63,12 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	public P_Etudiants () {
 		super(GREI.color1);
 
+		this.cbxStatut.addItem("Alternant");
+		this.cbxStatut.addItem("Initial");
+		
 		this.PanelForm.setBackground(GREI.color1);
 		this.PanelForm.setBounds(20, 60, 370, 320);
-		this.PanelForm.setLayout(new GridLayout(8,2));
+		this.PanelForm.setLayout(new GridLayout(9,2));
 		this.PanelForm.add(new JLabel("Nom : "));
 		this.PanelForm.add(this.txtNom);
 		this.PanelForm.add(new JLabel("Prenom : "));
@@ -74,6 +83,8 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelForm.add(this.txtMDP);
 		this.PanelForm.add(new JLabel("ID Classe : "));
 		this.PanelForm.add(this.cbxIdClasse);
+		this.PanelForm.add(new JLabel("Statut : "));
+		this.PanelForm.add(this.cbxStatut);
 		this.PanelForm.add(this.btAnnuler);
 		this.PanelForm.add(this.btEnregistrer);
 		this.add(PanelForm);
@@ -103,9 +114,16 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.add(this.PanelFiltre);
 		this.btFiltrer.addActionListener(this);
 		
+		
+		//total resultats
+		this.labelTotal.setBounds(425, 675, 100, 50);//b
+		this.add(this.labelTotal);//b
+		
+		//PanelTable
 		this.PanelTable.setBackground(GREI.color1);
 		this.PanelTable.setBounds(420, 60, 650, 620);
 		this.PanelTable.setLayout(null);
+		
 		
 		String entetes [] = {"ID Etudiant", "Nom", "Prenom", "Adresse","Telephone", "Email","mdp", "ID Classe"};
 		this.unTableau = new Tableau(this.obtenirDonnees(), entetes);
@@ -225,6 +243,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	
 	public Object[][] obtenirDonnees(){
 		ArrayList<Etudiant> lesEtudiants = C_Etudiant.selectAllEtudiants();
+		System.out.println(lesEtudiants.size());
 		Object[][] matrice = new Object [lesEtudiants.size()][8];
 		int i=0;
 		for (Etudiant unEtudiant : lesEtudiants) {
@@ -238,10 +257,12 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			matrice[i][7] = unEtudiant.getIdCl();
 			i++;
 		}
+		this.labelTotal.setText(lesEtudiants.size()+" resultat(s)");//b	
 		return matrice;
 	}
 	public Object[][] obtenirDonnees(ArrayList<Etudiant> lesEtudiants){
 		Object[][]matrice = new Object[lesEtudiants.size()][8];
+		System.out.println(lesEtudiants.size());
 		int i = 0;
 		for (Etudiant unEtudiant : lesEtudiants) {
 			matrice[i][0] = unEtudiant.getIdU();
@@ -254,6 +275,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			matrice[i][7] = unEtudiant.getIdCl();
 			i++;
 		}
+		this.labelTotal.setText(lesEtudiants.size()+" resultat(s)");//b		
 		return matrice;
 	}
 	public void actualiser() {
@@ -288,6 +310,46 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		    tableColumn.setPreferredWidth( preferredWidth );
 		}
 	}
+public Boolean verifMDP(String mdp) {
+	    
+		if (mdp == null || mdp.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Erreur MDP: Mot de passe vide");
+			return false;
+		}
+		
+		boolean cond = true;
+		Pattern patternMin = Pattern.compile("[a-z]");
+	    Matcher matcherMin = patternMin.matcher(mdp);
+	    Pattern patternMaj = Pattern.compile("[A-Z]");
+	    Matcher matcherMaj = patternMaj.matcher(mdp);
+	    Pattern patternSpec = Pattern.compile("\\W");
+	    Matcher matcherSpec = patternSpec.matcher(mdp);
+	    Pattern patternNum = Pattern.compile("[0-9]");
+	    Matcher matcherNum = patternNum.matcher(mdp);
+		
+		if (mdp.length() < 4 || mdp.length() > 15){
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Taille du mot de passe incorrecte (entre 3 et 15)");
+			cond = false;
+		} else if (!matcherMin.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque une minuscule");
+			cond = false;
+		} else if (!matcherMaj.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque une majuscule");
+			cond = false;
+		} else if (!matcherSpec.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque un caractere special");
+			cond = false;
+		} else if (!matcherNum.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque un chiffre");
+			cond = false;
+		}
+		
+		
+		if (!cond){
+			this.txtMDP.setText("");
+		}
+		return cond;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -312,11 +374,13 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			
 			Etudiant unEtudiant = new Etudiant(nom, prenom, adresse, telephone, email, mdp, idclasse);
 			
-			//insertion client dans BDD
-			JOptionPane.showMessageDialog(this, C_Etudiant.insertEtudiant(unEtudiant));
-			this.viderChamps();
+			//verif mdp puis insertion etudiant dans BDD 
+			if (this.verifMDP(mdp) == true) {
+				JOptionPane.showMessageDialog(this, C_Etudiant.insertEtudiant(unEtudiant));
+			}
 			
 			//actualisation de l'affichage
+			this.viderChamps();
 			this.actualiser();
 		}
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Modifier")) {
@@ -324,24 +388,39 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			String prenom = this.txtPrenom.getText();
 			String adresse = this.txtAdresse.getText();
 			String telephone = this.txtTelephone.getText();
+			System.out.println(telephone);
 			String email = this.txtEmail.getText();
 			String mdp = new String(this.txtMDP.getPassword());
 			//recuperation des id dans les CBX
 			
 			String chaine = this.cbxIdClasse.getSelectedItem().toString();
 			String tab[] = chaine.split("-");
-			int idclasse = Integer.parseInt(tab[0]);			
-			//instancier un client
+			int idclasse = Integer.parseInt(tab[0]);	
+			
+			//instancier un etudiant
 			//		recuperer l'id dans le tableau
 			int numLigne = this.uneTable.getSelectedRow();
 			int idetudiant = Integer.parseInt(this.unTableau.getValueAt(numLigne, 0).toString());
 			Etudiant unEtudiant = new Etudiant(idetudiant,nom,prenom,adresse,telephone,email,mdp,idclasse);
 			
-			//on realise la modif BDD
-			JOptionPane.showMessageDialog(this, C_Etudiant.updateEtudiant(unEtudiant));
-			this.viderChamps();
-			
+			//on recupere la 
+			//verif mdp puis on realise la modif BDD
+			if (!this.uneTable.getValueAt(numLigne, 6).toString().equals(mdp)) {
+				System.out.println(mdp.length());
+				System.out.println(this.uneTable.getValueAt(numLigne, 6).toString());
+				System.out.println(mdp);
+				if (this.verifMDP(mdp)) {
+
+					System.out.println(this.uneTable.getValueAt(numLigne, 5).toString());
+					
+					JOptionPane.showMessageDialog(this, C_Etudiant.updateEtudiant(unEtudiant));
+				}	
+			} else {
+				System.out.println(mdp.length());
+				JOptionPane.showMessageDialog(this, C_Etudiant.updateEtudiant(unEtudiant));
+			}
 			//actualisation de l'affichage
+			this.viderChamps();
 			this.actualiser();
 		}
 		else if (e.getSource() == this.btFiltrer) {
@@ -350,7 +429,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 			ArrayList<Etudiant> lesEtudiants = C_Etudiant.selectSearch(attribut,mot);
 			Object[][] matrice = this.obtenirDonnees(lesEtudiants);
 			//on actualise l'affichage
-			
+			this.viderChamps();//b
 			this.unTableau.setDonnees(matrice);
 		}
 	}

@@ -10,7 +10,7 @@ import controleur.Station;
 public class M_Station  {
 		
 	public static void insertStation(Station uneStation) {
-		String requete = "insert into station values('"+uneStation.getIdSt()+"','"
+		String requete = "insert into Station values('"+uneStation.getIdSt()+"','"
 				+uneStation.getNom()+"','"+uneStation.getVille()+"');";
 		try {
 			BDD.seConnecter();
@@ -25,7 +25,7 @@ public class M_Station  {
 	}
 	public static ArrayList<Station> selectAllStations() {
 		ArrayList<Station> desStations = new ArrayList<Station>();
-		String requete = "select * from station;";
+		String requete = "select * from Station;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -47,7 +47,7 @@ public class M_Station  {
 		return desStations;
 	}
 	public static void supprimerStation(int IdSt) {
-		String requete = "delete from station where IdSt = '"+IdSt+"';";
+		String requete = "delete from Station where IdSt = '"+IdSt+"';";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -60,7 +60,7 @@ public class M_Station  {
 		}
 	}
 	public static Station selectWhereStation(int IdSt) {
-		String requete = "select * from station where IdSt = '"+IdSt+"';";
+		String requete = "select * from Station where IdSt = '"+IdSt+"';";
 		Station uneStation = null;
 		try {
 			BDD.seConnecter();
@@ -82,7 +82,7 @@ public class M_Station  {
 		return uneStation;
 	}
 	public static void updateStation(Station uneStation) {
-		String requete = "update station set nom = '"+uneStation.getNom()+"', ville = '"+uneStation.getVille()+"' where IdSt = '" +
+		String requete = "update Station set nom = '"+uneStation.getNom()+"', ville = '"+uneStation.getVille()+"' where IdSt = '" +
 				uneStation.getIdSt() +"';";
 		try {
 			BDD.seConnecter();

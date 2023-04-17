@@ -11,7 +11,7 @@ public class M_Billet  {
 		
 	public static String insertBillet(Billet unBillet) {
 		String message = "";
-		String requete = "insert into billet values(null,null,null,null,null,'"
+		String requete = "insert into Billet values(null,null,null,null,null,'"
 				+unBillet.getRaison()+"',"+unBillet.getIdAd()+","
 				+unBillet.getIdE()+");";
 		System.out.println(requete);
@@ -29,7 +29,7 @@ public class M_Billet  {
 	}
 	public static ArrayList<Billet> selectAllBillets() {
 		ArrayList<Billet> lesBillets = new ArrayList<Billet>();
-		String requete = "select * from billet;";
+		String requete = "select * from Billet;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -57,7 +57,7 @@ public class M_Billet  {
 	}
 	public static String supprimerBillet(int IdAd, int IdE, String dateheure){
 		String message = "";
-		String requete = "delete from billet where IdAd = " +
+		String requete = "delete from Billet where IdAd = " +
 				IdAd +" and IdE = "+IdE+" and dateheure = '"+dateheure+"';";
 		System.out.println(requete);
 		try {	
@@ -73,7 +73,7 @@ public class M_Billet  {
 		return message;
 	}
 	public static Billet selectWhereBillet(int IdAd, int IdE, String dateheure) {
-		String requete = "select * from billet where IdAd = " +
+		String requete = "select * from Billet where IdAd = " +
 				IdAd +" and IdE = "+IdE+" and dateheure = '"+dateheure+"';";
 		Billet unBillet = null;
 		try {
@@ -102,7 +102,7 @@ public class M_Billet  {
 	}
 	public static String updateBillet(Billet unBillet){
 		String message = "";
-		String requete = "update billet set raison = '"+unBillet.getRaison()+
+		String requete = "update Billet set raison = '"+unBillet.getRaison()+
 				"' where IdAd = " +unBillet.getIdAd() +" and IdE = "+unBillet.getIdE()+" and dateheure = '"+unBillet.getDateheure()+"';";
 		try {	
 			BDD.seConnecter();

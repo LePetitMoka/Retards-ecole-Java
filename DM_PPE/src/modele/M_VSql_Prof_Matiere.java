@@ -13,7 +13,7 @@ public class M_VSql_Prof_Matiere  {
 	
 	public static ArrayList<VSql_Vue_Prof_Matiere> selectAllVues() {
 		ArrayList<VSql_Vue_Prof_Matiere> lesuneVues = new ArrayList<VSql_Vue_Prof_Matiere>();
-		String requete = "select * from vue_prof_matiere;";
+		String requete = "select * from Vue_Prof_Matiere ;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -38,7 +38,7 @@ public class M_VSql_Prof_Matiere  {
 	}
 	// gadget
 	public static VSql_Vue_Prof_Matiere selectWhereVue(int IdM,int IdPf) {
-		String requete = "select * from vue_Prof_Matiere where IdM = " + IdM + " and IdPf = " + IdPf +";";
+		String requete = "select * from Vue_Prof_Matiere where IdM = " + IdM + " and IdPf = " + IdPf +";";
 		VSql_Vue_Prof_Matiere uneVue = null;
 		try {
 			BDD.seConnecter();

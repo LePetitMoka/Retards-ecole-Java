@@ -13,7 +13,7 @@ public class M_VSql_Vue_Trajet_Details  {
 	
 	public static ArrayList<VSql_Vue_Trajet_Details> selectAllVues() {
 		ArrayList<VSql_Vue_Trajet_Details> lesuneVues = new ArrayList<VSql_Vue_Trajet_Details>();
-		String requete = "select * from vue_trajet_details;";
+		String requete = "select * from Vue_Trajet_Details;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();

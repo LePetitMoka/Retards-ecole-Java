@@ -29,7 +29,7 @@ public class M_Trajet  {
 	}
 	public static ArrayList<Trajet> selectAllTrajets() {
 		ArrayList<Trajet> lesunTrajets = new ArrayList<Trajet>();
-		String requete = "select * from trajet;";
+		String requete = "select * from Trajet;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -51,7 +51,7 @@ public class M_Trajet  {
 	}
 	public static String supprimerTrajet(int IdSt, int IdE) {
 		String message = "";
-		String requete = "delete from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
+		String requete = "delete from Trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -66,7 +66,7 @@ public class M_Trajet  {
 		return message;
 	}
 	public static Trajet selectWhereTrajet(int IdSt, int IdE) {
-		String requete = "select * from trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
+		String requete = "select * from Trajet where IdSt = '" + IdSt + "' and IdE = " + IdE + ";";
 		Trajet unTrajet = null;
 		try {
 			BDD.seConnecter();

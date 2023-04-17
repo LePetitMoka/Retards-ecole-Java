@@ -10,7 +10,7 @@ import controleur.Perturbation;
 public class M_Perturbation  {
 	
 	public static void insertPerturbation(Perturbation unePerturbation) {
-		String requete = "insert into perturbation values('"+unePerturbation.getIdPt()+"','"
+		String requete = "insert into Perturbation values('"+unePerturbation.getIdPt()+"','"
 				+unePerturbation.getRaisonCourte()+"','"
 				+unePerturbation.getRaisonLongue()+"','"
 				+unePerturbation.getDateDebMessage()+"','"
@@ -28,7 +28,7 @@ public class M_Perturbation  {
 	}
 	public static ArrayList<Perturbation> selectAllPerturbations() {
 		ArrayList<Perturbation> lesPerturbations = new ArrayList<Perturbation>();
-		String requete = "select * from perturbation;";
+		String requete = "select * from Perturbation;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -52,7 +52,7 @@ public class M_Perturbation  {
 		return lesPerturbations;
 	}
 	public static void supprimerPerturbation(int IdPt) {
-		String requete = "delete from perturbation where IdPt = " + IdPt;
+		String requete = "delete from Perturbation where IdPt = " + IdPt;
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -65,7 +65,7 @@ public class M_Perturbation  {
 		}
 	}
 	public static Perturbation selectWherePerturbation(int IdPt) {
-		String requete = "select * from perturbation where IdPt = " + IdPt;
+		String requete = "select * from Perturbation where IdPt = " + IdPt;
 		Perturbation unePerturbation = null;
 		try {
 			BDD.seConnecter();
@@ -89,7 +89,7 @@ public class M_Perturbation  {
 		return unePerturbation;
 	}
 	public static void updatePerturbation(Perturbation unePerturbation) {
-		String requete = "update perturbation set dateDebMessage = '"+unePerturbation.getDateDebMessage()
+		String requete = "update Perturbation set dateDebMessage = '"+unePerturbation.getDateDebMessage()
 				+"', dateFinMessage = '"+unePerturbation.getDateFinMessage()
 				+"', raisonCourte = '"+unePerturbation.getRaisonCourte()
 				+"', raisonLongue = '"+unePerturbation.getRaisonLongue()

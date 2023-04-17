@@ -10,7 +10,7 @@ import controleur.Transport;
 public class M_Transport  {
 	
 	public static void insertTransport(Transport unTransport) {
-		String requete = "insert into transport values('"+unTransport.getIdTp()+"','"
+		String requete = "insert into Transport values('"+unTransport.getIdTp()+"','"
 				+unTransport.getNom()+"','"
 				+unTransport.getType()+"','"
 				+unTransport.getTransporteur()+"','"
@@ -29,7 +29,7 @@ public class M_Transport  {
 	}
 	public static ArrayList<Transport> selectAllTransports() {
 		ArrayList<Transport> lesTransports = new ArrayList<Transport>();
-		String requete = "select * from transport order by nom;";
+		String requete = "select * from Transport order by nom;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -54,7 +54,7 @@ public class M_Transport  {
 		return lesTransports;
 	}
 	public static void supprimerTransport(int IdTp) {
-		String requete = "delete from transport where IdTp = " + IdTp;
+		String requete = "delete from Transport where IdTp = " + IdTp;
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -67,7 +67,7 @@ public class M_Transport  {
 		}
 	}
 	public static Transport selectWhereTransport(int IdTp) {
-		String requete = "select * from transport where IdTp = " + IdTp;
+		String requete = "select * from Transport where IdTp = " + IdTp;
 		Transport unTransport = null;
 		try {
 			BDD.seConnecter();
@@ -92,7 +92,7 @@ public class M_Transport  {
 		return unTransport;
 	}
 	public static void updateTransport(Transport unTransport) {
-		String requete = "update transport set nom = '"+unTransport.getNom()
+		String requete = "update Transport set nom = '"+unTransport.getNom()
 				+"', type = '"+unTransport.getType()
 				+"', transporteur = '"+unTransport.getTransporteur()
 				+"', pictogramme = '"+unTransport.getPictogramme()

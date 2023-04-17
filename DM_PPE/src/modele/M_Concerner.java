@@ -10,7 +10,7 @@ import controleur.Concerner;
 public class M_Concerner  {
 	
 	public static void insertConcerner(Concerner unConcern) {
-		String requete = "insert into concerner values('"
+		String requete = "insert into Concerner values('"
 				+unConcern.getIdSt()+"','"
 				+unConcern.getIdPt()+"');";
 		try {
@@ -26,7 +26,7 @@ public class M_Concerner  {
 	}
 	public static ArrayList<Concerner> selectAllConcerners() {
 		ArrayList<Concerner> lesConcerns = new ArrayList<Concerner>();
-		String requete = "select * from concerner;";
+		String requete = "select * from Concerner;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -47,7 +47,7 @@ public class M_Concerner  {
 		return lesConcerns;
 	}
 	public static void supprimerConcerner(int IdSt, int IdPt) {
-		String requete = "delete from concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
+		String requete = "delete from Concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -60,7 +60,7 @@ public class M_Concerner  {
 		}
 	}
 	public static Concerner selectWhereConcerner(int IdSt, int IdPt) {
-		String requete = "select * from concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
+		String requete = "select * from Concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
 		Concerner unConcern = null;
 		try {
 			BDD.seConnecter();

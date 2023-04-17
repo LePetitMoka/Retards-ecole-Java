@@ -282,7 +282,7 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			String nom = this.txtNom.getText();
 			String prenom = this.txtPrenom.getText();
 			String adresse = this.txtAdresse.getText();
-			String telephone = this.txtAdresse.getText();
+			String telephone = this.txtTelephone.getText();
 			String email = this.txtEmail.getText();
 			String mdp = new String(this.txtMDP.getPassword());
 			String diplome = this.txtDiplome.getText();

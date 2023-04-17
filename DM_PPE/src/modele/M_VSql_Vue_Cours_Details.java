@@ -14,7 +14,7 @@ public class M_VSql_Vue_Cours_Details  {
 		
 		public static ArrayList<VSql_Vue_Cours_Details> selectAllVues() {
 			ArrayList<VSql_Vue_Cours_Details> lesuneVues = new ArrayList<VSql_Vue_Cours_Details>();
-			String requete = "select * from vue_cours_details;";
+			String requete = "select * from Vue_Cours_Details;";
 			try {
 				BDD.seConnecter();
 				Statement unStat = BDD.maConnexion.createStatement();
@@ -46,7 +46,7 @@ public class M_VSql_Vue_Cours_Details  {
 		}
 		// gadget
 		public static VSql_Vue_Cours_Details selectWhereVue(int IdCl, int IdM,int IdPf, String dateTS) {
-			String requete = "select * from vue_cours_details where IdM = " + IdM + " and IdPf = " + IdPf +" and IdCl ="+IdCl+" and dateTS = '"+dateTS+"';";
+			String requete = "select * from Vue_Cours_Details where IdM = " + IdM + " and IdPf = " + IdPf +" and IdCl ="+IdCl+" and dateTS = '"+dateTS+"';";
 			VSql_Vue_Cours_Details uneVue = null;
 			try {
 				BDD.seConnecter();

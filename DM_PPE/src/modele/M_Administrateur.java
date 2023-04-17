@@ -12,7 +12,7 @@ public class M_Administrateur {
 	
 	public static String insertAdministrateur(Administrateur unAdministrateur) {
 		String message = null;
-		String requete = "insert into administrateur values(null, '"+unAdministrateur.getNom()+"', '"
+		String requete = "insert into Administrateur values(null, '"+unAdministrateur.getNom()+"', '"
 				+unAdministrateur.getPrenom()+"', '"+unAdministrateur.getEmail()+"', '"
 				+unAdministrateur.getTelephone()+"', '"+unAdministrateur.getAdresse()+"', '"
 				+unAdministrateur.getMdp()+"', '"+unAdministrateur.getUrlSignature()+"');";
@@ -30,7 +30,7 @@ public class M_Administrateur {
 	}
 	public static ArrayList<Administrateur> selectAllAdministrateurs() {
 		ArrayList<Administrateur> lesAdministrateurs = new ArrayList<Administrateur>();
-		String requete = "select * from administrateur;";
+		String requete = "select * from Administrateur;";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -57,7 +57,7 @@ public class M_Administrateur {
 		return lesAdministrateurs;
 	}
 	public static void supprimerAdministrateur(int idAd) {
-		String requete = "delete from administrateur where idAd = " + idAd;
+		String requete = "delete from Administrateur where idAd = " + idAd;
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -70,7 +70,7 @@ public class M_Administrateur {
 		}
 	}
 	public static Administrateur selectWhereAdministrateur(int idAd) {
-		String requete = "select * from administrateur where idAd = " + idAd;
+		String requete = "select * from Administrateur where idAd = " + idAd;
 		Administrateur unAdministrateur = null;
 		try {
 			BDD.seConnecter();
@@ -98,7 +98,7 @@ public class M_Administrateur {
 		return unAdministrateur;
 	}
 	public static Administrateur selectWhereAdministrateur(String email, String mdp) {
-		String requete = "select * from administrateur where email = ? and mdp = sha1(?);";
+		String requete = "select * from Administrateur where email = ? and mdp = sha1(?);";
 		Administrateur unAdministrateur = null;
 		try {
 			BDD.seConnecter();
@@ -128,7 +128,7 @@ public class M_Administrateur {
 	}
 	public static String updateAdministrateur(Administrateur unAdministrateur){
 		String message = null;
-		String requete = "update administrateur set nom = '"+unAdministrateur.getNom()+"', prenom = '"
+		String requete = "update Administrateur set nom = '"+unAdministrateur.getNom()+"', prenom = '"
 				+unAdministrateur.getPrenom()+"', adresse = '"+unAdministrateur.getAdresse()+
 				"', telephone = '"+unAdministrateur.getTelephone()+"', mdp = '"+unAdministrateur.getMdp()+
 				"', URLSignature = '"+unAdministrateur.getUrlSignature()+"', email = '"
