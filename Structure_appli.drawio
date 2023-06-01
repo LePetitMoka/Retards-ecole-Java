@@ -1,17 +1,23 @@
-<mxfile host="app.diagrams.net" modified="2023-06-01T08:25:36.621Z" agent="5.0 (Macintosh)" etag="8zeFqioehdwCVIt2zena" version="20.8.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-01T08:51:47.741Z" agent="5.0 (Macintosh)" etag="rjuwzqD6mmMdgZSjp0xm" version="20.8.11" type="github">
   <diagram name="Page-1" id="qzUSwUFRgPcWngRlXeXx">
     <mxGraphModel dx="1785" dy="797" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="aLbdxtJdZIABuGEaoBWG-29" value="etc" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="250" y="400" width="130" height="70" as="geometry" />
+          <mxGeometry x="260" y="790" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="aLbdxtJdZIABuGEaoBWG-1" target="aLbdxtJdZIABuGEaoBWG-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="aLbdxtJdZIABuGEaoBWG-1" target="aLbdxtJdZIABuGEaoBWG-36">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-1" value="&lt;div&gt;controleur&lt;/div&gt;" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" vertex="1" parent="1">
-          <mxGeometry x="-40" y="470" width="69" height="56.00000000000001" as="geometry" />
+          <mxGeometry x="-30" y="835" width="69" height="56.00000000000001" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-5" value="&lt;div&gt;vue&lt;/div&gt;" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" vertex="1" parent="1">
-          <mxGeometry x="-40" y="340" width="69" height="56.00000000000001" as="geometry" />
+          <mxGeometry x="-30" y="557" width="69" height="56.00000000000001" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="aLbdxtJdZIABuGEaoBWG-8" target="aLbdxtJdZIABuGEaoBWG-20">
           <mxGeometry relative="1" as="geometry" />
@@ -20,31 +26,40 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-8" value="&lt;div&gt;modele&lt;/div&gt;" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" vertex="1" parent="1">
-          <mxGeometry x="-40" y="220" width="69" height="56.00000000000001" as="geometry" />
+          <mxGeometry x="-30" y="260" width="69" height="56.00000000000001" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-20" value="BDD" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="120" y="160" width="130" height="70" as="geometry" />
+          <mxGeometry x="130" y="200" width="130" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="aLbdxtJdZIABuGEaoBWG-22" value="&lt;div&gt;Objets métiers, &lt;br&gt;&lt;/div&gt;et traitement des demandes utilisateur (appelle le modèle)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-210" y="463" width="140" height="70" as="geometry" />
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-22" value="&lt;div&gt;Objets métiers, &lt;br&gt;&lt;/div&gt;et traitement des demandes utilisateur (appelle le modèle)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="-200" y="828" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="aLbdxtJdZIABuGEaoBWG-23" value="Classe gérant la connexion / déconnexion à la base de données, la configuration du fichier config.properties, " style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="160" width="140" height="70" as="geometry" />
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-23" value="&lt;div&gt;Classe gérant la connexion / déconnexion à la base de données, et la configuration du fichier config.properties&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="285" y="190" width="180" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="aLbdxtJdZIABuGEaoBWG-25" value="BDD" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="120" y="250" width="130" height="70" as="geometry" />
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-25" value="M_[nomdelatable]" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="130" y="360" width="130" height="70" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-28" value="Trajet" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="190" y="430" width="130" height="70" as="geometry" />
+          <mxGeometry x="200" y="820" width="130" height="70" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-27" value="Etudiant" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="130" y="463" width="130" height="70" as="geometry" />
+          <mxGeometry x="140" y="853" width="130" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="aLbdxtJdZIABuGEaoBWG-30" value="&lt;div&gt;Objets métiers, &lt;br&gt;&lt;/div&gt;et traitement des demandes utilisateur (appelle le modèle)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-210" y="333" width="140" height="70" as="geometry" />
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-30" value="Gestion des vues de l&#39;application" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="-200" y="550" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="aLbdxtJdZIABuGEaoBWG-31" value="Classes qui représentent la table en question dans la base de&amp;nbsp;données " style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="400" y="456" width="140" height="70" as="geometry" />
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-31" value="Ces classes sont les objets qui représentent les tables en question dans la base de&amp;nbsp;données " style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="826" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-32" value="Classes permettant la modification, sélection des données de la table dans la base de données (requêtes SQL)" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="350" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-36" value="C_[nomdelatable]" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="140" y="970" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-37" value="&lt;div&gt;Classes qui appellent le modele M_[nomdelatable]&lt;/div&gt;&lt;div&gt;correspondant&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="975" width="160" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
