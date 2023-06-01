@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-01T08:54:38.106Z" agent="5.0 (Macintosh)" etag="jrvDR-J6SNpbhxMTJ8Cg" version="20.8.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-01T09:00:06.018Z" agent="5.0 (Macintosh)" etag="FYgbx3SprOP8Wmzz_SPn" version="20.8.11" type="github">
   <diagram name="Page-1" id="qzUSwUFRgPcWngRlXeXx">
     <mxGraphModel dx="1785" dy="797" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -23,6 +23,9 @@
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-1" value="&lt;div&gt;controleur&lt;/div&gt;" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" vertex="1" parent="1">
           <mxGeometry x="-30" y="835" width="69" height="56.00000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="aLbdxtJdZIABuGEaoBWG-5" target="aLbdxtJdZIABuGEaoBWG-45">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-5" value="&lt;div&gt;vue&lt;/div&gt;" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" vertex="1" parent="1">
           <mxGeometry x="-30" y="557" width="69" height="56.00000000000001" as="geometry" />
@@ -74,6 +77,12 @@
         </mxCell>
         <mxCell id="aLbdxtJdZIABuGEaoBWG-44" value="C_[nomdelatable]" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="140" y="995" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-45" value="GREI" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="120" y="550" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aLbdxtJdZIABuGEaoBWG-46" value="Cette classe est le point d&#39;entrée du programme" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="285" y="557" width="175" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
