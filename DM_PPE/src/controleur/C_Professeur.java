@@ -12,8 +12,8 @@ public class C_Professeur {
 	public static ArrayList<Professeur> selectAllProfesseurs() {
 		return M_Professeur.selectAllProfesseurs();
 	}
-	public static void supprimerProfesseur(int idPf) {
-		M_Professeur.supprimerProfesseur(idPf);
+	public static String supprimerProfesseur(int idPf) {
+		return M_Professeur.supprimerProfesseur(idPf);
 	}
 	public static Professeur selectWhereProfesseur(int idPf) {
 		return M_Professeur.selectWhereProfesseur(idPf);

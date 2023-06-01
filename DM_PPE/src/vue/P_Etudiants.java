@@ -38,8 +38,6 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	private JTextField txtEmail = new JTextField();
 	private JComboBox<String> cbxIdClasse = new JComboBox<String>();
 	private JPasswordField txtMDP = new JPasswordField();
-	private JComboBox<String> cbxStatut = new JComboBox<String>();
-
 	
 	private JComboBox<String> cbxFiltre = new JComboBox<String>();
 	private JButton btFiltrer = new JButton("Filtrer");
@@ -56,19 +54,14 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	
 	private JTable uneTable;
 	private Tableau unTableau;
-	
-	private String tempMDP;
-	
+		
 	
 	public P_Etudiants () {
 		super(GREI.color1);
-
-		this.cbxStatut.addItem("Alternant");
-		this.cbxStatut.addItem("Initial");
 		
 		this.PanelForm.setBackground(GREI.color1);
 		this.PanelForm.setBounds(20, 60, 370, 320);
-		this.PanelForm.setLayout(new GridLayout(9,2));
+		this.PanelForm.setLayout(new GridLayout(8,2));
 		this.PanelForm.add(new JLabel("Nom : "));
 		this.PanelForm.add(this.txtNom);
 		this.PanelForm.add(new JLabel("Prenom : "));
@@ -83,8 +76,6 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelForm.add(this.txtMDP);
 		this.PanelForm.add(new JLabel("ID Classe : "));
 		this.PanelForm.add(this.cbxIdClasse);
-		this.PanelForm.add(new JLabel("Statut : "));
-		this.PanelForm.add(this.cbxStatut);
 		this.PanelForm.add(this.btAnnuler);
 		this.PanelForm.add(this.btEnregistrer);
 		this.add(PanelForm);
@@ -96,7 +87,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.PanelFiltre.setBounds(420,30,650,25);
 		this.PanelFiltre.setBackground(GREI.color1);
 		this.PanelFiltre.setLayout(new GridLayout(1,4));
-		this.PanelFiltre.add(new JLabel ("Filtrer les Trajets :"));
+		this.PanelFiltre.add(new JLabel ("Filtrer les etudiants :"));
 		this.PanelFiltre.add(this.cbxFiltre);
 		this.PanelFiltre.add(txtFiltre);
 		this.PanelFiltre.add(btFiltrer);
@@ -138,7 +129,6 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 		this.resizeTable();
 		this.add(this.PanelTable);
 		
-		this.tempMDP = "";
 		
 		//remplir les CBX
 		this.remplirCBX();
@@ -180,8 +170,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 					C_Etudiant.supprimerEtudiant(idEtudiant);
 					//suppression dans l'affichage
 					actualiser();
-					JOptionPane.showMessageDialog(null, "Etudiant supprime");
-
+					viderChamps();
 				}
 				else if (e.getClickCount() == 1) {
 					
@@ -220,7 +209,7 @@ public class P_Etudiants extends P_Principal implements ActionListener {
 	public Object whereisItemCBX(String idTab, JComboBox<String> CBX) { //permet de trouver l'index d'un item CBX en fonction d'un ID int
 		Object item = new Object();
 		for (int i = 0; i < CBX.getItemCount() ; i++) {
-			//on recupere l'id de l'item en explosant le texte et en convertissant le premier morceau en int
+			//on recupere l'id de l'item en explosant le texte et en convertissant le premier morceau en string
 			String txtItem = CBX.getItemAt(i).toString();
 			String tab[] = txtItem.split("-");
 			//on le compare avec l'id recherche
@@ -417,7 +406,8 @@ public Boolean verifMDP(String mdp) {
 				}	
 			} else {
 				System.out.println(mdp.length());
-				JOptionPane.showMessageDialog(this, C_Etudiant.updateEtudiant(unEtudiant));
+				String message = C_Etudiant.updateEtudiant(unEtudiant);
+				JOptionPane.showMessageDialog(this,message);
 			}
 			//actualisation de l'affichage
 			this.viderChamps();

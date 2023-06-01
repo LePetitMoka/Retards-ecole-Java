@@ -59,18 +59,22 @@ public class M_Professeur  {
 		}
 		return lesProfesseurs;
 	}
-	public static void supprimerProfesseur(int idPf) {
+	public static String supprimerProfesseur(int idPf) {
 		String requete = "delete from Professeur where idPf = " + idPf;
+		String message = "";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			BDD.seDeConnecter();
+			message = "Supprime prof";
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
+			message = exp.getMessage();
 		}
+		return message;
 	}
 	public static Professeur selectWhereProfesseur(int idPf) {
 		String requete = "select * from Professeur where idPf = " + idPf;

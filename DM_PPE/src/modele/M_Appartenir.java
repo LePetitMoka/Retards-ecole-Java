@@ -47,18 +47,22 @@ public class M_Appartenir  {
 		}
 		return lesAppartenances;
 	}
-	public static void supprimerAppartenir(int IdSt, int IdTp) {
+	public static String supprimerAppartenir(int IdSt, int IdTp) {
 		String requete = "delete from Appartenir where IdSt = '" + IdSt + "' and IdTp = '" + IdTp + "';";
+		String message = "";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			BDD.seDeConnecter();
+			message = "Supprime";
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
+			message = exp.getMessage();
 		}
+		return message;
 	}
 	public static Appartenir selectWhereAppartenir(int IdSt, int IdTp) {
 		String requete = "select * from Appartenir where IdSt = '" + IdSt + "' and IdTp = '" + IdTp + "';";

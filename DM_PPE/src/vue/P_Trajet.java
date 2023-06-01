@@ -152,6 +152,7 @@ public class P_Trajet extends P_Principal implements ActionListener{
 					//suppression dans la BDD
 					JOptionPane.showMessageDialog(null, C_Trajet.supprimerTrajet(idst,ide));
 					//actualisation de l'affichage
+					viderChamps();
 					actualiser();
 				}
 			}

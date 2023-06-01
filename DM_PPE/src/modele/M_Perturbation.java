@@ -51,18 +51,22 @@ public class M_Perturbation  {
 		}
 		return lesPerturbations;
 	}
-	public static void supprimerPerturbation(int IdPt) {
+	public static String supprimerPerturbation(int IdPt) {
 		String requete = "delete from Perturbation where IdPt = " + IdPt;
+		String message = "";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
 			unStat.execute(requete);
 			unStat.close();
 			BDD.seDeConnecter();
+			message = "";
 		}
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
+			message = "";
 		}
+		return message;
 	}
 	public static Perturbation selectWherePerturbation(int IdPt) {
 		String requete = "select * from Perturbation where IdPt = " + IdPt;

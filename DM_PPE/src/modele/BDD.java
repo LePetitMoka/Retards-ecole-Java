@@ -51,7 +51,7 @@ public class BDD {
 	}
 	public static void seConnecter() {
 		String url = "jdbc:mysql://"+BDD.serveur+"/"+BDD.bdd;
-		url +="?verifyServerCertificate=false&useSSL=false&requireSSL=false"; // desactivation verification du certificat SSL (MAC bruh)
+		url +="?verifyServerCertificate=false&useSSL=false&requireSSL=false"; // desactivation verification du certificat SSL (specifique a macOS)
 		chargerPilote();
 		try {
 			maConnexion = DriverManager.getConnection(url, BDD.user, BDD.mdp);
@@ -75,7 +75,7 @@ public class BDD {
 	}
 	
 	public static boolean ignoreSQLException(String sqlState) {
-
+		// cette classe permet de filtrer les erreurs a ne pas considerer comme telles (liste blanche)
 	    if (sqlState == null) {
 	        System.out.println("The SQL state is not defined!");
 	        return false;
@@ -93,8 +93,9 @@ public class BDD {
 	}
 	
 	public static void printSQLException(SQLException ex) {
-
+		//imprime l'erreur dans la console
 	    for (Throwable e : ex) {
+	    	// filtre liste blanche
 	        if (e instanceof SQLException) {
 	            if (ignoreSQLException(
 	                ((SQLException)e).

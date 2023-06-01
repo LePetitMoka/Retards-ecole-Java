@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import controleur.C_Etudiant;
 import controleur.C_Professeur;
 import controleur.Professeur;
 import controleur.Tableau;
@@ -38,6 +41,8 @@ public class P_Professeur extends P_Principal implements ActionListener {
 	private JButton btFiltrer = new JButton("Filtrer");
 	private JPanel PanelFiltre = new JPanel();
 	private JTextField txtFiltre = new JTextField();
+	
+	private JLabel labelTotal = new JLabel();
 	
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btEnregistrer = new JButton("Enregistrer");
@@ -76,7 +81,7 @@ public class P_Professeur extends P_Principal implements ActionListener {
 		this.PanelFiltre.setBounds(420,30,650,25);
 		this.PanelFiltre.setBackground(GREI.color1);
 		this.PanelFiltre.setLayout(new GridLayout(1,4));
-		this.PanelFiltre.add(new JLabel ("Filtrer les Trajets :"));
+		this.PanelFiltre.add(new JLabel ("Filtrer les professeurs :"));
 		this.PanelFiltre.add(this.cbxFiltre);
 		this.PanelFiltre.add(txtFiltre);
 		this.PanelFiltre.add(btFiltrer);
@@ -91,6 +96,10 @@ public class P_Professeur extends P_Principal implements ActionListener {
 
 		this.add(this.PanelFiltre);
 		this.btFiltrer.addActionListener(this);
+		
+		//total resultats
+		this.labelTotal.setBounds(425, 675, 100, 50);//b
+		this.add(this.labelTotal);//b
 		
 		this.btAnnuler.addActionListener(this);
 		this.btEnregistrer.addActionListener(this);
@@ -143,11 +152,11 @@ public class P_Professeur extends P_Principal implements ActionListener {
 				if (e.getClickCount() == 2) {
 					int idProfesseur = Integer.parseInt(uneTable.getValueAt(numLigne, 0).toString());
 					//suppression dans la BDD
-					C_Professeur.supprimerProfesseur(idProfesseur);
+					JOptionPane.showMessageDialog(null, C_Professeur.supprimerProfesseur(idProfesseur));
 					//suppression dans l'affichage
 					actualiser();
-					JOptionPane.showMessageDialog(null, "Professeur supprime");
-
+					viderChamps();
+					
 				}
 				else if (e.getClickCount() == 1) {
 					
@@ -200,6 +209,7 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			matrice[i][7] = unProfesseur.getDiplome();
 			i++;
 		}
+		this.labelTotal.setText(lesProfesseurs.size()+" resultat(s)");//b	
 		return matrice;
 	}
 	public Object[][] obtenirDonnees(ArrayList<Professeur> lesProfs){
@@ -216,6 +226,7 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			matrice[i][7] = unProfesseur.getDiplome();
 			i++;
 		}
+		this.labelTotal.setText(lesProfs.size()+" resultat(s)");//b
 		return matrice;
 	}
 	public void actualiser() {
@@ -250,6 +261,48 @@ public class P_Professeur extends P_Principal implements ActionListener {
 		    tableColumn.setPreferredWidth( preferredWidth );
 		}
 	}
+	
+public Boolean verifMDP(String mdp) {
+	    
+		if (mdp == null || mdp.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Erreur MDP: Mot de passe vide");
+			return false;
+		}
+		
+		boolean cond = true;
+		Pattern patternMin = Pattern.compile("[a-z]");
+	    Matcher matcherMin = patternMin.matcher(mdp);
+	    Pattern patternMaj = Pattern.compile("[A-Z]");
+	    Matcher matcherMaj = patternMaj.matcher(mdp);
+	    Pattern patternSpec = Pattern.compile("\\W");
+	    Matcher matcherSpec = patternSpec.matcher(mdp);
+	    Pattern patternNum = Pattern.compile("[0-9]");
+	    Matcher matcherNum = patternNum.matcher(mdp);
+		
+		if (mdp.length() < 4 || mdp.length() > 15){
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Taille du mot de passe incorrecte (entre 3 et 15)");
+			cond = false;
+		} else if (!matcherMin.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque une minuscule");
+			cond = false;
+		} else if (!matcherMaj.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque une majuscule");
+			cond = false;
+		} else if (!matcherSpec.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque un caractere special");
+			cond = false;
+		} else if (!matcherNum.find()) {
+			JOptionPane.showMessageDialog(this,"Erreur MDP: Il manque un chiffre");
+			cond = false;
+		}
+		
+		
+		if (!cond){
+			this.txtMDP.setText("");
+		}
+		return cond;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -267,15 +320,16 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			String diplome = this.txtDiplome.getText();
 
 			
-			//instancier un etudiant
+			//instancier un prof
 			
 			Professeur unProfesseur = new Professeur(nom, prenom, adresse, telephone, email, mdp, diplome);
 			
-			//insertion client dans BDD
-			
-			JOptionPane.showMessageDialog(this, C_Professeur.insertProfesseur(unProfesseur));
-			this.viderChamps();
+			//verif mdp puis insertion prof dans BDD 
+			if (this.verifMDP(mdp) == true) {
+				JOptionPane.showMessageDialog(this, C_Professeur.insertProfesseur(unProfesseur));
+			}
 			//actualisation de l'affichage
+			this.viderChamps();
 			this.actualiser();
 		}
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Modifier")) {
@@ -287,16 +341,27 @@ public class P_Professeur extends P_Principal implements ActionListener {
 			String mdp = new String(this.txtMDP.getPassword());
 			String diplome = this.txtDiplome.getText();
 			
-			//instancier un client
+			//instancier un prof
 			//		recuperer l'id dans le tableau
 			int numLigne = this.uneTable.getSelectedRow();
 			int idprof = Integer.parseInt(this.unTableau.getValueAt(numLigne, 0).toString());
 			Professeur unProfesseur = new Professeur(idprof,nom,prenom,adresse,telephone,email,mdp,diplome);
 			
-			//on realise la modif BDD
-			JOptionPane.showMessageDialog(this, C_Professeur.updateProfesseur(unProfesseur));
-			this.viderChamps();
+			//verif mdp puis on realise la modif BDD
+			if (!this.uneTable.getValueAt(numLigne, 6).toString().equals(mdp)) {
+				System.out.println(mdp.length());
+				System.out.println(this.uneTable.getValueAt(numLigne, 6).toString());
+				System.out.println(mdp);
+				if (this.verifMDP(mdp)) {
+
+					//System.out.println(this.uneTable.getValueAt(numLigne, 5).toString());
+					
+					JOptionPane.showMessageDialog(this, C_Professeur.updateProfesseur(unProfesseur));				}	
+			} else {
+				System.out.println(mdp.length());
+				JOptionPane.showMessageDialog(this, C_Professeur.updateProfesseur(unProfesseur));			}
 			//actualisation de l'affichage
+			this.viderChamps();
 			this.actualiser();
 		}
 		else if (e.getSource() == this.btFiltrer) {

@@ -96,7 +96,7 @@ public class P_Cours extends P_Principal implements ActionListener {
 		this.PanelFiltre.setBounds(420,30,650,25);
 		this.PanelFiltre.setBackground(GREI.color1);
 		this.PanelFiltre.setLayout(new GridLayout(1,4));
-		this.PanelFiltre.add(new JLabel ("Filtrer les Trajets :"));
+		this.PanelFiltre.add(new JLabel ("Filtrer les cours :"));
 		this.PanelFiltre.add(this.cbxFiltre);
 		this.PanelFiltre.add(txtFiltre);
 		this.PanelFiltre.add(btFiltrer);

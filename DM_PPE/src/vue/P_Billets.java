@@ -171,7 +171,7 @@ public class P_Billets extends P_Principal implements ActionListener {
 	public Object whereisItemCBX(String idTab, JComboBox<String> CBX) { //permet de trouver l'index d'un item CBX en fonction d'un ID int
 		Object item = new Object();
 		for (int i = 0; i < CBX.getItemCount() ; i++) {
-			//on recupere l'id de l'item en explosant le texte et en convertissant le premier morceau en int
+			//on recupere l'id de l'item en explosant le texte et en convertissant le premier morceau en string
 			String txtItem = CBX.getItemAt(i).toString();
 			String tab[] = txtItem.split("-");
 			//on le compare avec l'id recherche

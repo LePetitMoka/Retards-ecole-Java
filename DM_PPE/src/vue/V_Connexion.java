@@ -29,7 +29,7 @@ public class V_Connexion extends JFrame implements ActionListener, KeyListener {
 	private JPasswordField txtMdp = new JPasswordField();
 	
 	public V_Connexion() {
-		this.setTitle("Gestion des Interventions d'Orange");
+		this.setTitle("Gestion des Retards IRIS");
 		this.setBounds(100, 50, 600, 350);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);

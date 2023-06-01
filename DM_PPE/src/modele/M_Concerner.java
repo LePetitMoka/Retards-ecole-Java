@@ -46,8 +46,9 @@ public class M_Concerner  {
 		}
 		return lesConcerns;
 	}
-	public static void supprimerConcerner(int IdSt, int IdPt) {
+	public static String supprimerConcerner(int IdSt, int IdPt) {
 		String requete = "delete from Concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
+		String message = "";
 		try {
 			BDD.seConnecter();
 			Statement unStat = BDD.maConnexion.createStatement();
@@ -58,6 +59,7 @@ public class M_Concerner  {
 		catch(SQLException exp) {
 			System.out.println("Erreur d'execution de : " + requete);
 		}
+		return message;
 	}
 	public static Concerner selectWhereConcerner(int IdSt, int IdPt) {
 		String requete = "select * from Concerner where IdSt = '" + IdSt + "' and IdPt = '" + IdPt + "';";
